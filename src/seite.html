@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Demokratie, jetzt und in Zukunft – Jahreskompass und Lernseite</title>
+<title>Demokratie, jetzt und in Zukunft – Leitfaden durch das Jahr</title>
 <style>/*FONTS*/</style>
 <style>/*SEITE*/</style>
 </head>
@@ -13,8 +13,9 @@
 <header class="top">
   <a class="marke" href="#start"><span class="marke__rose" aria-hidden="true"></span><span>Demokratie, jetzt und in Zukunft</span></a>
   <nav aria-label="Bereiche">
-    <a href="#start" data-nav="start">Jahreskompass</a>
-    <a href="#heute" data-nav="heute">Heute</a>
+    <a href="#start" data-nav="start">Kompass</a>
+    <a href="#heute" data-nav="heute">Lernseite</a>
+    <a href="#ausstellung" data-nav="ausstellung">Ausstellung</a>
   </nav>
 </header>
 
@@ -25,7 +26,7 @@
   <div class="held">
     <p class="kicker">Wahlfach · Demokratiebildung in der frühen Kindheit</p>
     <h1 id="start-titel">Wohin die Reise geht</h1>
-    <p class="intro">Acht Etappen führen durch das Jahr. Im Mittelpunkt steht immer dasselbe: die Rechte jedes Kindes. Tippen Sie eine Etappe an und sehen Sie, was dort auf Sie wartet.</p>
+    <p class="intro">Acht Etappen führen durch das Jahr. Jede beginnt mit einer Szene aus einer Kita. Im Mittelpunkt steht immer dasselbe: die Rechte jedes Kindes. Tippen Sie eine Etappe an.</p>
   </div>
 
   <div class="kompass">
@@ -36,51 +37,131 @@
     <article class="etappe" id="etappe" aria-live="polite"></article>
   </div>
 
+  <div class="faden" aria-labelledby="faden-titel">
+    <h2 id="faden-titel">Der rote Faden</h2>
+    <p class="lauf">Die Etappen folgen einem Vortrag, der im April 2026 auf einem Fachtag für Erzieherinnen und Erzieher gehalten wurde. Er hat drei Teile.</p>
+    <ol class="faden__teile">
+      <li><b>Demokratie jetzt und in Zukunft</b><span>Was Demokratie ist – und warum sie gelernt werden muss.</span><span class="meta">Etappen 1 und 7</span></li>
+      <li><b>Warum die frühe Kindheit?</b><span>Warum die Kita der wichtigste Ort dafür ist. Was Korczak und das Gesetz dazu sagen.</span><span class="meta">Etappen 2 und 3</span></li>
+      <li><b>Die praktische Umsetzung</b><span>Feste Verfahren, gelebter Alltag – und die Haltung, die beides trägt.</span><span class="meta">Etappen 4, 5, 6 und 8</span></li>
+    </ol>
+  </div>
+
   <div class="fundament">
     <h2>Unser Maßstab das ganze Jahr</h2>
     <p>Kinder haben Rechte auf <strong>Schutz</strong>, <strong>Förderung</strong> und <strong>Beteiligung</strong>. Daran prüfen wir jede Situation aus der Kita – und jede eigene Entscheidung.</p>
     <p class="dreifrage"><span>Wer entscheidet?</span><span>Wer wird gehört?</span><span>Wer gehört dazu?</span></p>
   </div>
 
-  <a class="heutekarte" href="#heute" id="heutekarte">
-    <span class="kicker">Heute · Etappe 1</span>
-    <span class="heutekarte__titel">Welches Volk meint die Demokratie?</span>
-    <span class="heutekarte__text">Sieben Schritte · 90 Minuten · am Ende steht Ihr eigener Satz, der für jedes Kind in der Kita stimmt.</span>
-    <span class="knopf knopf--hell" id="heute-knopf">Stunde beginnen →</span>
-  </a>
+  <div class="offen">
+    <h2>Schon offen</h2>
+    <div class="offen__karten">
+      <a class="heutekarte" href="#heute" id="heutekarte">
+        <span class="kicker">Lernseite · Etappe 1</span>
+        <span class="heutekarte__titel">Drei Formen – ein Ganzes</span>
+        <span class="heutekarte__text">Fünf Schritte · 90 Minuten · am Ende steht Ihr eigener Satz, wann Demokratie in der Kita beginnt.</span>
+        <span class="knopf knopf--hell" id="heute-knopf">Lernseite beginnen →</span>
+      </a>
+      <a class="heutekarte heutekarte--ruhig" href="#ausstellung">
+        <span class="kicker">Ausstellung · Etappe 3</span>
+        <span class="heutekarte__titel">Kinderrechte im Kita-Alltag</span>
+        <span class="heutekarte__text">Sechs Plakate, sechs Szenen, sechs Alltagskarten · am Ende steht Ihr Plakat für die eigene Kita.</span>
+        <span class="knopf knopf--hell">Ausstellung öffnen →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ETAPPE: MODULSEITE ================= -->
+<section class="view" id="v-etappe" hidden aria-labelledby="mod-titel">
+  <div id="modul" class="modul"></div>
+</section>
+
+<!-- ================= AUSSTELLUNG ================= -->
+<section class="view" id="v-ausstellung" hidden aria-labelledby="aus-titel">
+  <div class="held">
+    <p class="kicker">Ausstellung · Etappe 3 · Kinder haben Rechte</p>
+    <h1 id="aus-titel">Kinderrechte im Kita-Alltag</h1>
+    <p class="intro">Sechs Plakate hängen in dieser Ausstellung. Jedes sagt ein Recht so, wie ein Kind es sagen würde. Hinter jedem Plakat wartet eine Szene aus einer Kita.</p>
+    <p class="meta">Etwa 45 Minuten · zu zweit an einem Gerät · danach Rundgang im Plenum</p>
+  </div>
+  <p class="auftrag">Öffnen Sie mindestens drei Plakate. Lesen Sie die Szene. Legen Sie sich fest, welcher Prüfstein zuerst berührt ist – Schutz, Förderung oder Beteiligung – und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung.</p>
+  <div class="plakate" id="plakate" role="group" aria-label="Plakate der Ausstellung"></div>
+  <p class="meta" id="plakat-stand" aria-live="polite"></p>
+  <div id="station" class="station" aria-live="polite"></div>
+
+  <div class="alltag">
+    <h2>Alltag mit Kinderrechten</h2>
+    <p class="lauf">Sechs Situationen, die jeden Tag vorkommen. Überlegen Sie zuerst selbst, wie es mit Kinderrechten ginge. Decken Sie dann auf.</p>
+    <p class="hinweis">Niemand macht das immer richtig. Die Karten zeigen eine Richtung, keine Note.</p>
+    <div class="chips" id="alltag-wahl" role="group" aria-label="Situation wählen"></div>
+    <div id="alltag-karte"></div>
+  </div>
+
+  <div class="freigabe" id="plakat-box" data-zu>
+    <p class="freigabe__sperre meta">Ihr eigenes Plakat öffnet sich, sobald Sie sich bei drei Plakaten festgelegt haben.</p>
+    <div class="freigabe__inhalt">
+      <h2>Ihr Plakat für die Kita</h2>
+      <p class="auftrag">Wählen Sie das Recht, das in Ihrer Einrichtung am meisten Aufmerksamkeit braucht. Schreiben Sie es so auf, dass ein Kind von vier Jahren es versteht. Dieser Teil bleibt auf Ihrem Gerät.</p>
+      <div class="chips" id="plakat-recht" role="group" aria-label="Recht für Ihr Plakat wählen"></div>
+      <label class="feld">So sage ich es einem Kind:
+        <textarea rows="2" id="plakat-satz" data-text="plakat-satz" placeholder="Ich darf …"></textarea>
+      </label>
+      <label class="feld">Hier hängt das Plakat – und in dieser Situation erinnert es uns:
+        <textarea rows="2" data-text="plakat-ort" placeholder="Am Wickeltisch. Es erinnert uns daran, …"></textarea>
+      </label>
+      <div class="g-reihe">
+        <button type="button" class="g-knopf g-knopf--primaer" id="plakat-vergleich" disabled>Mit den Kriterien vergleichen</button>
+        <p class="meta" id="plakat-hinweis" aria-live="polite"></p>
+      </div>
+      <div class="erklaerung raster" id="plakat-raster" hidden>
+        <p class="erklaerung__kopf">Vergleichen Sie Ihr Plakat mit diesen Kriterien</p>
+        <table>
+          <tr><th scope="row">Grundlegend</th><td>Der Satz steht in der Ich-Form. Ein Kind versteht ihn.</td></tr>
+          <tr><th scope="row">Sicher</th><td>Der Satz sagt, was das Kind darf oder erwarten kann – nicht, was es soll.</td></tr>
+          <tr><th scope="row">Souverän</th><td>Der Satz passt zu einer echten Situation in Ihrer Einrichtung. Sie können sagen, welcher Prüfstein dahintersteht.</td></tr>
+        </table>
+        <p>Überarbeiten Sie Ihren Satz, wenn etwas fehlt. Im Plenum hängen wir die Plakate nebeneinander: Welches Recht wurde am häufigsten gewählt – und warum?</p>
+      </div>
+      <figure class="meinplakat" id="meinplakat" hidden>
+        <p class="meinplakat__satz" id="meinplakat-satz"></p>
+        <figcaption class="meta" id="meinplakat-recht"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="schluss">
+    <div class="g-reihe">
+      <button type="button" class="g-knopf g-knopf--sekundaer" data-drucken>Meine Ergebnisse drucken oder als PDF sichern</button>
+      <a class="g-knopf g-knopf--still" href="#etappe-3">← Zur Etappe 3</a>
+    </div>
+    <p class="meta">Die sechs Szenen sind ausgedacht. Welcher Prüfstein »zentral« ist, ist ein Vorschlag der Lehrkraft – gute Begründungen für eine andere Wahl zählen.</p>
+    <p class="ende">Fertig? Dann drehen Sie Ihr Tablet um.</p>
+  </div>
 </section>
 
 <!-- ================= HEUTE: DIE STUNDE ================= -->
 <section class="view" id="v-heute" hidden aria-labelledby="heute-titel">
   <div class="stundenkopf">
-    <p class="kicker">Heute · Etappe 1 · Grundlagen und Orientierung</p>
-    <h1 id="heute-titel">Welches Volk meint die Demokratie?</h1>
+    <p class="kicker">Lernseite · Etappe 1 · Demokratie verstehen</p>
+    <h1 id="heute-titel">Drei Formen – ein Ganzes</h1>
+    <p class="leitfrage leitfrage--klein">Wo beginnt Demokratie?</p>
     <ol class="schritte" id="schritte" aria-label="Schritte der Stunde"></ol>
   </div>
 
   <!-- 1 -->
-  <article class="schritt" data-n="1" data-titel="Erinnern">
-    <p class="meta">Schritt 1 · 5 Minuten · allein · ohne Unterlagen</p>
-    <h2>Erst erinnern</h2>
-    <p class="lauf">Sie kommen aus der Einheit zu Nation und Nationalismus zurück. Beantworten Sie jede Frage im Kopf oder auf einem Zettel. Decken Sie erst danach auf.</p>
-    <div class="abruf" id="abruf"></div>
-  </article>
-
-  <!-- 2 -->
-  <article class="schritt" data-n="2" data-titel="Festlegen">
-    <p class="meta">Schritt 2 · 10 Minuten · allein, dann Positionslinie im Raum</p>
-    <h2>Ein Satz aus Ihrer ersten Stunde</h2>
-    <p class="lauf">»Demokratie bedeutet für mich …« – so haben Sie im September geantwortet (ohne Namen):</p>
-    <p class="wolke">Mitbestimmung · <strong>ein Volk zu sein</strong> · Dazugehörigkeit · Schutz · Freiheit · Meinungsfreiheit · Menschenrechte · Gleichwertigkeit</p>
-    <div class="dreisatz">
-      <figure><blockquote>»Alle Staatsgewalt geht vom Volke aus.«</blockquote><figcaption>Grundgesetz, Artikel 20 Absatz 2</figcaption></figure>
-      <figure><blockquote>»Wir sind das Volk!«</blockquote><figcaption>Demonstrierende in Leipzig, Herbst 1989</figcaption></figure>
-      <figure><blockquote>»Wir allein sind das Volk!«</blockquote><figcaption>Anspruch von Populisten, wie ihn Jan-Werner Müller beschreibt – kein Zitat einer Person</figcaption></figure>
+  <article class="schritt" data-n="1" data-titel="Die Szene">
+    <p class="meta">Schritt 1 · 10 Minuten · allein, dann Positionslinie im Raum</p>
+    <h2>Drei Kinder am Fenster</h2>
+    <div class="falltext">
+      <p class="etikett">Szene aus der Forschung · nach dem Impulsvortrag erzählt · Fundstelle noch zu prüfen</p>
+      <p class="falltext__text">Max, Oguz und Greta sehen vom Fenster einer alten Windmühle auf ihren Ort. Max zeigt hinunter: »Guck mal, da ist das Rathaus. Da wohnt der Bürgermeister.«</p>
+      <p class="falltext__text">Oguz fragt: »Was ist noch mal ein Bürgermeister?« Max antwortet: »Der ist doch der Vorsitzende von der ganzen Stadt. So wie Lukas und Jil im Kinderparlament.«</p>
     </div>
-    <p class="leitfrage">Ist das dreimal dasselbe Volk?</p>
+    <p class="lauf">Max erklärt das Rathaus mit dem, was er aus seiner Kita kennt. Der Vortrag, dem dieses Wahlfach folgt, zieht daraus einen Satz. Stimmt er?</p>
     <form class="these" id="these1">
       <p class="auftrag">Legen Sie sich fest, bevor wir darüber sprechen.</p>
-      <p class="these__satz">»Demokratie schützt das Volk.«</p>
+      <p class="these__satz">»Demokratie beginnt nicht im Bundestag. Sie beginnt in der Kita.«</p>
       <div class="g-skala">
         <label for="vor-regler" class="g-sr">Zustimmung von 0 bis 10</label>
         <input type="range" id="vor-regler" min="0" max="10" step="1" value="5">
@@ -94,34 +175,13 @@
         <button type="button" class="g-knopf g-knopf--primaer" data-festlegen disabled>Festlegen</button>
         <span class="g-stempel" hidden>festgelegt</span>
       </div>
-      <p class="hinweis" data-danach hidden>Ihre Position bleibt gespeichert. Jetzt: Stellen Sie sich im Raum auf die Linie von 0 bis 10. Am Ende der Stunde kommen Sie auf diese These zurück.</p>
+      <p class="hinweis" data-danach hidden>Ihre Position bleibt gespeichert. Jetzt: Stellen Sie sich im Raum auf die Linie von 0 bis 10. Am Ende der Stunde kommen Sie auf diesen Satz zurück.</p>
     </form>
   </article>
 
-  <!-- 3 -->
-  <article class="schritt" data-n="3" data-titel="Welches Volk?">
-    <p class="meta">Schritt 3 · 10 Minuten · zu zweit</p>
-    <h2>Welches Volk ist gemeint?</h2>
-    <div class="zwei">
-      <div class="karte"><h3><i>demos</i></h3><p>Das Volk der Bürgerinnen und Bürger: alle Staatsangehörigen mit gleichen Rechten. Man kann dazukommen, zum Beispiel durch Einbürgerung.</p></div>
-      <div class="karte"><h3><i>ethnos</i></h3><p>Das Volk der Abstammung: Dazu gehört, wer »hineingeboren« ist. Zugehörigkeit gilt als angeboren.</p></div>
-    </div>
-    <p class="auftrag">Welches Volk steckt in jedem Satz? Begründen Sie Ihre Wahl Ihrer Partnerin oder Ihrem Partner in einem Satz. Die Rückmeldung kommt, wenn alle vier Sätze gewählt sind.</p>
-    <div id="volk" class="volk"></div>
-    <div class="g-reihe">
-      <button type="button" class="g-knopf g-knopf--primaer" id="volk-pruefen" disabled>Rückmeldung zeigen</button>
-      <p class="meta" id="volk-stand" aria-live="polite">Noch 4 Sätze offen.</p>
-    </div>
-    <div class="sicherung" id="volk-merk" hidden>
-      <p class="sicherung__kopf">Das halten wir fest</p>
-      <p>Das Grundgesetz meint mit »Volk« den <i>demos</i>. Die Grundrechte reichen noch weiter: Die Würde gilt <strong>jedem Menschen</strong> (Artikel 1 Absatz 1). Niemand darf wegen seiner Abstammung, Heimat, Herkunft, Sprache oder seines Glaubens benachteiligt werden (Artikel 3 Absatz 3).</p>
-      <p><strong>Merksatz aus der Einheit:</strong> Die entscheidende Grenze verläuft dort, wo Menschen gleiche Würde und gleiche Rechte abgesprochen werden.</p>
-    </div>
-  </article>
-
-  <!-- 4 -->
-  <article class="schritt" data-n="4" data-titel="Lesen">
-    <p class="meta">Schritt 4 · 15 Minuten · allein · den Text gibt es auch auf Papier</p>
+  <!-- 2 -->
+  <article class="schritt" data-n="2" data-titel="Lesen">
+    <p class="meta">Schritt 2 · 20 Minuten · allein · den Text gibt es auch auf Papier</p>
     <h2>Was ist überhaupt Demokratie?</h2>
     <p class="auftrag">Lesen Sie den Text. Tippen Sie dann auf zwei oder drei Sätze, die zeigen: <strong>Demokratie ist mehr als die Mehrheit.</strong> Schreiben Sie in einem Satz auf, warum Sie diese Stellen gewählt haben.</p>
     <div class="lesetext" id="lesetext" aria-label="Lesetext mit antippbaren Sätzen"></div>
@@ -153,14 +213,14 @@
           <article class="form form--g"><p class="form__marke">Gesellschaftsform</p><p class="form__frage">Wie leben verschiedene Menschen und Gruppen zusammen?</p><p>Vielfalt, freie Medien und Öffentlichkeit, Vereine und Verbände, friedlicher Streit, Schutz vor Ausgrenzung.</p><details><summary>In der Kita</summary><p>Hier begegnen sich verschiedene Familienformen, Sprachen, Religionen und Lebenslagen. Erleben Kinder das als normal?</p></details></article>
           <article class="form form--l"><p class="form__marke">Lebensform</p><p class="form__frage">Wie gehen Menschen im Alltag miteinander um?</p><p>Zuhören, Würde achten, fair streiten, Kompromisse aushandeln, andere beteiligen, Ungerechtigkeit widersprechen.</p><details><summary>In der Kita</summary><p>Wird mir zugehört? Darf ich Nein sagen? Wird meine Beschwerde ernst genommen? Kinder erleben Demokratie im Morgenkreis, beim Essen, beim Wickeln, im Streit.</p></details></article>
         </div>
-        <p class="meta">Nach Gerhard Himmelmann: Demokratie Lernen als Lebens-, Gesellschafts- und Herrschaftsform. Kita-Beispiele nach Ihrem Arbeitsblatt 2.</p>
+        <p class="meta">Nach Gerhard Himmelmann (2004). Kita-Beispiele nach Hansen und Knauer (2015), wie im Impulsvortrag wiedergegeben – Fundstellen noch zu prüfen.</p>
       </div>
     </div>
   </article>
 
-  <!-- 5 -->
-  <article class="schritt" data-n="5" data-titel="Legen">
-    <p class="meta">Schritt 5 · 15 Minuten · zu zweit an einem Gerät</p>
+  <!-- 3 -->
+  <article class="schritt" data-n="3" data-titel="Legen">
+    <p class="meta">Schritt 3 · 20 Minuten · zu zweit an einem Gerät</p>
     <h2>Das Begriffsnetz legen</h2>
     <p class="auftrag">Tippen Sie eine Karte an und dann das Feld, in das sie gehört. Felder zwischen zwei Formen bedeuten: gehört zu beiden. Sprechen Sie über jede Karte. Ab fünf Karten können Sie einen Zwischenstand ansehen.</p>
     <div class="lege" id="lege">
@@ -215,9 +275,9 @@
     </div>
   </article>
 
-  <!-- 6 -->
-  <article class="schritt" data-n="6" data-titel="Kita-Fall">
-    <p class="meta">Schritt 6 · 20 Minuten · in Gruppen · jede Gruppe eine Karte</p>
+  <!-- 4 -->
+  <article class="schritt" data-n="4" data-titel="Kita-Fall">
+    <p class="meta">Schritt 4 · 25 Minuten · in Gruppen · jede Gruppe eine Karte</p>
     <h2>Trägt die Situation?</h2>
     <p class="lauf">Demokratie steht auf drei Beinen. Ist eines zu kurz, gerät alles ins Wanken – auch in der Kita. Prüfen Sie das an einem Fall.</p>
     <p class="auftrag">Wählen Sie die Karte Ihrer Gruppe. Vermuten Sie zuerst, welches Bein zu kurz ist. Prüfen Sie dann mit den sechs Fragen – und bauen Sie die Situation um. Sie stellen Ihre Karte in höchstens 90 Sekunden vor.</p>
@@ -225,13 +285,13 @@
     <div id="fall"></div>
   </article>
 
-  <!-- 7 -->
-  <article class="schritt" data-n="7" data-titel="Ihr Satz">
-    <p class="meta">Schritt 7 · 15 Minuten · allein, dann Plenum</p>
+  <!-- 5 -->
+  <article class="schritt" data-n="5" data-titel="Ihr Satz">
+    <p class="meta">Schritt 5 · 15 Minuten · allein, dann Plenum</p>
     <h2>Ihr Satz – und Ihre Position jetzt</h2>
-    <p class="auftrag">Schreiben Sie den Satz aus der ersten Stunde um – so, dass er für <strong>jedes Kind in der Kita</strong> stimmt. Begründen Sie ihn mit einer der drei Formen.</p>
-    <label class="feld">Demokratie schützt …
-      <textarea rows="4" id="produkt" data-text="produkt" placeholder="Demokratie schützt …, weil … In der Kita heißt das: …"></textarea>
+    <p class="auftrag">Schreiben Sie Ihren eigenen Satz – so, dass er für <strong>jedes Kind in der Kita</strong> stimmt. Begründen Sie ihn mit einer der drei Formen.</p>
+    <label class="feld">Demokratie beginnt in der Kita, wenn …
+      <textarea rows="4" id="produkt" data-text="produkt" placeholder="Demokratie beginnt in der Kita, wenn …, weil … Das ist Demokratie als …"></textarea>
     </label>
     <div class="g-reihe">
       <button type="button" class="g-knopf g-knopf--primaer" id="produkt-vergleich" disabled>Mit den Kriterien vergleichen</button>
@@ -240,16 +300,16 @@
     <div class="erklaerung raster" id="raster" hidden>
       <p class="erklaerung__kopf">Vergleichen Sie Ihren Satz mit diesen Kriterien</p>
       <table>
-        <tr><th scope="row">Grundlegend</th><td>Der Satz sagt, wen Demokratie schützt – und meint nicht nur die Mehrheit.</td></tr>
-        <tr><th scope="row">Sicher</th><td>Der Satz unterscheidet <i>demos</i> und <i>ethnos</i> oder nennt die gleiche Würde jedes Menschen.</td></tr>
-        <tr><th scope="row">Souverän</th><td>Der Satz gilt für Kinder in der Kita und ist mit einer der drei Formen begründet.</td></tr>
+        <tr><th scope="row">Grundlegend</th><td>Der Satz nennt etwas, das Kinder im Kita-Alltag wirklich erleben können.</td></tr>
+        <tr><th scope="row">Sicher</th><td>Der Satz meint jedes Kind – nicht nur die Mehrheit oder die Lauten.</td></tr>
+        <tr><th scope="row">Souverän</th><td>Der Satz ist mit einer der drei Formen begründet und nennt, was Erwachsene dafür tun müssen.</td></tr>
       </table>
       <p>Überarbeiten Sie Ihren Satz, wenn etwas fehlt. Zwei oder drei Sätze werden im Plenum vorgelesen.</p>
     </div>
 
     <form class="these" id="these2">
-      <p class="auftrag">Zurück zur These vom Anfang.</p>
-      <p class="these__satz">»Demokratie schützt das Volk.«</p>
+      <p class="auftrag">Zurück zum Satz vom Anfang.</p>
+      <p class="these__satz">»Demokratie beginnt nicht im Bundestag. Sie beginnt in der Kita.«</p>
       <div class="g-skala">
         <label for="nach-regler" class="g-sr">Zustimmung jetzt von 0 bis 10</label>
         <input type="range" id="nach-regler" min="0" max="10" step="1" value="5">
@@ -271,13 +331,13 @@
       <div class="freigabe__inhalt">
         <div class="merkseite">
           <h3 class="zwischen">Zusammenfassung zum Mitnehmen</h3>
-          <p class="merk__kern">Demokratie schützt nicht ein Abstammungsvolk und nicht nur die Mehrheit. Sie schützt die gleiche Würde und die gleichen Rechte jedes Menschen – in der Kita die jedes Kindes.</p>
+          <p class="merk__kern">Demokratie ist mehr als Wählen und mehr als Mehrheit. Sie schützt die gleiche Würde und die gleichen Rechte jedes Menschen – in der Kita die jedes Kindes. Kinder lernen sie, indem sie sie erleben.</p>
           <div class="tabelle-rahmen">
           <table class="merk__tab">
             <thead><tr><td></td><th scope="col">Herrschaftsform</th><th scope="col">Gesellschaftsform</th><th scope="col">Lebensform</th></tr></thead>
             <tbody>
               <tr><th scope="row">Leitfrage</th><td>Wie wird Macht begründet, kontrolliert, begrenzt?</td><td>Wie leben Verschiedene zusammen?</td><td>Wie gehen wir im Alltag miteinander um?</td></tr>
-              <tr><th scope="row">Welches »Volk«?</th><td>Das Staatsvolk wählt. Minderheiten haben Rechte, die keine Mehrheit abschaffen kann.</td><td>Vielfalt ist normal: viele Familien, Sprachen, Religionen.</td><td>Jeder Mensch zählt – egal, woher er kommt.</td></tr>
+              <tr><th scope="row">Kinder erleben sie, wenn …</th><td>sie abstimmen – und wenn auch die zählen, die überstimmt wurden.</td><td>verschiedene Familien, Sprachen und Fähigkeiten normal sind.</td><td>ihnen zugehört wird – auch ihrem Nein.</td></tr>
               <tr><th scope="row">In der Kita</th><td>Kinderkonferenz, Gruppenrat, Beschwerdeweg</td><td>Familienwand, Mehrsprachigkeit</td><td>Morgenkreis, Essen, Wickeln, Konflikt</td></tr>
             </tbody>
           </table>
@@ -299,11 +359,11 @@
 
     <div class="schluss">
       <div class="g-reihe">
-        <button type="button" class="g-knopf g-knopf--sekundaer" id="drucken">Meine Ergebnisse drucken oder als PDF sichern</button>
+        <button type="button" class="g-knopf g-knopf--sekundaer" data-drucken>Meine Ergebnisse drucken oder als PDF sichern</button>
         <button type="button" class="g-knopf g-knopf--still" id="loeschen">Eingaben löschen</button>
       </div>
       <div class="hinweis" id="loesch-frage" hidden>
-        <p><strong>Wirklich alles löschen?</strong> Ihre Positionen, das Legebild und alle Texte auf diesem Gerät werden entfernt.</p>
+        <p><strong>Wirklich alles löschen?</strong> Ihre Positionen, das Legebild, Ihre Wahl in den Etappen und in der Ausstellung und alle Texte auf diesem Gerät werden entfernt.</p>
         <div class="g-reihe"><button type="button" class="g-knopf g-knopf--primaer" id="loesch-ja">Ja, alles löschen</button><button type="button" class="g-knopf g-knopf--still" id="loesch-nein">Nein, behalten</button></div>
       </div>
       <p class="ende">Fertig? Dann drehen Sie Ihr Tablet um.</p>
@@ -320,20 +380,21 @@
 </main>
 
 <footer class="fuss">
-  <p><strong>Ihre Eingaben bleiben auf diesem Gerät.</strong> Auswahl und Legebild speichert der Browser, damit nach dem Neuladen nichts fehlt. Texte bleiben nur, bis Sie den Tab schließen – sichern Sie sie vorher als PDF. Nichts wird übertragen.</p>
-  <p>Entwurf, noch nicht im Unterricht erprobt. Die Kita-Fälle sind ausgedacht. Das Dreibein ist ein Modell – es misst nichts.</p>
+  <p><strong>Ihre Eingaben bleiben auf diesem Gerät.</strong> Auswahl und Legebild speichert der Browser, damit nach dem Neuladen nichts fehlt. Texte bleiben nur, bis Sie den Tab schließen – sichern Sie sie vorher als PDF. Nichts wird übertragen. »Eingaben löschen« steht im letzten Schritt der Lernseite.</p>
+  <p>Entwurf, noch nicht im Unterricht erprobt. Ausgedachte Szenen sind als ausgedacht gekennzeichnet. Das Dreibein ist ein Modell – es misst nichts.</p>
   <details><summary>Für die Lehrkraft · offen, nicht geschützt</summary>
     <ul>
-      <li><a href="#heute-alle">Alle Schritte öffnen</a> – für das Smartboard, damit Sie frei vor- und zurückgehen können.</li>
-      <li>Zwischen Schritt 2 und 3: Positionslinie im Raum, zwei bis drei Begründungen anhören.</li>
-      <li>Schritt 4: Der Lesetext liegt zusätzlich als Kopie bereit (Arbeitsblatt 1).</li>
-      <li>Nach Schritt 6: Demokratie-Ampel (Auftrag 3) gemeinsam per Handzeichen, ohne Gerät.</li>
-      <li>Die Zuordnung der acht Etappen zu den vier Blickrichtungen ist ein Vorschlag.</li>
+      <li><a href="#heute-alle">Alle Schritte der Lernseite öffnen</a> – für das Smartboard, damit Sie frei vor- und zurückgehen können.</li>
+      <li>Lernseite, nach Schritt 1: Positionslinie im Raum, zwei bis drei Begründungen anhören.</li>
+      <li>Lernseite, Schritt 2: Der Lesetext liegt zusätzlich als Kopie bereit (Arbeitsblatt 1).</li>
+      <li>Ausstellung: Die Lernenden öffnen mindestens drei Plakate; im Rundgang stellt jedes Paar ein Plakat vor.</li>
+      <li>Der Zuschnitt der acht Etappen, die Rückmeldetexte und die Zuordnung zu den Prüfsteinen sind Vorschläge.</li>
     </ul>
   </details>
 </footer>
 
 <script>/*DATEN*/</script>
+<script>/*LEITFADEN*/</script>
 <script>/*LOGIK*/</script>
 </body>
 </html>

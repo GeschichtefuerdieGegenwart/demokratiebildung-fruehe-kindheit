@@ -17,10 +17,14 @@
   function sichere(store, key, wert) { try { store.setItem(key, JSON.stringify(wert)); } catch (e) { /* privat oder voll: Seite läuft weiter */ } }
   var S = lade(window.localStorage, KEY, {});
   var T = lade(window.sessionStorage, TKEY, {});
-  ["abruf", "volk", "lage", "fallWahl", "fallZu"].forEach(function (k) { S[k] = S[k] || {}; });
-  ["abrufOffen", "lese", "links"].forEach(function (k) { S[k] = S[k] || []; });
+  ["lage", "fallWahl", "fallZu", "wahl", "wahlFest", "alltag"].forEach(function (k) { S[k] = S[k] || {}; });
+  ["lese", "links"].forEach(function (k) { S[k] = S[k] || []; });
   function merke() { sichere(window.localStorage, KEY, S); }
-  function merkeText() { sichere(window.sessionStorage, TKEY, T); }
+  function merkeText() {
+    Object.keys(T).forEach(function (k) { if (!T[k]) delete T[k]; });
+    if (Object.keys(T).length) sichere(window.sessionStorage, TKEY, T);
+    else { try { window.sessionStorage.removeItem(TKEY); } catch (e) { /* nichts gespeichert */ } }
+  }
   function woerter(s) { return (s.trim().match(/\S+/g) || []).length; }
 
   /* Textfelder mit data-text bleiben bis zum Schließen des Tabs */
@@ -31,34 +35,7 @@
     });
   }
 
-  /* ---------- 1 Erst erinnern ---------- */
-  (function () {
-    var box = $("#abruf");
-    D.abruf.forEach(function (a) {
-      var karte = el("div", { "class": "abruf__karte" });
-      karte.appendChild(el("p", { "class": "abruf__frage" }, a.frage));
-      var knopf = el("button", { type: "button", "class": "g-knopf g-knopf--sekundaer" }, "Ich habe geantwortet – aufdecken");
-      var antwort = el("div", { "class": "abruf__antwort", hidden: "" });
-      antwort.appendChild(el("p", {}, a.antwort));
-      var chips = el("div", { "class": "chips", role: "group", "aria-label": "Wie gut wussten Sie es?" });
-      ["wusste ich", "teilweise", "noch nicht"].forEach(function (w, i) {
-        var c = el("button", { type: "button", "class": "chip", "aria-pressed": S.abruf[a.id] === i ? "true" : "false" }, w);
-        c.addEventListener("click", function () {
-          S.abruf[a.id] = i; merke();
-          $$(".chip", chips).forEach(function (x, j) { x.setAttribute("aria-pressed", j === i ? "true" : "false"); });
-          fertig();
-        });
-        chips.appendChild(c);
-      });
-      antwort.appendChild(chips);
-      function oeffne() { antwort.hidden = false; knopf.hidden = true; }
-      knopf.addEventListener("click", function () { oeffne(); if (S.abrufOffen.indexOf(a.id) < 0) S.abrufOffen.push(a.id); merke(); fertig(); });
-      if (S.abrufOffen.indexOf(a.id) >= 0) oeffne();
-      karte.appendChild(knopf); karte.appendChild(antwort); box.appendChild(karte);
-    });
-  })();
-
-  /* ---------- 2 und 7 These mit Skala ---------- */
+  /* ---------- 1 und 5 These mit Skala ---------- */
   function these(form, art) {
     var regler = $("input[type=range]", form), aus = $("output", form), warum = $("textarea", form);
     var knopf = $("[data-festlegen]", form), stempel = $(".g-stempel", form), danach = $("[data-danach]", form);
@@ -86,46 +63,7 @@
     return "Am Anfang: " + S.vor + " von 10. Jetzt: " + S.nach + " von 10. " + wort + " Stellen Sie sich noch einmal auf die Linie im Raum – und sagen Sie, was Ihre Position bewegt hat.";
   }
 
-  /* ---------- 3 Welches Volk? ---------- */
-  (function () {
-    var box = $("#volk"), knopf = $("#volk-pruefen"), stand = $("#volk-stand"), merk = $("#volk-merk");
-    D.volk.saetze.forEach(function (s) {
-      var fs = el("fieldset", { "data-id": s.id });
-      fs.appendChild(el("legend", {}, s.text));
-      var reihe = el("div", { "class": "volk__opt" });
-      D.volk.optionen.forEach(function (o) {
-        var lab = el("label", { "class": "g-option" });
-        var inp = el("input", { type: "radio", name: s.id, value: o[0] });
-        if (S.volk[s.id] === o[0]) inp.checked = true;
-        inp.addEventListener("change", function () { S.volk[s.id] = o[0]; merke(); zaehle(); if (S.volkZu) zeige(); });
-        var sp = el("span"); sp.appendChild(el(o[0] === "weder" ? "b" : "i", {}, o[1]));
-        lab.appendChild(inp); lab.appendChild(sp); reihe.appendChild(lab);
-      });
-      fs.appendChild(reihe);
-      fs.appendChild(el("div", { "class": "rueck", hidden: "", "aria-live": "polite" }));
-      box.appendChild(fs);
-    });
-    function zaehle() {
-      var offen = D.volk.saetze.filter(function (s) { return !S.volk[s.id]; }).length;
-      knopf.disabled = offen > 0;
-      stand.textContent = offen ? "Noch " + offen + (offen === 1 ? " Satz offen." : " Sätze offen.") : (S.volkZu ? "Sie können Ihre Wahl ändern – die Rückmeldung passt sich an." : "Alle vier gewählt.");
-    }
-    function zeige() {
-      D.volk.saetze.forEach(function (s) {
-        var r = $("fieldset[data-id=" + s.id + "] .rueck", box), w = S.volk[s.id];
-        if (!w) return;
-        r.hidden = false; r.textContent = "";
-        r.setAttribute("data-urteil", w === s.richtig ? "zentral" : "kaum");
-        r.appendChild(el("b", {}, w === s.richtig ? "Das trifft es." : "Noch nicht."));
-        r.appendChild(document.createTextNode(s.rueck[w]));
-      });
-      merk.hidden = false; knopf.hidden = true; fertig();
-    }
-    knopf.addEventListener("click", function () { S.volkZu = true; merke(); zeige(); zaehle(); });
-    zaehle(); if (S.volkZu) zeige();
-  })();
-
-  /* ---------- 4 Lesen und markieren ---------- */
+  /* ---------- 2 Lesen und markieren ---------- */
   (function () {
     var box = $("#lesetext"), knopf = $("#lese-vergleich"), stand = $("#lese-stand"), warum = $("#lese-warum"), rueck = $("#lese-rueck");
     D.lesetext.forEach(function (absatz) {
@@ -163,7 +101,7 @@
     window.addEventListener("pageshow", pruefe);
   })();
 
-  /* ---------- 5 Begriffsnetz legen ---------- */
+  /* ---------- 3 Begriffsnetz legen ---------- */
   var lege = (function () {
     var stapel = $("#stapel"), matte = $("#matte"), ansage = $("#lege-ansage"), zahl = $("#stapel-zahl");
     var zw = $("#zwischenstand"), zurueck = $("#zuruecklegen"), verbinden = $("#verbinden"), rueck = $("#lege-rueck");
@@ -444,7 +382,7 @@
     return { zeige: zeige };
   }
 
-  /* ---------- 6 Kita-Fall: vermuten, prüfen, umbauen ---------- */
+  /* ---------- 4 Kita-Fall: vermuten, prüfen, umbauen ---------- */
   (function () {
     var wahl = $("#fallwahl"), box = $("#fall");
     D.faelle.forEach(function (f) {
@@ -591,25 +529,16 @@
     }
     function zeigePanel(e, i, bewegt) {
       panel.textContent = "";
-      panel.appendChild(el("p", { "class": "kicker" }, "Etappe " + (i + 1) + " von 8 · Blickrichtung: " + D.blick[Math.floor(i / 2)] + (i === D.hier ? " · wir sind hier" : (i < D.hier ? " · geschafft" : ""))));
+      panel.appendChild(el("p", { "class": "kicker" }, "Etappe " + (i + 1) + " von 8 · " + D.blick[Math.floor(i / 2)] + (i === D.hier ? " · wir sind hier" : (i < D.hier ? " · geschafft" : ""))));
       panel.appendChild(el("h2", {}, e.titel));
       panel.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.frage));
       var dl = el("dl");
+      dl.appendChild(el("dt", {}, "Die Szene")); dl.appendChild(el("dd", {}, e.szene.titel));
       dl.appendChild(el("dt", {}, "Das nehmen Sie mit")); dl.appendChild(el("dd", {}, e.mit));
-      dl.appendChild(el("dt", {}, "In der Kita")); dl.appendChild(el("dd", {}, e.kita));
+      dl.appendChild(el("dt", {}, "Im Vortrag")); dl.appendChild(el("dd", {}, e.vortrag));
       panel.appendChild(dl);
-      if (e.weg) {
-        var ol = el("ol", { "class": "weg" });
-        e.weg.forEach(function (w) {
-          var li = el("li", { "data-stand": w[0] });
-          li.appendChild(el("span", { "class": "weg__marke" }, w[0] === "fertig" ? "✓" : (w[0] === "heute" ? "→" : "")));
-          li.appendChild(el("span", {}, w[1]));
-          if (w[0] === "heute") li.appendChild(el("span", { "class": "weg__heute" }, "heute"));
-          ol.appendChild(li);
-        });
-        panel.appendChild(ol);
-      }
-      if (bewegt && !RUHIG && panel.animate) panel.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 260, easing: "cubic-bezier(.2,.8,.2,1)" });
+      panel.appendChild(el("a", { "class": "knopf", href: "#etappe-" + (i + 1) }, "Etappe " + (i + 1) + " öffnen →"));
+      if (bewegt && !RUHIG && panel.animate) panel.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 220, easing: "cubic-bezier(.23,1,.32,1)" });
     }
     $("#rad-heute").addEventListener("click", function () { waehle(D.hier, true); });
     waehle(D.hier, false);
@@ -620,9 +549,7 @@
   var schritte = $$(".schritt"), leiste = $("#schritte"), alle = false;
   try { alle = window.sessionStorage.getItem(KEY + ":alle") === "1"; } catch (e) { alle = false; }
   var FEHLT = [
-    "Decken Sie alle drei Antworten auf.",
     "Legen Sie Ihre Position fest.",
-    "Wählen Sie alle vier Sätze und lassen Sie sich die Rückmeldung zeigen.",
     "Markieren, begründen, vergleichen – dann geht es weiter.",
     "Sehen Sie den Zwischenstand an und legen Sie zwei Verbindungen.",
     "Vermuten, prüfen und vergleichen Sie Ihre Karte.",
@@ -636,8 +563,7 @@
   });
   function stand() {
     return [
-      D.abruf.every(function (a) { return S.abrufOffen.indexOf(a.id) >= 0; }),
-      typeof S.vor === "number", !!S.volkZu, !!S.leseZu,
+      typeof S.vor === "number", !!S.leseZu,
       !!S.geprueft && S.links.length >= 2,
       Object.keys(S.fallGeprueft).length > 0,
       !!S.produktZu && typeof S.nach === "number"
@@ -655,36 +581,237 @@
     });
     var w = $("#weiter"), h = $("#weiter-hinweis");
     w.hidden = akt >= schritte.length; $("#zurueck").hidden = false;
-    $("#zurueck").textContent = akt === 1 ? "← Zum Jahreskompass" : "← Zurück";
+    $("#zurueck").textContent = akt === 1 ? "← Zur Etappe 1" : "← Zurück";
     w.disabled = !(alle || f[akt - 1]);
     h.textContent = w.hidden ? "" : (w.disabled ? FEHLT[akt - 1] : "");
     var erster = 0; while (erster < f.length && f[erster]) erster++;
-    $("#heute-knopf").textContent = erster === 0 && !S.schritt ? "Stunde beginnen →" : (erster >= f.length ? "Ergebnisse ansehen →" : "Weitermachen bei Schritt " + Math.min(erster + 1, 7) + " →");
+    $("#heute-knopf").textContent = erster === 0 && !S.schritt ? "Lernseite beginnen →" : (erster >= f.length ? "Ergebnisse ansehen →" : "Weitermachen bei Schritt " + Math.min(erster + 1, f.length) + " →");
   }
   function gehe(n, still) {
     n = Math.max(1, Math.min(schritte.length, n)); S.schritt = n; merke();
     schritte.forEach(function (s, i) { s.hidden = i + 1 !== n; });
     fertig();
-    if (n === 5) lege.zeichne();
+    if (n === 3) lege.zeichne();
     if (!still) { window.scrollTo(0, 0); var h = $("h2", schritte[n - 1]); h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
     var s = schritte[n - 1];
     if (!still && !RUHIG && s.animate) s.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 280, easing: "cubic-bezier(.2,.8,.2,1)" });
   }
   $("#weiter").addEventListener("click", function () { gehe((S.schritt || 1) + 1); });
-  $("#zurueck").addEventListener("click", function () { if ((S.schritt || 1) === 1) window.location.hash = "#start"; else gehe(S.schritt - 1); });
+  $("#zurueck").addEventListener("click", function () { if ((S.schritt || 1) === 1) window.location.hash = "#etappe-1"; else gehe(S.schritt - 1); });
 
   function ansicht() {
     var h = window.location.hash.replace("#", "");
     if (h === "heute-alle") { alle = true; try { window.sessionStorage.setItem(KEY + ":alle", "1"); } catch (e) { /* ohne Speicher gilt es bis zum Neuladen */ } h = "heute"; }
-    var heute = h === "heute";
-    $("#v-start").hidden = heute; $("#v-heute").hidden = !heute;
-    $$("[data-nav]").forEach(function (a) { if ((a.dataset.nav === "heute") === heute) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
-    if (heute) gehe(Math.min(S.schritt || 1, offenBis()), true);
+    var m = /^etappe-([1-8])$/.exec(h), welche = h === "heute" ? "heute" : (h === "ausstellung" ? "ausstellung" : (m ? "etappe" : "start"));
+    ["start", "heute", "ausstellung", "etappe"].forEach(function (v) { $("#v-" + v).hidden = v !== welche; });
+    $$("[data-nav]").forEach(function (a) { if (a.dataset.nav === welche) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (welche === "heute") gehe(Math.min(S.schritt || 1, offenBis()), true);
+    if (welche === "etappe") zeigeModul(+m[1] - 1);
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", ansicht);
 
-  /* ---------- 7 Produkt, Raster, Merkseite ---------- */
+
+  /* ---------- Einfachwahl mit Begründung: erst festlegen, dann Rückmeldung zu jeder Antwort ---------- */
+  function wahl(box, key, frage, optionen, danach) {
+    var fs = el("fieldset", { "class": "volkfs" });
+    fs.appendChild(el("legend", {}, frage));
+    var reihe = el("div", { "class": "wahl__opt" }), fest = !!S.wahlFest[key];
+    optionen.forEach(function (o, i) {
+      var lab = el("label", { "class": "g-option" }), inp = el("input", { type: "radio", name: "wahl-" + key, value: i });
+      if (S.wahl[key] === i) inp.checked = true;
+      inp.addEventListener("change", function () {
+        if (S.wahlFest[key]) { $$("input", reihe).forEach(function (x, j) { x.checked = j === S.wahl[key]; }); return; }
+        S.wahl[key] = i; merke(); pruefe();
+      });
+      lab.appendChild(inp); lab.appendChild(el("span", {}, o[0])); reihe.appendChild(lab);
+    });
+    fs.appendChild(reihe); box.appendChild(fs);
+    var lab1 = el("label", { "class": "feld" }, "Ein Satz, warum:");
+    var warum = el("textarea", { rows: "2", "data-text": "wahl-warum-" + key, placeholder: "Ich wähle das, weil …" }); lab1.appendChild(warum); box.appendChild(lab1);
+    var r = el("div", { "class": "g-reihe" }), knopf = el("button", { type: "button", "class": "g-knopf g-knopf--primaer", disabled: "" }, "Festlegen");
+    var stempel = el("span", { "class": "g-stempel", hidden: "" }, "festgelegt"); r.appendChild(knopf); r.appendChild(stempel); box.appendChild(r);
+    var rueck = el("div", { "class": "wahl__rueck", hidden: "", "aria-live": "polite" }); box.appendChild(rueck);
+    bindeTexte(box);
+    function pruefe() { knopf.disabled = !(typeof S.wahl[key] === "number" && warum.value.trim().length >= 12); }
+    function zeige(neu) {
+      knopf.hidden = true; stempel.hidden = false; if (neu) stempel.classList.add("neu"); warum.readOnly = true;
+      rueck.hidden = false; rueck.textContent = "";
+      var o = optionen[S.wahl[key]], eigen = el("div", { "class": "rueck", "data-urteil": o[1] });
+      eigen.appendChild(el("b", {}, "Ihre Wahl: " + D.urteilWort[o[1]])); eigen.appendChild(document.createTextNode(o[2])); rueck.appendChild(eigen);
+      var det = el("details", { "class": "woerter" }); det.appendChild(el("summary", {}, "Und die anderen Antworten?"));
+      var ul = el("ul");
+      optionen.forEach(function (x, j) { if (j === S.wahl[key]) return; var li = el("li"); li.appendChild(el("b", {}, x[0] + " – " + D.urteilWort[x[1]] + " ")); li.appendChild(document.createTextNode(x[2])); ul.appendChild(li); });
+      det.appendChild(ul); rueck.appendChild(det);
+      if (danach) danach(neu);
+    }
+    warum.addEventListener("input", pruefe);
+    knopf.addEventListener("click", function () { S.wahlFest[key] = true; merke(); zeige(true); });
+    pruefe(); if (fest) zeige(false);
+  }
+
+  /* ---------- Etappe: Szene, Festlegung, Kern, Begriffe, Stationen ---------- */
+  function zeigeModul(i) {
+    var e = D.etappen[i], box = $("#modul"); box.textContent = "";
+    var kopf = el("div", { "class": "held" });
+    kopf.appendChild(el("p", { "class": "kicker" }, "Etappe " + (i + 1) + " von 8 · " + D.blick[Math.floor(i / 2)] + " · " + e.vortrag));
+    kopf.appendChild(el("h1", { id: "mod-titel" }, e.titel));
+    kopf.appendChild(el("p", { "class": "leitfrage" }, e.frage));
+    box.appendChild(kopf);
+
+    var karte = el("div", { "class": "schritt" });
+    var sz = el("div", { "class": "falltext" });
+    sz.appendChild(el("p", { "class": "etikett" }, e.szene.status));
+    sz.appendChild(el("h2", {}, e.szene.titel));
+    e.szene.text.forEach(function (a) { sz.appendChild(el("p", { "class": "falltext__text" }, a)); });
+    karte.appendChild(sz);
+    karte.appendChild(el("p", { "class": "auftrag" }, "Lesen Sie die Szene. Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie, was dahintersteckt."));
+    var w = el("div", { "class": "teil" }); karte.appendChild(w);
+    var frei = el("div", { "class": "freigabe", "data-zu": "" });
+    frei.appendChild(el("p", { "class": "freigabe__sperre meta" }, "Kern, Begriffe und Ihr Auftrag für die Kita öffnen sich nach Ihrer Festlegung."));
+    var fi = el("div", { "class": "freigabe__inhalt" });
+    var sich = el("div", { "class": "sicherung" });
+    sich.appendChild(el("p", { "class": "sicherung__kopf" }, "Das steckt dahinter")); sich.appendChild(el("p", {}, e.kern)); fi.appendChild(sich);
+    fi.appendChild(el("h3", { "class": "zwischen" }, "Begriffe dieser Etappe"));
+    var dl = el("dl", { "class": "begriffe" });
+    e.begriffe.forEach(function (b) { var d = el("div"); d.appendChild(el("dt", {}, b[0])); d.appendChild(el("dd", {}, b[1])); dl.appendChild(d); });
+    fi.appendChild(dl);
+    var kita = el("div", { "class": "praxis" });
+    kita.appendChild(el("h3", { "class": "zwischen" }, "In Ihrer Kita"));
+    kita.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.kita));
+    kita.appendChild(el("p", { "class": "meta" }, "Freiwillig und ohne Namen. Ihre Notiz bleibt auf diesem Gerät, bis Sie den Tab schließen."));
+    var lab = el("label", { "class": "feld" }, "Das habe ich beobachtet:");
+    lab.appendChild(el("textarea", { rows: "2", "data-text": "kita-" + i, placeholder: "In meiner Einrichtung …" })); kita.appendChild(lab);
+    fi.appendChild(kita);
+    frei.appendChild(fi); karte.appendChild(frei);
+    box.appendChild(karte);
+    wahl(w, "e" + i, e.wahl.frage, e.wahl.optionen, function () { frei.removeAttribute("data-zu"); });
+    bindeTexte(kita);
+
+    var st = el("div", { "class": "stationen" });
+    st.appendChild(el("h2", {}, "Stationen dieser Etappe"));
+    st.appendChild(el("p", { "class": "lauf" }, "Am Ende nehmen Sie mit: " + e.mit + "."));
+    var ol = el("ol", { "class": "weg" });
+    e.weg.forEach(function (x) {
+      var li = el("li", { "data-stand": x[0] });
+      li.appendChild(el("span", { "class": "weg__marke" }, x[0] === "offen" ? "→" : ""));
+      if (x[2]) li.appendChild(el("a", { href: x[2] }, x[1])); else li.appendChild(el("span", {}, x[1]));
+      li.appendChild(el("span", { "class": x[0] === "offen" ? "weg__heute" : "weg__kommt" }, x[0] === "offen" ? "offen" : "kommt"));
+      ol.appendChild(li);
+    });
+    st.appendChild(ol); box.appendChild(st);
+
+    var nav = el("nav", { "class": "weiter", "aria-label": "Zwischen den Etappen wechseln" });
+    nav.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: i > 0 ? "#etappe-" + i : "#start" }, i > 0 ? "← Etappe " + i : "← Zum Kompass"));
+    nav.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: "#start" }, "Kompass"));
+    nav.appendChild(el("a", { "class": "g-knopf g-knopf--sekundaer", href: i < 7 ? "#etappe-" + (i + 2) : "#start" }, i < 7 ? "Etappe " + (i + 2) + " →" : "Zum Kompass →"));
+    box.appendChild(nav);
+  }
+
+  /* ---------- Ausstellung: Plakat, Szene, Prüfstein, Alltagskarten, eigenes Plakat ---------- */
+  (function () {
+    var wand = $("#plakate"), box = $("#station"), standP = $("#plakat-stand"), knoepfe = {};
+    function festZahl() { return D.stationen.filter(function (s) { return S.wahlFest[s.id]; }).length; }
+    function stand() {
+      var n = festZahl();
+      D.stationen.forEach(function (s) { if (S.wahlFest[s.id]) knoepfe[s.id].setAttribute("data-stand", "fertig"); });
+      standP.textContent = n === 0 ? "Tippen Sie ein Plakat an." : n + " von " + D.stationen.length + " Plakaten festgelegt." + (n < 3 ? " Noch " + (3 - n) + " bis zu Ihrem eigenen Plakat." : "");
+      if (n >= 3) $("#plakat-box").removeAttribute("data-zu");
+    }
+    D.stationen.forEach(function (s, i) {
+      var b = el("button", { type: "button", "class": "plakat plakat--" + s.farbe, "aria-pressed": "false" });
+      b.appendChild(el("span", { "class": "plakat__nr" }, String(i + 1)));
+      b.appendChild(el("span", { "class": "plakat__satz" }, s.satz));
+      b.appendChild(el("span", { "class": "plakat__ok" }, "festgelegt"));
+      b.addEventListener("click", function () { S.station = s.id; merke(); zeige(s, i, true); });
+      knoepfe[s.id] = b; wand.appendChild(b);
+    });
+    function zeige(s, i, bewegt) {
+      D.stationen.forEach(function (x) { knoepfe[x.id].setAttribute("aria-pressed", x.id === s.id ? "true" : "false"); });
+      box.textContent = "";
+      var k = el("div", { "class": "schritt station__karte plakat--" + s.farbe });
+      k.appendChild(el("p", { "class": "meta" }, "Plakat " + (i + 1) + " von " + D.stationen.length));
+      k.appendChild(el("h2", { "class": "station__satz", tabindex: "-1" }, s.satz));
+      var q = el("details", { "class": "woerter" }); q.appendChild(el("summary", {}, "Woher kommt dieses Recht?"));
+      q.appendChild(el("p", {}, s.quelle)); q.appendChild(el("p", { "class": "meta" }, "Status: " + s.status)); k.appendChild(q);
+      var sz = el("div", { "class": "falltext" });
+      sz.appendChild(el("p", { "class": "etikett" }, "ausgedachte Szene"));
+      sz.appendChild(el("p", { "class": "falltext__text" }, s.szene)); k.appendChild(sz);
+      var w = el("div", { "class": "teil" }); k.appendChild(w);
+      var frei = el("div", { "class": "freigabe", "data-zu": "" });
+      frei.appendChild(el("p", { "class": "freigabe__sperre meta" }, "Was das Recht im Kita-Alltag heißt, öffnet sich nach Ihrer Festlegung."));
+      var fi = el("div", { "class": "freigabe__inhalt" });
+      fi.appendChild(el("h3", { "class": "zwischen" }, "In der Kita heißt das"));
+      var ul = el("ul", { "class": "kitaliste" }); s.kita.forEach(function (x) { ul.appendChild(el("li", {}, x)); }); fi.appendChild(ul);
+      var lab = el("label", { "class": "feld" }, "So würde ich die Szene verändern:");
+      lab.appendChild(el("textarea", { rows: "2", "data-text": "station-" + s.id, placeholder: "Die Fachkraft könnte …" })); fi.appendChild(lab);
+      frei.appendChild(fi); k.appendChild(frei);
+      box.appendChild(k);
+      wahl(w, s.id, "Welcher Prüfstein ist hier zuerst berührt?", D.pruefsteine.map(function (p) { return [p[1], s.urteil[p[0]][0], s.urteil[p[0]][1]]; }), function () { frei.removeAttribute("data-zu"); stand(); });
+      bindeTexte(fi);
+      if (bewegt) {
+        k.scrollIntoView({ block: "start", behavior: RUHIG ? "auto" : "smooth" });
+        if (!RUHIG && k.animate) k.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 220, easing: "cubic-bezier(.23,1,.32,1)" });
+      }
+    }
+    if (S.station) D.stationen.forEach(function (s, i) { if (s.id === S.station) zeige(s, i, false); });
+    stand();
+
+    /* Alltagskarten: erst selbst überlegen, dann aufdecken */
+    var aw = $("#alltag-wahl"), ak = $("#alltag-karte");
+    D.alltag.forEach(function (a) {
+      var c = el("button", { type: "button", "class": "chip", "aria-pressed": "false", "data-id": a.id }, a.name);
+      c.addEventListener("click", function () { zeigeAlltag(a); });
+      aw.appendChild(c);
+    });
+    function zeigeAlltag(a) {
+      $$(".chip", aw).forEach(function (c) { c.setAttribute("aria-pressed", c.dataset.id === a.id ? "true" : "false"); });
+      ak.textContent = "";
+      var k = el("div", { "class": "alltagkarte" });
+      k.appendChild(el("p", { "class": "etikett" }, "ausgedachte Situation · " + a.name));
+      k.appendChild(el("p", { "class": "meta" }, "Was oft passiert"));
+      k.appendChild(el("p", { "class": "falltext__text" }, a.oft));
+      var lab = el("label", { "class": "feld" }, "Was braucht das Kind – und was könnten Sie sagen?");
+      var ta = el("textarea", { rows: "2", "data-text": "alltag-" + a.id, placeholder: "Das Kind braucht … Ich könnte sagen: …" }); lab.appendChild(ta); k.appendChild(lab);
+      var knopf = el("button", { type: "button", "class": "g-knopf g-knopf--sekundaer", disabled: "" }, "Ich habe eine Idee – aufdecken");
+      k.appendChild(knopf);
+      var auf = el("dl", { "class": "alltagkarte__auf", hidden: "" });
+      [["Was das Kind braucht", a.braucht], ["So ginge es mit Kinderrechten", a.weg], ["Welches Recht", a.recht]].forEach(function (x) { var d = el("div"); d.appendChild(el("dt", {}, x[0])); d.appendChild(el("dd", {}, x[1])); auf.appendChild(d); });
+      k.appendChild(auf); ak.appendChild(k); bindeTexte(k);
+      function pruefe() { knopf.disabled = ta.value.trim().length < 12; }
+      function oeffne() { auf.hidden = false; knopf.hidden = true; }
+      ta.addEventListener("input", pruefe);
+      knopf.addEventListener("click", function () { S.alltag[a.id] = 1; merke(); oeffne(); });
+      pruefe(); if (S.alltag[a.id]) oeffne();
+    }
+
+    /* Eigenes Plakat */
+    bindeTexte($("#plakat-box"));
+    var pr = $("#plakat-recht"), satz = $("#plakat-satz"), pk = $("#plakat-vergleich"), ph = $("#plakat-hinweis");
+    D.stationen.forEach(function (s, i) {
+      var c = el("button", { type: "button", "class": "chip", "aria-pressed": S.plakat === i ? "true" : "false" }, s.satz);
+      c.addEventListener("click", function () { S.plakat = i; merke(); $$(".chip", pr).forEach(function (x, j) { x.setAttribute("aria-pressed", j === i ? "true" : "false"); }); pruefe(); male(); });
+      pr.appendChild(c);
+    });
+    function pruefe() {
+      var n = woerter(satz.value), ok = typeof S.plakat === "number" && n >= 4;
+      pk.disabled = !ok;
+      ph.textContent = S.plakatZu ? "" : (typeof S.plakat !== "number" ? "Wählen Sie ein Recht." : (n < 4 ? "Schreiben Sie Ihren Satz – mindestens vier Wörter." : ""));
+    }
+    function male() {
+      if (!S.plakatZu || typeof S.plakat !== "number") return;
+      $("#meinplakat").hidden = false; $("#meinplakat").className = "meinplakat plakat--" + D.stationen[S.plakat].farbe;
+      $("#meinplakat-satz").textContent = satz.value.trim() || D.stationen[S.plakat].satz;
+      $("#meinplakat-recht").textContent = "Ihr Plakat zum Recht: " + D.stationen[S.plakat].satz;
+    }
+    function oeffne() { $("#plakat-raster").hidden = false; pk.hidden = true; ph.textContent = ""; male(); }
+    satz.addEventListener("input", function () { pruefe(); male(); });
+    pk.addEventListener("click", function () { S.plakatZu = true; merke(); oeffne(); });
+    window.addEventListener("pageshow", pruefe);
+    pruefe(); if (S.plakatZu) oeffne();
+  })();
+
+  /* ---------- 5 Produkt, Raster, Merkseite ---------- */
   (function () {
     var p = $("#produkt"), knopf = $("#produkt-vergleich"), stand = $("#produkt-stand"), raster = $("#raster"), merk = $("#merk");
     
@@ -707,7 +834,7 @@
   if (S.leseZu) $("#formen").removeAttribute("data-zu");
   ansicht();
 
-  $("#drucken").addEventListener("click", function () { window.print(); });
+  $$("[data-drucken]").forEach(function (b) { b.addEventListener("click", function () { window.print(); }); });
   var frage = $("#loesch-frage");
   $("#loeschen").addEventListener("click", function () { frage.hidden = false; $("#loesch-nein").focus(); });
   $("#loesch-nein").addEventListener("click", function () { frage.hidden = true; $("#loeschen").focus(); });
