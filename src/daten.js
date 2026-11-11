@@ -1,41 +1,6 @@
-/* Inhalte der Lernseite – getrennt von der Logik. Quellen: Arbeitsblätter DS 1, Verlaufsplan DS 3. */
+/* Inhalte der Lernseite »Drei Formen – ein Ganzes« – getrennt von der Logik. Quellen: Arbeitsblätter DS 1, Impulsvortrag. */
 var DATEN = {
-  schluessel: "wpb-demokratie-ds3:v1",
-
-  abruf: [
-    { id: "a1", frage: "Was unterscheidet demos und ethnos?",
-      antwort: "Demos ist das Volk der Bürgerinnen und Bürger mit gleichen Rechten – man kann dazukommen, zum Beispiel durch Einbürgerung. Ethnos ist das Volk der Abstammung – Zugehörigkeit gilt als angeboren." },
-    { id: "a2", frage: "Warum nennt Benedict Anderson die Nation eine »vorgestellte Gemeinschaft«?",
-      antwort: "Weil ihre Mitglieder die meisten anderen nie kennenlernen und sich trotzdem als eine Gemeinschaft vorstellen." },
-    { id: "a3", frage: "Wo verläuft die entscheidende Grenze zwischen Zugehörigkeit und Ausgrenzung?",
-      antwort: "Dort, wo Menschen gleiche Würde und gleiche Rechte abgesprochen werden." }
-  ],
-
-  volk: {
-    optionen: [["demos", "demos"], ["ethnos", "ethnos"], ["weder", "weder noch"]],
-    saetze: [
-      { id: "v1", text: "»Wer eingebürgert wird, gehört zum Volk.«", richtig: "demos",
-        rueck: {
-          demos: "Man kann dazukommen: Das ist das Kennzeichen des demos.",
-          ethnos: "Naheliegend, weil es um Zugehörigkeit geht. Aber zu einem Abstammungsvolk kann man nicht dazukommen – Einbürgerung passt nur zum demos.",
-          weder: "Der Satz sagt, wer zum Volk gehört. Fragen Sie: Kann man hier dazukommen? Dann ist es der demos." } },
-      { id: "v2", text: "»Deutscher ist nur, wer deutsche Vorfahren hat.«", richtig: "ethnos",
-        rueck: {
-          ethnos: "Zugehörigkeit durch Abstammung: Das ist der ethnos. So ein Satz schließt Eingebürgerte aus.",
-          demos: "Naheliegend, weil »Deutscher« nach Staatsangehörigkeit klingt. Der Satz macht aber die Vorfahren zur Bedingung – das ist der ethnos.",
-          weder: "Der Satz sagt sehr wohl, wer dazugehört: nur, wer hineingeboren ist. Das ist der ethnos." } },
-      { id: "v3", text: "»Alle Staatsgewalt geht vom Volke aus.« (Grundgesetz, Artikel 20 Absatz 2)", richtig: "demos",
-        rueck: {
-          demos: "Gemeint ist das Staatsvolk: alle Staatsangehörigen, egal woher ihre Familien kommen.",
-          ethnos: "Das Grundgesetz kennt kein Abstammungsvolk. Gemeint sind alle Staatsangehörigen – der demos.",
-          weder: "Hier ist tatsächlich ein Volk gemeint: das Staatsvolk, das wählt und abstimmt. Das ist der demos." } },
-      { id: "v4", text: "»Die Würde des Menschen ist unantastbar.« (Grundgesetz, Artikel 1 Absatz 1)", richtig: "weder",
-        rueck: {
-          weder: "Hier steht nicht »Volk«, sondern »Mensch«. Die Würde gilt jedem – auch wem kein Wahlrecht zusteht, zum Beispiel Kindern.",
-          demos: "Naheliegend, weil der Satz im Grundgesetz steht. Er spricht aber vom Menschen, nicht vom Staatsvolk: Die Würde gilt auch denen, die nicht dazugehören.",
-          ethnos: "Der Satz kennt keine Abstammung. Er spricht vom Menschen – von jedem." } }
-    ]
-  },
+  schluessel: "wpb-demokratie-leitfaden:v3",
 
   lesetext: [
     [ ["l1", "Demokratie ist mehr als das Kreuz auf dem Wahlzettel."],
@@ -106,45 +71,7 @@ var DATEN = {
   ],
   zusatzfrage: "Wer gehört in dieser Situation dazu – und wer entscheidet das?"
 };
-/* Jahreskompass und Dreibein – ergänzt die Inhalte der Stunde. */
-DATEN.schluessel = "wpb-demokratie-ds3:v2";
-DATEN.hier = 0; /* Etappe, in der die Klasse gerade arbeitet (0 = erste) */
-DATEN.blick = ["Verstehen", "Reflektieren", "Positionieren", "Handeln"];
-DATEN.etappen = [
-  { kurz: "Grundlagen", titel: "Grundlagen und Orientierung",
-    frage: "Was heißt Demokratie – und wo beginnt sie für Kinder?",
-    mit: "ein gemeinsames Begriffsnetz und die drei Formen der Demokratie",
-    kita: "Wo wird in meiner Einrichtung entschieden – und von wem?",
-    weg: [["fertig", "Was verbinde ich mit Demokratie?"], ["fertig", "Abstecher: Nation und Nationalismus"], ["heute", "Welches Volk meint die Demokratie?"], ["kommt", "Kinder beteiligen – aber wie?"]] },
-  { kurz: "Kinderrechte", titel: "Kinderrechte und Partizipation",
-    frage: "Welche Rechte haben Kinder – und wann ist Beteiligung echt?",
-    mit: "einen Beteiligungscheck, den Ablauf einer Kinderkonferenz, ein kleines Beschwerdekonzept",
-    kita: "Kinderkonferenz, gemeinsame Regeln, Wege für Beschwerden" },
-  { kurz: "Macht", titel: "Macht, Haltung und Beziehung",
-    frage: "Wie gehe ich mit meiner Macht als Erwachsene oder Erwachsener um?",
-    mit: "eine persönliche Handlungsleitlinie",
-    kita: "Essen, Schlafen, Kleidung, Wickeln – und die Sprache, die wir dabei benutzen" },
-  { kurz: "Vielfalt", titel: "Vielfalt und Anti-Bias",
-    frage: "Wer kommt bei uns vor – und wer nicht?",
-    mit: "eine Materialprüfung und einen Leitfaden für stereotype Aussagen unter Kindern",
-    kita: "Familienwand, Bücher, Feste, Sprachen" },
-  { kurz: "Grenzen", titel: "Diskriminierung und Demokratiegefährdung",
-    frage: "Wo endet eine Meinung – und wo beginnt Menschenfeindlichkeit?",
-    mit: "einen Analysebogen und eine fachlich begründete Position",
-    kita: "die Einrichtung als Schutzort für jedes Kind" },
-  { kurz: "Gespräche", titel: "Gesprächsführung und Konflikte",
-    frage: "Wie widerspreche ich klar – und bleibe im Gespräch?",
-    mit: "einen Gesprächsleitfaden und eine Intervention in fünf Sätzen",
-    kita: "Gespräche mit Eltern, Großeltern und im Team" },
-  { kurz: "Kita entwickeln", titel: "Demokratische Kita entwickeln",
-    frage: "Wie wird aus einzelnen Momenten eine demokratische Einrichtung?",
-    mit: "eine Teamvereinbarung und das Konzept für einen Elternabend",
-    kita: "Team, Konzeption, Zusammenarbeit mit Familien" },
-  { kurz: "Praxisprojekt", titel: "Praxisprojekt und Transfer",
-    frage: "Was nehme ich mit in meine Praxis?",
-    mit: "Ihr eigenes Demokratieprojekt und einen persönlichen Plan für den Berufsstart",
-    kita: "Erprobung in Ihrer Praxisstelle" }
-];
+/* Dreibein */
 DATEN.kriterien = [
   { id: "h1", form: "h", text: "Ist klar und begründet, wer hier entscheidet?" },
   { id: "h2", form: "h", text: "Können die Kinder die Entscheidung beeinflussen oder sich beschweren?" },
