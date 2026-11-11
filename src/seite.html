@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demokratie, jetzt und in Zukunft – Jahreskompass und Lernseite</title>
+<style>/*FONTS*/</style>
+<style>/*SEITE*/</style>
+</head>
+<body>
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="top">
+  <a class="marke" href="#start"><span class="marke__rose" aria-hidden="true"></span><span>Demokratie, jetzt und in Zukunft</span></a>
+  <nav aria-label="Bereiche">
+    <a href="#start" data-nav="start">Jahreskompass</a>
+    <a href="#heute" data-nav="heute">Heute</a>
+  </nav>
+</header>
+
+<main id="inhalt">
+
+<!-- ================= START: JAHRESKOMPASS ================= -->
+<section class="view" id="v-start" aria-labelledby="start-titel">
+  <div class="held">
+    <p class="kicker">Wahlfach · Demokratiebildung in der frühen Kindheit</p>
+    <h1 id="start-titel">Wohin die Reise geht</h1>
+    <p class="intro">Acht Etappen führen durch das Jahr. Im Mittelpunkt steht immer dasselbe: die Rechte jedes Kindes. Tippen Sie eine Etappe an und sehen Sie, was dort auf Sie wartet.</p>
+  </div>
+
+  <div class="kompass">
+    <figure class="kompass__bild">
+      <svg id="rad" viewBox="0 0 560 560" role="group" aria-label="Jahreskompass mit acht Etappen. In der Mitte stehen die Kinderrechte."></svg>
+      <figcaption>Die Nadel zeigt auf die gewählte Etappe. <button type="button" class="link" id="rad-heute">Zurück zu »Wir sind hier«</button></figcaption>
+    </figure>
+    <article class="etappe" id="etappe" aria-live="polite"></article>
+  </div>
+
+  <div class="fundament">
+    <h2>Unser Maßstab das ganze Jahr</h2>
+    <p>Kinder haben Rechte auf <strong>Schutz</strong>, <strong>Förderung</strong> und <strong>Beteiligung</strong>. Daran prüfen wir jede Situation aus der Kita – und jede eigene Entscheidung.</p>
+    <p class="dreifrage"><span>Wer entscheidet?</span><span>Wer wird gehört?</span><span>Wer gehört dazu?</span></p>
+  </div>
+
+  <a class="heutekarte" href="#heute" id="heutekarte">
+    <span class="kicker">Heute · Etappe 1</span>
+    <span class="heutekarte__titel">Welches Volk meint die Demokratie?</span>
+    <span class="heutekarte__text">Sieben Schritte · 90 Minuten · am Ende steht Ihr eigener Satz, der für jedes Kind in der Kita stimmt.</span>
+    <span class="knopf knopf--hell" id="heute-knopf">Stunde beginnen →</span>
+  </a>
+</section>
+
+<!-- ================= HEUTE: DIE STUNDE ================= -->
+<section class="view" id="v-heute" hidden aria-labelledby="heute-titel">
+  <div class="stundenkopf">
+    <p class="kicker">Heute · Etappe 1 · Grundlagen und Orientierung</p>
+    <h1 id="heute-titel">Welches Volk meint die Demokratie?</h1>
+    <ol class="schritte" id="schritte" aria-label="Schritte der Stunde"></ol>
+  </div>
+
+  <!-- 1 -->
+  <article class="schritt" data-n="1" data-titel="Erinnern">
+    <p class="meta">Schritt 1 · 5 Minuten · allein · ohne Unterlagen</p>
+    <h2>Erst erinnern</h2>
+    <p class="lauf">Sie kommen aus der Einheit zu Nation und Nationalismus zurück. Beantworten Sie jede Frage im Kopf oder auf einem Zettel. Decken Sie erst danach auf.</p>
+    <div class="abruf" id="abruf"></div>
+  </article>
+
+  <!-- 2 -->
+  <article class="schritt" data-n="2" data-titel="Festlegen">
+    <p class="meta">Schritt 2 · 10 Minuten · allein, dann Positionslinie im Raum</p>
+    <h2>Ein Satz aus Ihrer ersten Stunde</h2>
+    <p class="lauf">»Demokratie bedeutet für mich …« – so haben Sie im September geantwortet (ohne Namen):</p>
+    <p class="wolke">Mitbestimmung · <strong>ein Volk zu sein</strong> · Dazugehörigkeit · Schutz · Freiheit · Meinungsfreiheit · Menschenrechte · Gleichwertigkeit</p>
+    <div class="dreisatz">
+      <figure><blockquote>»Alle Staatsgewalt geht vom Volke aus.«</blockquote><figcaption>Grundgesetz, Artikel 20 Absatz 2</figcaption></figure>
+      <figure><blockquote>»Wir sind das Volk!«</blockquote><figcaption>Demonstrierende in Leipzig, Herbst 1989</figcaption></figure>
+      <figure><blockquote>»Wir allein sind das Volk!«</blockquote><figcaption>Anspruch von Populisten, wie ihn Jan-Werner Müller beschreibt – kein Zitat einer Person</figcaption></figure>
+    </div>
+    <p class="leitfrage">Ist das dreimal dasselbe Volk?</p>
+    <form class="these" id="these1">
+      <p class="auftrag">Legen Sie sich fest, bevor wir darüber sprechen.</p>
+      <p class="these__satz">»Demokratie schützt das Volk.«</p>
+      <div class="g-skala">
+        <label for="vor-regler" class="g-sr">Zustimmung von 0 bis 10</label>
+        <input type="range" id="vor-regler" min="0" max="10" step="1" value="5">
+        <div class="g-skala__enden"><span>0 · stimme gar nicht zu</span><span>10 · stimme voll zu</span></div>
+        <p class="g-skala__wert" aria-live="polite">Ihre Wahl: <output for="vor-regler">5</output> von 10</p>
+      </div>
+      <label class="feld">Ein Satz, warum:
+        <textarea rows="2" data-text="vor-warum" placeholder="Ich stimme (nicht) zu, weil …"></textarea>
+      </label>
+      <div class="g-reihe">
+        <button type="button" class="g-knopf g-knopf--primaer" data-festlegen disabled>Festlegen</button>
+        <span class="g-stempel" hidden>festgelegt</span>
+      </div>
+      <p class="hinweis" data-danach hidden>Ihre Position bleibt gespeichert. Jetzt: Stellen Sie sich im Raum auf die Linie von 0 bis 10. Am Ende der Stunde kommen Sie auf diese These zurück.</p>
+    </form>
+  </article>
+
+  <!-- 3 -->
+  <article class="schritt" data-n="3" data-titel="Welches Volk?">
+    <p class="meta">Schritt 3 · 10 Minuten · zu zweit</p>
+    <h2>Welches Volk ist gemeint?</h2>
+    <div class="zwei">
+      <div class="karte"><h3><i>demos</i></h3><p>Das Volk der Bürgerinnen und Bürger: alle Staatsangehörigen mit gleichen Rechten. Man kann dazukommen, zum Beispiel durch Einbürgerung.</p></div>
+      <div class="karte"><h3><i>ethnos</i></h3><p>Das Volk der Abstammung: Dazu gehört, wer »hineingeboren« ist. Zugehörigkeit gilt als angeboren.</p></div>
+    </div>
+    <p class="auftrag">Welches Volk steckt in jedem Satz? Begründen Sie Ihre Wahl Ihrer Partnerin oder Ihrem Partner in einem Satz. Die Rückmeldung kommt, wenn alle vier Sätze gewählt sind.</p>
+    <div id="volk" class="volk"></div>
+    <div class="g-reihe">
+      <button type="button" class="g-knopf g-knopf--primaer" id="volk-pruefen" disabled>Rückmeldung zeigen</button>
+      <p class="meta" id="volk-stand" aria-live="polite">Noch 4 Sätze offen.</p>
+    </div>
+    <div class="sicherung" id="volk-merk" hidden>
+      <p class="sicherung__kopf">Das halten wir fest</p>
+      <p>Das Grundgesetz meint mit »Volk« den <i>demos</i>. Die Grundrechte reichen noch weiter: Die Würde gilt <strong>jedem Menschen</strong> (Artikel 1 Absatz 1). Niemand darf wegen seiner Abstammung, Heimat, Herkunft, Sprache oder seines Glaubens benachteiligt werden (Artikel 3 Absatz 3).</p>
+      <p><strong>Merksatz aus der Einheit:</strong> Die entscheidende Grenze verläuft dort, wo Menschen gleiche Würde und gleiche Rechte abgesprochen werden.</p>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="schritt" data-n="4" data-titel="Lesen">
+    <p class="meta">Schritt 4 · 15 Minuten · allein · den Text gibt es auch auf Papier</p>
+    <h2>Was ist überhaupt Demokratie?</h2>
+    <p class="auftrag">Lesen Sie den Text. Tippen Sie dann auf zwei oder drei Sätze, die zeigen: <strong>Demokratie ist mehr als die Mehrheit.</strong> Schreiben Sie in einem Satz auf, warum Sie diese Stellen gewählt haben.</p>
+    <div class="lesetext" id="lesetext" aria-label="Lesetext mit antippbaren Sätzen"></div>
+    <p class="meta">Text aus dem Arbeitsblatt Ihrer ersten Stunde. Die Angaben dort (Schmidt 2010; Schultze 2015) sind noch am Original zu prüfen.</p>
+    <details class="woerter"><summary>Schwierige Wörter erklärt</summary>
+      <dl>
+        <dt>unveräußerlich</dt><dd>kann einem Menschen nicht weggenommen und nicht abgegeben werden</dd>
+        <dt>Volkssouveränität</dt><dd>Das Volk ist die höchste Quelle aller staatlichen Macht.</dd>
+        <dt>Willkür</dt><dd>Entscheiden nach Laune, ohne Regel und ohne Begründung</dd>
+        <dt>Konfession</dt><dd>Zugehörigkeit zu einer Glaubensgemeinschaft</dd>
+      </dl>
+    </details>
+    <label class="feld">Warum diese Stellen?
+      <textarea rows="2" id="lese-warum" data-text="lese-warum" placeholder="Diese Sätze zeigen, dass …"></textarea>
+    </label>
+    <div class="g-reihe">
+      <button type="button" class="g-knopf g-knopf--primaer" id="lese-vergleich" disabled>Mit dem Vorschlag der Lehrkraft vergleichen</button>
+      <p class="meta" id="lese-stand" aria-live="polite">Noch keine Stelle markiert.</p>
+    </div>
+    <div class="erklaerung" id="lese-rueck" hidden aria-live="polite"></div>
+
+    <div class="freigabe" id="formen" data-zu>
+      <p class="freigabe__sperre meta">Die drei Formen der Demokratie öffnen sich nach dem Vergleich.</p>
+      <div class="freigabe__inhalt">
+        <h3 class="zwischen">Drei Formen – ein Ganzes</h3>
+        <p class="lauf">Der Politikdidaktiker Gerhard Himmelmann unterscheidet drei Formen von Demokratie. Es sind keine getrennten Arten: Jede braucht die anderen.</p>
+        <div class="drei">
+          <article class="form form--h"><p class="form__marke">Herrschaftsform</p><p class="form__frage">Wie wird Macht begründet, kontrolliert und begrenzt?</p><p>Wahlen, Gewaltenteilung, Rechtsstaat, Grundrechte, Mehrheit <strong>und</strong> Schutz von Minderheiten.</p><details><summary>In der Kita</summary><p>Eine Kita ist kein Staat. Trotzdem: Wer darf was entscheiden? Welche Rechte der Kinder sind verbindlich? Gibt es einen Weg für Beschwerden?</p></details></article>
+          <article class="form form--g"><p class="form__marke">Gesellschaftsform</p><p class="form__frage">Wie leben verschiedene Menschen und Gruppen zusammen?</p><p>Vielfalt, freie Medien und Öffentlichkeit, Vereine und Verbände, friedlicher Streit, Schutz vor Ausgrenzung.</p><details><summary>In der Kita</summary><p>Hier begegnen sich verschiedene Familienformen, Sprachen, Religionen und Lebenslagen. Erleben Kinder das als normal?</p></details></article>
+          <article class="form form--l"><p class="form__marke">Lebensform</p><p class="form__frage">Wie gehen Menschen im Alltag miteinander um?</p><p>Zuhören, Würde achten, fair streiten, Kompromisse aushandeln, andere beteiligen, Ungerechtigkeit widersprechen.</p><details><summary>In der Kita</summary><p>Wird mir zugehört? Darf ich Nein sagen? Wird meine Beschwerde ernst genommen? Kinder erleben Demokratie im Morgenkreis, beim Essen, beim Wickeln, im Streit.</p></details></article>
+        </div>
+        <p class="meta">Nach Gerhard Himmelmann: Demokratie Lernen als Lebens-, Gesellschafts- und Herrschaftsform. Kita-Beispiele nach Ihrem Arbeitsblatt 2.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="schritt" data-n="5" data-titel="Legen">
+    <p class="meta">Schritt 5 · 15 Minuten · zu zweit an einem Gerät</p>
+    <h2>Das Begriffsnetz legen</h2>
+    <p class="auftrag">Tippen Sie eine Karte an und dann das Feld, in das sie gehört. Felder zwischen zwei Formen bedeuten: gehört zu beiden. Sprechen Sie über jede Karte. Ab fünf Karten können Sie einen Zwischenstand ansehen.</p>
+    <div class="lege" id="lege">
+      <div class="lege__stapel">
+        <h3 class="h4">Stapel <span class="meta" id="stapel-zahl"></span></h3>
+        <div class="stapel" id="stapel" data-zone="stapel" role="group" aria-label="Stapel: noch nicht gelegte Karten"></div>
+        <p class="meta" id="lege-ansage" aria-live="polite">Tippen Sie eine Karte an.</p>
+      </div>
+      <div class="matte" id="matte">
+        <svg class="matte__linien" id="linien" aria-hidden="true"></svg>
+        <div class="feldz feldz--h" data-zone="h"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: Herrschaftsform">Herrschaftsform</button><div class="feldz__karten"></div></div>
+        <div class="feldz feldz--hg" data-zone="hg"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: Herrschafts- und Gesellschaftsform">beides</button><div class="feldz__karten"></div></div>
+        <div class="feldz feldz--g" data-zone="g"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: Gesellschaftsform">Gesellschaftsform</button><div class="feldz__karten"></div></div>
+        <div class="feldz feldz--hl" data-zone="hl"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: Herrschafts- und Lebensform">beides</button><div class="feldz__karten"></div></div>
+        <div class="feldz feldz--hgl" data-zone="hgl"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: alle drei Formen">alle drei</button><div class="feldz__karten"></div></div>
+        <div class="feldz feldz--gl" data-zone="gl"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: Gesellschafts- und Lebensform">beides</button><div class="feldz__karten"></div></div>
+        <div class="feldz feldz--l" data-zone="l"><button type="button" class="feldz__name" aria-label="Gewählte Karte hier ablegen: Lebensform">Lebensform</button><div class="feldz__karten"></div></div>
+      </div>
+    </div>
+    <div class="g-reihe lege__knoepfe">
+      <button type="button" class="g-knopf g-knopf--primaer" id="zwischenstand" disabled>Zwischenstand ansehen</button>
+      <button type="button" class="g-knopf g-knopf--sekundaer" id="zuruecklegen" hidden>Karten mit »passt kaum« zurück in den Stapel</button>
+    </div>
+    <div class="erklaerung" id="lege-rueck" hidden aria-live="polite"></div>
+
+    <div class="freigabe" id="verbinden-box" data-zu>
+      <p class="freigabe__sperre meta">Nach dem Zwischenstand öffnet sich der zweite Teil: Begriffe verbinden.</p>
+      <div class="freigabe__inhalt">
+        <h3 class="zwischen">Begriffe verbinden</h3>
+        <p class="auftrag">Die drei Formen brauchen einander. Zeigen Sie das: Legen Sie mindestens zwei Verbindungen zwischen Karten und begründen Sie jede mit »weil …«.</p>
+        <div class="g-reihe"><button type="button" class="g-knopf g-knopf--sekundaer" id="verbinden" aria-pressed="false" disabled>Verbindung legen</button></div>
+        <div class="verb" id="verb-form" hidden>
+          <p><strong id="verb-a"></strong>
+            <label class="g-sr" for="verb-rel">Art der Verbindung</label>
+            <select id="verb-rel"><option>braucht</option><option>schützt</option><option>ermöglicht</option><option>zeigt sich in</option><option>steht in Spannung zu</option></select>
+            <strong id="verb-b"></strong></p>
+          <label class="feld">weil …<textarea rows="2" id="verb-weil" placeholder="weil …"></textarea></label>
+          <div class="g-reihe"><button type="button" class="g-knopf g-knopf--primaer" id="verb-ok" disabled>Verbindung festhalten</button><button type="button" class="g-knopf g-knopf--still" id="verb-ab">Abbrechen</button></div>
+        </div>
+        <div id="verb-liste-box" hidden>
+          <ol class="verb-liste" id="verb-liste"></ol>
+          <p id="verb-netz" class="hinweis" aria-live="polite"></p>
+          <details class="woerter" id="verb-beispiele" hidden><summary>Beispiele der Lehrkraft – keine Musterlösung</summary>
+            <ul>
+              <li>freie Wahlen → <b>braucht</b> → freie Medien, weil man nur wählen kann, worüber man sich informieren konnte.</li>
+              <li>Schutz von Minderheiten → <b>ermöglicht</b> → gesellschaftliche Vielfalt, weil niemand sich anpassen muss, um seine Rechte zu behalten.</li>
+            </ul>
+          </details>
+        </div>
+        <p class="hinweis">Danach im Plenum: Eine Gruppe zeigt ihr Netz am Smartboard.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="schritt" data-n="6" data-titel="Kita-Fall">
+    <p class="meta">Schritt 6 · 20 Minuten · in Gruppen · jede Gruppe eine Karte</p>
+    <h2>Trägt die Situation?</h2>
+    <p class="lauf">Demokratie steht auf drei Beinen. Ist eines zu kurz, gerät alles ins Wanken – auch in der Kita. Prüfen Sie das an einem Fall.</p>
+    <p class="auftrag">Wählen Sie die Karte Ihrer Gruppe. Vermuten Sie zuerst, welches Bein zu kurz ist. Prüfen Sie dann mit den sechs Fragen – und bauen Sie die Situation um. Sie stellen Ihre Karte in höchstens 90 Sekunden vor.</p>
+    <div class="fallwahl" id="fallwahl" role="group" aria-label="Karte wählen"></div>
+    <div id="fall"></div>
+  </article>
+
+  <!-- 7 -->
+  <article class="schritt" data-n="7" data-titel="Ihr Satz">
+    <p class="meta">Schritt 7 · 15 Minuten · allein, dann Plenum</p>
+    <h2>Ihr Satz – und Ihre Position jetzt</h2>
+    <p class="auftrag">Schreiben Sie den Satz aus der ersten Stunde um – so, dass er für <strong>jedes Kind in der Kita</strong> stimmt. Begründen Sie ihn mit einer der drei Formen.</p>
+    <label class="feld">Demokratie schützt …
+      <textarea rows="4" id="produkt" data-text="produkt" placeholder="Demokratie schützt …, weil … In der Kita heißt das: …"></textarea>
+    </label>
+    <div class="g-reihe">
+      <button type="button" class="g-knopf g-knopf--primaer" id="produkt-vergleich" disabled>Mit den Kriterien vergleichen</button>
+      <p class="meta" id="produkt-stand" aria-live="polite">Schreiben Sie mindestens 15 Wörter.</p>
+    </div>
+    <div class="erklaerung raster" id="raster" hidden>
+      <p class="erklaerung__kopf">Vergleichen Sie Ihren Satz mit diesen Kriterien</p>
+      <table>
+        <tr><th scope="row">Grundlegend</th><td>Der Satz sagt, wen Demokratie schützt – und meint nicht nur die Mehrheit.</td></tr>
+        <tr><th scope="row">Sicher</th><td>Der Satz unterscheidet <i>demos</i> und <i>ethnos</i> oder nennt die gleiche Würde jedes Menschen.</td></tr>
+        <tr><th scope="row">Souverän</th><td>Der Satz gilt für Kinder in der Kita und ist mit einer der drei Formen begründet.</td></tr>
+      </table>
+      <p>Überarbeiten Sie Ihren Satz, wenn etwas fehlt. Zwei oder drei Sätze werden im Plenum vorgelesen.</p>
+    </div>
+
+    <form class="these" id="these2">
+      <p class="auftrag">Zurück zur These vom Anfang.</p>
+      <p class="these__satz">»Demokratie schützt das Volk.«</p>
+      <div class="g-skala">
+        <label for="nach-regler" class="g-sr">Zustimmung jetzt von 0 bis 10</label>
+        <input type="range" id="nach-regler" min="0" max="10" step="1" value="5">
+        <div class="g-skala__enden"><span>0 · stimme gar nicht zu</span><span>10 · stimme voll zu</span></div>
+        <p class="g-skala__wert" aria-live="polite">Ihre Wahl jetzt: <output for="nach-regler">5</output> von 10</p>
+      </div>
+      <label class="feld">Was denken Sie jetzt – und warum?
+        <textarea rows="2" data-text="nach-warum" placeholder="Meine Position hat sich (nicht) verändert, weil …"></textarea>
+      </label>
+      <div class="g-reihe">
+        <button type="button" class="g-knopf g-knopf--primaer" data-festlegen disabled>Festlegen</button>
+        <span class="g-stempel" hidden>festgelegt</span>
+      </div>
+      <p class="hinweis" data-danach hidden aria-live="polite"></p>
+    </form>
+
+    <div class="freigabe merk" id="merk" data-zu>
+      <p class="freigabe__sperre meta">Die Zusammenfassung und der Blick in Ihre Praxisstelle öffnen sich, sobald Sie Ihren Satz verglichen haben.</p>
+      <div class="freigabe__inhalt">
+        <div class="merkseite">
+          <h3 class="zwischen">Zusammenfassung zum Mitnehmen</h3>
+          <p class="merk__kern">Demokratie schützt nicht ein Abstammungsvolk und nicht nur die Mehrheit. Sie schützt die gleiche Würde und die gleichen Rechte jedes Menschen – in der Kita die jedes Kindes.</p>
+          <div class="tabelle-rahmen">
+          <table class="merk__tab">
+            <thead><tr><td></td><th scope="col">Herrschaftsform</th><th scope="col">Gesellschaftsform</th><th scope="col">Lebensform</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Leitfrage</th><td>Wie wird Macht begründet, kontrolliert, begrenzt?</td><td>Wie leben Verschiedene zusammen?</td><td>Wie gehen wir im Alltag miteinander um?</td></tr>
+              <tr><th scope="row">Welches »Volk«?</th><td>Das Staatsvolk wählt. Minderheiten haben Rechte, die keine Mehrheit abschaffen kann.</td><td>Vielfalt ist normal: viele Familien, Sprachen, Religionen.</td><td>Jeder Mensch zählt – egal, woher er kommt.</td></tr>
+              <tr><th scope="row">In der Kita</th><td>Kinderkonferenz, Gruppenrat, Beschwerdeweg</td><td>Familienwand, Mehrsprachigkeit</td><td>Morgenkreis, Essen, Wickeln, Konflikt</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p><strong>Ihr Denkwerkzeug:</strong> Wer entscheidet? Wer wird gehört? Wer gehört dazu?</p>
+        </div>
+
+        <div class="praxis">
+          <h3 class="zwischen">Und in Ihrer Praxisstelle?</h3>
+          <p class="lauf">Dieser Teil ist freiwillig und bleibt nur auf Ihrem Gerät. Denken Sie an eine Situation aus dieser Woche – ohne Namen. Stellen Sie die sechs Fragen ein und sehen Sie, worauf die Situation steht.</p>
+          <div id="praxis-instrument"></div>
+          <label class="feld">Ein kleiner Schritt, den ich nächste Woche ausprobiere:
+            <textarea rows="2" data-text="praxis-schritt" placeholder="Ich könnte …"></textarea>
+          </label>
+          <p class="hinweis"><strong>Praxisauftrag bis zur nächsten Stunde:</strong> Beobachten Sie eine Situation in Ihrer Praxisstelle und notieren Sie ohne Namen: Wer hat entschieden? Wer wurde gehört? Wer gehörte dazu, wer nicht?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="schluss">
+      <div class="g-reihe">
+        <button type="button" class="g-knopf g-knopf--sekundaer" id="drucken">Meine Ergebnisse drucken oder als PDF sichern</button>
+        <button type="button" class="g-knopf g-knopf--still" id="loeschen">Eingaben löschen</button>
+      </div>
+      <div class="hinweis" id="loesch-frage" hidden>
+        <p><strong>Wirklich alles löschen?</strong> Ihre Positionen, das Legebild und alle Texte auf diesem Gerät werden entfernt.</p>
+        <div class="g-reihe"><button type="button" class="g-knopf g-knopf--primaer" id="loesch-ja">Ja, alles löschen</button><button type="button" class="g-knopf g-knopf--still" id="loesch-nein">Nein, behalten</button></div>
+      </div>
+      <p class="ende">Fertig? Dann drehen Sie Ihr Tablet um.</p>
+    </div>
+  </article>
+
+  <nav class="weiter" aria-label="Zwischen den Schritten wechseln">
+    <button type="button" class="g-knopf g-knopf--still" id="zurueck">← Zurück</button>
+    <p class="meta" id="weiter-hinweis" aria-live="polite"></p>
+    <button type="button" class="g-knopf g-knopf--primaer" id="weiter">Weiter →</button>
+  </nav>
+</section>
+
+</main>
+
+<footer class="fuss">
+  <p><strong>Ihre Eingaben bleiben auf diesem Gerät.</strong> Auswahl und Legebild speichert der Browser, damit nach dem Neuladen nichts fehlt. Texte bleiben nur, bis Sie den Tab schließen – sichern Sie sie vorher als PDF. Nichts wird übertragen.</p>
+  <p>Entwurf, noch nicht im Unterricht erprobt. Die Kita-Fälle sind ausgedacht. Das Dreibein ist ein Modell – es misst nichts.</p>
+  <details><summary>Für die Lehrkraft · offen, nicht geschützt</summary>
+    <ul>
+      <li><a href="#heute-alle">Alle Schritte öffnen</a> – für das Smartboard, damit Sie frei vor- und zurückgehen können.</li>
+      <li>Zwischen Schritt 2 und 3: Positionslinie im Raum, zwei bis drei Begründungen anhören.</li>
+      <li>Schritt 4: Der Lesetext liegt zusätzlich als Kopie bereit (Arbeitsblatt 1).</li>
+      <li>Nach Schritt 6: Demokratie-Ampel (Auftrag 3) gemeinsam per Handzeichen, ohne Gerät.</li>
+      <li>Die Zuordnung der acht Etappen zu den vier Blickrichtungen ist ein Vorschlag.</li>
+    </ul>
+  </details>
+</footer>
+
+<script>/*DATEN*/</script>
+<script>/*LOGIK*/</script>
+</body>
+</html>
