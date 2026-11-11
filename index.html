@@ -369,6 +369,52 @@ a.g-knopf--still{text-decoration:underline}
 .meinplakat__satz{font:600 clamp(1.7rem,1.3rem + 2vw,2.6rem)/1.15 var(--serif);color:var(--pc);text-wrap:balance;overflow-wrap:anywhere}
 #plakat-box h2{font-size:1.5rem}
 
+
+/* Fortschritt */
+.balken{display:grid;gap:6px;max-width:34rem}
+.balken__spur{display:flex;gap:4px}
+.balken__spur span{flex:1;height:10px;border-radius:5px;background:var(--sand);box-shadow:inset 0 0 0 1.5px #8B979A}
+.balken__spur span[data-stand=fertig]{background:var(--tuerkis);box-shadow:none}
+.balken__spur span[data-stand=angefangen]{background:linear-gradient(90deg,var(--tuerkis) 50%,var(--sand) 50%);box-shadow:inset 0 0 0 1.5px var(--tuerkis)}
+.balken__text{font:600 1rem/1.35 var(--sans);color:var(--leise)}
+.etappe .balken{margin-block:2px 4px}
+.rad-haken{font:600 13px var(--sans);fill:var(--tuerkis);text-anchor:middle}
+.rad-seg[aria-pressed=true] .rad-haken{fill:#fff}
+
+/* Etappe: Weg an der Seite, Arbeit im Fenster */
+.modul{gap:clamp(16px,2.5vw,24px)}
+.modul .held{gap:8px}
+.modul .held h1{font-size:clamp(1.7rem,1.3rem + 1.8vw,2.4rem)}
+.modul .held .leitfrage{font-size:clamp(1.25rem,1.1rem + .8vw,1.6rem)}
+.fenster{display:grid;gap:clamp(16px,2.5vw,28px);align-items:start}
+.fenster>*{min-width:0}
+@media (min-width:760px){.fenster{grid-template-columns:minmax(15rem,19rem) minmax(0,1fr)}.rail{position:sticky;top:76px}}
+.rail{background:var(--flaeche);border-radius:var(--r);padding:20px;box-shadow:var(--schatten);display:grid;gap:12px}
+.rail h2{font-size:1.25rem}
+.rail__liste{list-style:none;padding:0;display:grid;gap:4px}
+.rail__liste li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:10px;border-radius:var(--r-klein)}
+.rail__liste li[data-hier]{background:var(--eis-hell)}
+.rail__marke{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:600 1rem/1 var(--sans);background:var(--sand);color:var(--petrol)}
+.rail__liste li[data-stand=fertig] .rail__marke{background:var(--tuerkis);color:#fff}
+.rail__liste li[data-stand=angefangen] .rail__marke{box-shadow:inset 0 0 0 3px var(--tuerkis)}
+.rail__liste li[data-stand=kommt]{color:var(--leise)}
+.rail__liste li[data-stand=kommt] .rail__marke{background:none;border:1.5px dashed #8B979A;color:var(--leise)}
+.rail__liste div{display:grid;gap:2px}
+.rail__liste b{font:600 1.05rem/1.3 var(--sans)}
+.rail__liste a{color:var(--petrol);min-height:28px}
+.rail__wozu{font-size:1rem;line-height:1.4}
+.rail__stand{font:600 .9rem/1.3 var(--sans);color:var(--leise)}
+.rail__liste li[data-stand=fertig] .rail__stand{color:var(--tuerkis)}
+.rail__ziel{border-top:1px solid var(--linie);padding-top:12px;display:grid;gap:2px;font-size:1rem;line-height:1.45}
+.arbeits{gap:18px;scroll-margin-top:76px}
+.arbeits .schritte{margin-top:0}
+.arbeits .seite{display:grid;gap:18px}
+.arbeits .seite>h2{outline:none;font-size:1.6rem}
+.arbeits .falltext h2{font-size:1.4rem;outline:none}
+.erledigt{background:var(--gut-hell);border-left:6px solid var(--gut);border-radius:0 var(--r-klein) var(--r-klein) 0;padding:14px 18px;display:grid;gap:10px}
+.erledigt__kopf{font:600 1.1rem/1.2 var(--sans);color:var(--gut)}
+@media (max-width:759px){.rail{order:2}}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{
   .top,.sprung,.g-knopf,.knopf,.chips,.fallwahl,.weiter,.schritte,#loesch-frage,.ende,.fuss details,.freigabe__sperre,.woerter,.lege__stapel,#lege-rueck,.g-stempel,.plakate,#plakat-stand{display:none!important}
@@ -461,7 +507,9 @@ a.g-knopf--still{text-decoration:underline}
     <p class="intro">Sechs Plakate hängen in dieser Ausstellung. Jedes sagt ein Recht so, wie ein Kind es sagen würde. Hinter jedem Plakat wartet eine Szene aus einer Kita.</p>
     <p class="meta">Etwa 45 Minuten · zu zweit an einem Gerät · danach Rundgang im Plenum</p>
   </div>
+  <p class="meta"><strong>Fertig sind Sie, wenn</strong> Sie sich bei drei Plakaten festgelegt und Ihr eigenes Plakat mit den Kriterien verglichen haben.</p>
   <p class="auftrag">Öffnen Sie mindestens drei Plakate. Lesen Sie die Szene. Legen Sie sich fest, welcher Prüfstein zuerst berührt ist – Schutz, Förderung oder Beteiligung – und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung.</p>
+  <div id="aus-balken"></div>
   <div class="plakate" id="plakate" role="group" aria-label="Plakate der Ausstellung"></div>
   <p class="meta" id="plakat-stand" aria-live="polite"></p>
   <div id="station" class="station" aria-live="polite"></div>
@@ -523,6 +571,7 @@ a.g-knopf--still{text-decoration:underline}
     <h1 id="heute-titel">Drei Formen – ein Ganzes</h1>
     <p class="leitfrage leitfrage--klein">Wo beginnt Demokratie?</p>
     <ol class="schritte" id="schritte" aria-label="Schritte der Stunde"></ol>
+    <div id="lern-balken"></div>
   </div>
 
   <!-- 1 -->
@@ -879,7 +928,7 @@ DATEN.etappen = [
       ["Selbstwirksamkeit", "Die Erfahrung: Meine Stimme zählt. Was ich tue, verändert etwas."]],
     mit: "die drei Formen der Demokratie – und Ihren eigenen Satz, wann Demokratie in der Kita beginnt",
     kita: "Wo wird in Ihrer Einrichtung entschieden – und von wem?",
-    weg: [["offen", "Lernseite: Drei Formen – ein Ganzes", "#heute"], ["kommt", "Was steht auf dem Spiel? Warum Demokratie gelernt werden muss"]] },
+    weg: [["offen", "Lernseite: Drei Formen – ein Ganzes", "#heute", "Sie klären, was Demokratie ist, und schreiben Ihren eigenen Satz dazu.", "90 Minuten"], ["kommt", "Was steht auf dem Spiel? Warum Demokratie gelernt werden muss", "", "Sie begründen, warum Demokratiebildung heute dringlich ist.", "45 Minuten"]] },
 
   { kurz: "Warum Kita?", titel: "Warum gerade die Kita?", vortrag: "Teil II · Warum die frühe Kindheit",
     frage: "Warum beginnt Demokratiebildung nicht erst in der Schule?",
@@ -898,7 +947,7 @@ DATEN.etappen = [
       ["Aushandlung", "Verschiedene Wünsche werden besprochen, bis eine Lösung steht, die alle mittragen können."]],
     mit: "vier Gründe, mit denen Sie Demokratiebildung im Team und vor Eltern begründen können",
     kita: "Wo haben Sie zuletzt erlebt, dass Kinder einen Streit ohne Erwachsene gelöst haben? Was hatten sie dafür schon gelernt?",
-    weg: [["kommt", "Vier Gründe für die frühe Kindheit"], ["kommt", "Welche Demokratie lernen Kinder bei uns?"]] },
+    weg: [["kommt", "Vier Gründe für die frühe Kindheit", "", "Sie sammeln Argumente, mit denen Sie vor Team und Eltern bestehen.", "45 Minuten"], ["kommt", "Welche Demokratie lernen Kinder bei uns?", "", "Sie prüfen eine Situation aus Ihrer eigenen Einrichtung.", "45 Minuten"]] },
 
   { kurz: "Kinderrechte", titel: "Kinder haben Rechte", vortrag: "Teil II · Korczak und der gesetzliche Auftrag",
     frage: "Geben wir Kindern Rechte – oder haben sie welche?",
@@ -918,7 +967,7 @@ DATEN.etappen = [
       ["Drei Prüfsteine", "Schutz vor Gewalt, Beschämung und Ausgrenzung · Förderung durch Beziehung, Spiel, Sprache und Teilhabe · Beteiligung an allem, was das Kind betrifft."]],
     mit: "die drei Prüfsteine Schutz, Förderung, Beteiligung – und ein Kinderrechte-Plakat für Ihre Kita",
     kita: "Welche Rechte der Kinder sind in Ihrer Einrichtung aufgeschrieben – und wo können die Kinder sie sehen?",
-    weg: [["offen", "Ausstellung: Kinderrechte im Kita-Alltag", "#ausstellung"], ["kommt", "Vom Gesetz in den Alltag: Was heißt Artikel 12 in der Kita?"]] },
+    weg: [["offen", "Ausstellung: Kinderrechte im Kita-Alltag", "#ausstellung", "Sie prüfen sechs Kita-Szenen an den Kinderrechten und gestalten ein Plakat.", "45 Minuten"], ["kommt", "Vom Gesetz in den Alltag: Was heißt Artikel 12 in der Kita?", "", "Sie übersetzen einen Gesetzestext in das, was Kinder täglich erleben.", "45 Minuten"]] },
 
   { kurz: "Macht", titel: "Macht und Haltung", vortrag: "Teil III · Das Herzstück: die Haltung",
     frage: "Was mache ich mit der Macht, die ich als Erwachsene oder Erwachsener habe?",
@@ -937,7 +986,7 @@ DATEN.etappen = [
       ["Vorurteilsbewusste Bildung", "Ansatz mit vier Zielen (Anti-Bias): Identitäten stärken, Vielfalt erfahrbar machen, kritisch über Vorurteile nachdenken, gegen Diskriminierung aktiv werden."]],
     mit: "eine persönliche Handlungsleitlinie für Essen, Schlafen, Anziehen und Wickeln",
     kita: "Bei welcher Alltagsfrage entscheiden Sie allein, obwohl das Kind mitentscheiden könnte?",
-    weg: [["kommt", "Einladende und verschließende Sätze"], ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung"], ["kommt", "Stereotype Aussagen unter Kindern aufgreifen"]] },
+    weg: [["kommt", "Einladende und verschließende Sätze", "", "Sie formulieren Alltagssätze so um, dass Kinder mitentscheiden können.", "45 Minuten"], ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung", "", "Sie prüfen Bücher, Bilder und Routinen: Wer kommt vor, wer nicht?", "90 Minuten"], ["kommt", "Stereotype Aussagen unter Kindern aufgreifen", "", "Sie üben, wie Sie reagieren, wenn ein Kind ein anderes abwertet.", "90 Minuten"]] },
 
   { kurz: "Strukturen", titel: "Strukturen, die verlässlich sind", vortrag: "Teil III · Formelle Demokratiebildung",
     frage: "Welche festen Verfahren sichern die Rechte der Kinder – und was gilt, wenn die Mehrheit jemanden überstimmt?",
@@ -958,7 +1007,7 @@ DATEN.etappen = [
       ["Ambiguitätstoleranz", "Die Fähigkeit, Uneindeutiges und Widersprüche auszuhalten, statt nach einfachen Antworten zu greifen."]],
     mit: "den Ablauf einer Kinderkonferenz und ein kleines Beschwerdekonzept",
     kita: "Welche festen Verfahren gibt es in Ihrer Einrichtung – und wissen die Kinder davon?",
-    weg: [["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose"], ["kommt", "Eine Kinderkonferenz gestalten"], ["kommt", "Beschwerdewege für Kinder"]] },
+    weg: [["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose", "", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein.", "90 Minuten"], ["kommt", "Eine Kinderkonferenz gestalten", "", "Sie planen den Ablauf einer Kinderkonferenz und erproben die Moderation.", "90 Minuten"], ["kommt", "Beschwerdewege für Kinder", "", "Sie entwerfen einen Weg, auf dem auch kleine Kinder sich beschweren können.", "90 Minuten"]] },
 
   { kurz: "Alltag", titel: "Demokratie im Alltag", vortrag: "Teil III · Informelle Demokratiebildung",
     frage: "Was erleben Kinder in den vielen Stunden zwischen den Gremien?",
@@ -977,7 +1026,7 @@ DATEN.etappen = [
       ["Willkür", "Eine Fachkraft nimmt Kinder ernst. Am Nachbartisch gilt das Gegenteil, weil nichts vereinbart ist."]],
     mit: "einen Beteiligungscheck für Essen, Pflege, Schlafen und Morgenkreis",
     kita: "Beobachten Sie eine Mahlzeit: Wer entscheidet, was und wie viel auf den Teller kommt?",
-    weg: [["kommt", "Mahlzeiten: der wichtigste Übungsort"], ["kommt", "Wickeln, Schlafen, Eingewöhnung"], ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen"]] },
+    weg: [["kommt", "Mahlzeiten: der wichtigste Übungsort", "", "Sie untersuchen, wer beim Essen was entscheidet.", "45 Minuten"], ["kommt", "Wickeln, Schlafen, Eingewöhnung", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"], ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen", "", "Sie prüfen, wo Ihrer Einrichtung eher das Verfahren fehlt und wo die Haltung.", "90 Minuten"]] },
 
   { kurz: "Position", titel: "Haltung zeigen", vortrag: "Teil I · Was steht auf dem Spiel? – weitergedacht",
     frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
@@ -996,7 +1045,7 @@ DATEN.etappen = [
       ["Beutelsbacher Konsens", "Drei Grundsätze politischer Bildung: niemanden überwältigen, Kontroverses kontrovers darstellen, zum eigenen Urteil befähigen."]],
     mit: "einen Gesprächsleitfaden und eine Intervention in fünf Sätzen",
     kita: "Welche Aussage haben Sie schon gehört, bei der Sie gern etwas gesagt hätten?",
-    weg: [["kommt", "Diskriminierung erkennen und benennen"], ["kommt", "Populismus verstehen – die aktuelle Lage"], ["kommt", "Zuhören, nachfragen, klar widersprechen"]] },
+    weg: [["kommt", "Diskriminierung erkennen und benennen", "", "Sie lernen Formen der Abwertung kennen und ordnen Aussagen ein.", "mehrere Stunden"], ["kommt", "Populismus verstehen – die aktuelle Lage", "", "Sie prüfen politische Aussagen an Quellen und an den Grundrechten.", "mehrere Stunden"], ["kommt", "Zuhören, nachfragen, klar widersprechen", "", "Sie üben Gespräche mit Erwachsenen, die abwertend sprechen.", "mehrere Stunden"]] },
 
   { kurz: "Praxis", titel: "Ihr Praxisprojekt", vortrag: "Teil III · Kinder können Demokratie",
     frage: "Was nehmen Sie mit in Ihre Einrichtung?",
@@ -1014,7 +1063,7 @@ DATEN.etappen = [
       ["Zukunftswerkstatt", "Methode in drei Schritten: Kritik sammeln, Wünsche entwickeln, Umsetzung planen."]],
     mit: "Ihr eigenes Demokratieprojekt – geplant, erprobt und vorgestellt",
     kita: "Welche kleine Veränderung in Ihrer Einrichtung würden die Kinder sofort bemerken?",
-    weg: [["kommt", "Projektwerkstatt"], ["kommt", "Erprobung und kollegiale Beratung"], ["kommt", "Präsentation und Ausblick"]] }
+    weg: [["kommt", "Projektwerkstatt", "", "Sie planen Ihr eigenes Vorhaben für die Praxisstelle.", "mehrere Stunden"], ["kommt", "Erprobung und kollegiale Beratung", "", "Sie probieren Ihr Vorhaben aus und holen Rückmeldung ein.", "mehrere Stunden"], ["kommt", "Präsentation und Ausblick", "", "Sie stellen Ihr Projekt vor und halten fest, was Sie mitnehmen.", "mehrere Stunden"]] }
 ];
 
 /* ---------- Ausstellung: Kinderrechte im Kita-Alltag (aus der Mitmach-Ausstellung zum Tag der Kinderrechte, für Fachkräfte umgebaut) ---------- */
@@ -1589,6 +1638,8 @@ DATEN.alltag = [
       g.appendChild(sv("path", { d: ring(RA, RI, a1, a2) }));
       g.appendChild(sv("text", { x: m[0], y: m[1] - 6, "class": "rad-zahl" }, String(i + 1)));
       g.appendChild(sv("text", { x: m[0], y: m[1] + 16, "class": "rad-wort" }, e.kurz));
+      var haken = sv("text", { x: m[0], y: m[1] + 33, "class": "rad-haken" }, "");
+      g.appendChild(haken); g._haken = haken;
       if (i < D.hier) g.setAttribute("data-stand", "fertig");
       if (i === D.hier) { g.setAttribute("data-stand", "hier"); var h = pol(RA + 2, i * 45 + 22.5); g.appendChild(sv("circle", { cx: h[0], cy: h[1], r: 9, "class": "rad-hier" })); }
       g.addEventListener("click", function () { waehle(i, true); });
@@ -1619,16 +1670,26 @@ DATEN.alltag = [
       panel.appendChild(el("h2", {}, e.titel));
       panel.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.frage));
       var dl = el("dl");
+      var st = etappeStand(i), fb = el("div"); panel.appendChild(fb);
+      balken(fb, st.teile, st.fertig + " von " + st.von + " erledigt" + (st.kommt ? " · " + st.kommt + (st.kommt === 1 ? " Station kommt später" : " Stationen kommen später") : ""));
       dl.appendChild(el("dt", {}, "Die Szene")); dl.appendChild(el("dd", {}, e.szene.titel));
       dl.appendChild(el("dt", {}, "Das nehmen Sie mit")); dl.appendChild(el("dd", {}, e.mit));
       dl.appendChild(el("dt", {}, "Im Vortrag")); dl.appendChild(el("dd", {}, e.vortrag));
       panel.appendChild(dl);
-      panel.appendChild(el("a", { "class": "knopf", href: "#etappe-" + (i + 1) }, "Etappe " + (i + 1) + " öffnen →"));
+      panel.appendChild(el("a", { "class": "knopf", href: "#etappe-" + (i + 1) }, (st.fertig ? "Etappe " + (i + 1) + " fortsetzen →" : "Etappe " + (i + 1) + " öffnen →")));
       if (bewegt && !RUHIG && panel.animate) panel.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 220, easing: "cubic-bezier(.23,1,.32,1)" });
     }
     $("#rad-heute").addEventListener("click", function () { waehle(D.hier, true); });
+    function frisch() {
+      segs.forEach(function (g, j) {
+        var st = etappeStand(j);
+        g._haken.textContent = st.fertig === st.von ? "✓" : (st.fertig ? st.fertig + "/" + st.von : "");
+        g.setAttribute("aria-label", "Etappe " + (j + 1) + ": " + D.etappen[j].titel + " – " + st.fertig + " von " + st.von + " erledigt" + (j === D.hier ? " – wir sind hier" : ""));
+      });
+      waehle(gewaehlt, false);
+    }
     waehle(D.hier, false);
-    return {};
+    return { frisch: frisch };
   })();
 
   /* ---------- Schritte, Freigaben, Ansichten ---------- */
@@ -1665,6 +1726,8 @@ DATEN.alltag = [
       if (i + 1 === akt) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
       b.setAttribute("aria-label", "Schritt " + (i + 1) + ": " + schritte[i].dataset.titel + (f[i] ? " – erledigt" : (i + 1 > bis ? " – noch gesperrt" : "")));
     });
+    var nf = f.filter(Boolean).length;
+    balken($("#lern-balken"), f.map(function (x) { return x ? "fertig" : "offen"; }), nf === f.length ? "Lernseite erledigt: alle fünf Schritte abgeschlossen." : nf + " von " + f.length + " Schritten erledigt · Fertig sind Sie, wenn Ihr Satz verglichen und Ihre Position neu festgelegt ist.");
     var w = $("#weiter"), h = $("#weiter-hinweis");
     w.hidden = akt >= schritte.length; $("#zurueck").hidden = false;
     $("#zurueck").textContent = akt === 1 ? "← Zur Etappe 1" : "← Zurück";
@@ -1693,6 +1756,7 @@ DATEN.alltag = [
     $$("[data-nav]").forEach(function (a) { if (a.dataset.nav === welche) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
     if (welche === "heute") gehe(Math.min(S.schritt || 1, offenBis()), true);
     if (welche === "etappe") zeigeModul(+m[1] - 1);
+    if (welche === "start") kompass.frisch();
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", ansicht);
@@ -1736,62 +1800,150 @@ DATEN.alltag = [
     pruefe(); if (fest) zeige(false);
   }
 
-  /* ---------- Etappe: Szene, Festlegung, Kern, Begriffe, Stationen ---------- */
+  /* ---------- Fortschritt: zählt erledigte Festlegungen und Produkte, keine Klicks ---------- */
+  function balken(box, teile, satz) {
+    box.textContent = ""; box.className = "balken";
+    var spur = el("div", { "class": "balken__spur", "aria-hidden": "true" });
+    teile.forEach(function (x) { spur.appendChild(el("span", { "data-stand": x })); });
+    box.appendChild(spur); box.appendChild(el("p", { "class": "balken__text" }, satz));
+  }
+  function lernStand() { var f = stand(), n = f.filter(Boolean).length; return n === f.length ? "fertig" : (n > 0 ? "angefangen" : "offen"); }
+  function ausZahl() { return D.stationen.filter(function (s) { return S.wahlFest[s.id]; }).length; }
+  function ausStand() { var n = ausZahl(); return n >= 3 && S.plakatZu ? "fertig" : (n > 0 ? "angefangen" : "offen"); }
+  function stationStand(x) { return x[0] === "kommt" ? "kommt" : (x[2] === "#heute" ? lernStand() : (x[2] === "#ausstellung" ? ausStand() : "offen")); }
+  var STANDWORT = { fertig: "erledigt", angefangen: "angefangen", offen: "offen", kommt: "kommt später" };
+  function etappeStand(i) {
+    var e = D.etappen[i], teile = [S.wahlFest["e" + i] ? "fertig" : "offen"];
+    e.weg.forEach(function (x) { if (x[0] !== "kommt") teile.push(stationStand(x)); });
+    var n = teile.filter(function (x) { return x === "fertig"; }).length;
+    return { teile: teile, fertig: n, von: teile.length, kommt: e.weg.filter(function (x) { return x[0] === "kommt"; }).length };
+  }
+
+  /* ---------- Etappe: Weg an der Seite, Einstieg in drei Schritten im Fenster ---------- */
   function zeigeModul(i) {
-    var e = D.etappen[i], box = $("#modul"); box.textContent = "";
+    var e = D.etappen[i], box = $("#modul"), key = "e" + i, akt = 1; box.textContent = "";
     var kopf = el("div", { "class": "held" });
     kopf.appendChild(el("p", { "class": "kicker" }, "Etappe " + (i + 1) + " von 8 · " + D.blick[Math.floor(i / 2)] + " · " + e.vortrag));
     kopf.appendChild(el("h1", { id: "mod-titel" }, e.titel));
     kopf.appendChild(el("p", { "class": "leitfrage" }, e.frage));
+    var fb = el("div"); kopf.appendChild(fb);
     box.appendChild(kopf);
 
-    var karte = el("div", { "class": "schritt" });
+    var fenster = el("div", { "class": "fenster" });
+    /* Seite: der Weg durch die Etappe */
+    var rail = el("aside", { "class": "rail", "aria-labelledby": "rail-titel" });
+    rail.appendChild(el("h2", { id: "rail-titel" }, "Ihr Weg durch diese Etappe"));
+    rail.appendChild(el("p", { "class": "meta" }, "Der Einstieg führt in das Thema. In den Stationen arbeiten Sie daran – im Unterricht, gemeinsam geführt."));
+    var ol = el("ol", { "class": "rail__liste" }); rail.appendChild(ol);
+    var ziel = el("div", { "class": "rail__ziel" }); rail.appendChild(ziel);
+    fenster.appendChild(rail);
+
+    /* Fenster: Einstieg in drei Schritten */
+    var arb = el("div", { "class": "schritt arbeits" });
+    var leiste = el("ol", { "class": "schritte", "aria-label": "Schritte des Einstiegs" }); arb.appendChild(leiste);
+    var TEILE = ["Szene", "Dahinter", "Ihre Kita"], pills = [], seiten = [];
+    TEILE.forEach(function (name, n) {
+      var li = el("li"), b = el("button", { type: "button" });
+      b.appendChild(el("b", {}, String(n + 1))); b.appendChild(el("span", {}, name));
+      b.addEventListener("click", function () { if (!b.disabled) gehe(n + 1, true); });
+      li.appendChild(b); leiste.appendChild(li); pills.push(b);
+    });
+
+    var s1 = el("div", { "class": "seite" });
+    s1.appendChild(el("p", { "class": "meta" }, "Einstieg · Schritt 1 von 3 · etwa 5 Minuten · allein"));
     var sz = el("div", { "class": "falltext" });
     sz.appendChild(el("p", { "class": "etikett" }, e.szene.status));
-    sz.appendChild(el("h2", {}, e.szene.titel));
+    sz.appendChild(el("h2", { tabindex: "-1" }, e.szene.titel));
     e.szene.text.forEach(function (a) { sz.appendChild(el("p", { "class": "falltext__text" }, a)); });
-    karte.appendChild(sz);
-    karte.appendChild(el("p", { "class": "auftrag" }, "Lesen Sie die Szene. Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie, was dahintersteckt."));
-    var w = el("div", { "class": "teil" }); karte.appendChild(w);
-    var frei = el("div", { "class": "freigabe", "data-zu": "" });
-    frei.appendChild(el("p", { "class": "freigabe__sperre meta" }, "Kern, Begriffe und Ihr Auftrag für die Kita öffnen sich nach Ihrer Festlegung."));
-    var fi = el("div", { "class": "freigabe__inhalt" });
+    s1.appendChild(sz);
+    s1.appendChild(el("p", { "class": "auftrag" }, "Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung."));
+    var w = el("div", { "class": "teil" }); s1.appendChild(w);
+
+    var s2 = el("div", { "class": "seite" });
+    s2.appendChild(el("p", { "class": "meta" }, "Einstieg · Schritt 2 von 3 · etwa 5 Minuten · allein, dann zu zweit vergleichen"));
+    s2.appendChild(el("h2", { tabindex: "-1" }, "Das steckt dahinter"));
     var sich = el("div", { "class": "sicherung" });
-    sich.appendChild(el("p", { "class": "sicherung__kopf" }, "Das steckt dahinter")); sich.appendChild(el("p", {}, e.kern)); fi.appendChild(sich);
-    fi.appendChild(el("h3", { "class": "zwischen" }, "Begriffe dieser Etappe"));
+    sich.appendChild(el("p", { "class": "sicherung__kopf" }, "Ergebnissicherung")); sich.appendChild(el("p", {}, e.kern)); s2.appendChild(sich);
+    s2.appendChild(el("h3", { "class": "zwischen" }, "Begriffe dieser Etappe"));
     var dl = el("dl", { "class": "begriffe" });
     e.begriffe.forEach(function (b) { var d = el("div"); d.appendChild(el("dt", {}, b[0])); d.appendChild(el("dd", {}, b[1])); dl.appendChild(d); });
-    fi.appendChild(dl);
-    var kita = el("div", { "class": "praxis" });
-    kita.appendChild(el("h3", { "class": "zwischen" }, "In Ihrer Kita"));
-    kita.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.kita));
-    kita.appendChild(el("p", { "class": "meta" }, "Freiwillig und ohne Namen. Ihre Notiz bleibt auf diesem Gerät, bis Sie den Tab schließen."));
+    s2.appendChild(dl);
+
+    var s3 = el("div", { "class": "seite" });
+    s3.appendChild(el("p", { "class": "meta" }, "Einstieg · Schritt 3 von 3 · freiwillig · ohne Namen"));
+    s3.appendChild(el("h2", { tabindex: "-1" }, "In Ihrer Kita"));
+    s3.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.kita));
     var lab = el("label", { "class": "feld" }, "Das habe ich beobachtet:");
-    lab.appendChild(el("textarea", { rows: "2", "data-text": "kita-" + i, placeholder: "In meiner Einrichtung …" })); kita.appendChild(lab);
-    fi.appendChild(kita);
-    frei.appendChild(fi); karte.appendChild(frei);
-    box.appendChild(karte);
-    wahl(w, "e" + i, e.wahl.frage, e.wahl.optionen, function () { frei.removeAttribute("data-zu"); });
-    bindeTexte(kita);
+    lab.appendChild(el("textarea", { rows: "3", "data-text": "kita-" + i, placeholder: "In meiner Einrichtung …" })); s3.appendChild(lab);
+    s3.appendChild(el("p", { "class": "meta" }, "Ihre Notiz bleibt auf diesem Gerät, bis Sie den Tab schließen."));
+    var ende = el("div", { "class": "erledigt" }); s3.appendChild(ende);
 
-    var st = el("div", { "class": "stationen" });
-    st.appendChild(el("h2", {}, "Stationen dieser Etappe"));
-    st.appendChild(el("p", { "class": "lauf" }, "Am Ende nehmen Sie mit: " + e.mit + "."));
-    var ol = el("ol", { "class": "weg" });
-    e.weg.forEach(function (x) {
-      var li = el("li", { "data-stand": x[0] });
-      li.appendChild(el("span", { "class": "weg__marke" }, x[0] === "offen" ? "→" : ""));
-      if (x[2]) li.appendChild(el("a", { href: x[2] }, x[1])); else li.appendChild(el("span", {}, x[1]));
-      li.appendChild(el("span", { "class": x[0] === "offen" ? "weg__heute" : "weg__kommt" }, x[0] === "offen" ? "offen" : "kommt"));
-      ol.appendChild(li);
-    });
-    st.appendChild(ol); box.appendChild(st);
+    seiten = [s1, s2, s3]; seiten.forEach(function (s) { arb.appendChild(s); });
+    var nav = el("div", { "class": "weiter" });
+    var zur = el("button", { type: "button", "class": "g-knopf g-knopf--still" }, "← Zurück");
+    var hin = el("p", { "class": "meta", "aria-live": "polite" });
+    var wei = el("button", { type: "button", "class": "g-knopf g-knopf--primaer" }, "Weiter →");
+    nav.appendChild(zur); nav.appendChild(hin); nav.appendChild(wei); arb.appendChild(nav);
+    fenster.appendChild(arb); box.appendChild(fenster);
 
-    var nav = el("nav", { "class": "weiter", "aria-label": "Zwischen den Etappen wechseln" });
-    nav.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: i > 0 ? "#etappe-" + i : "#start" }, i > 0 ? "← Etappe " + i : "← Zum Kompass"));
-    nav.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: "#start" }, "Kompass"));
-    nav.appendChild(el("a", { "class": "g-knopf g-knopf--sekundaer", href: i < 7 ? "#etappe-" + (i + 2) : "#start" }, i < 7 ? "Etappe " + (i + 2) + " →" : "Zum Kompass →"));
-    box.appendChild(nav);
+    function gehe(n, fokus) {
+      akt = n;
+      seiten.forEach(function (s, j) { s.hidden = j + 1 !== n; });
+      male();
+      if (fokus) {
+        var h = $("h2", seiten[n - 1]); arb.scrollIntoView({ block: "start", behavior: "auto" }); h.focus({ preventScroll: true });
+        if (!RUHIG && seiten[n - 1].animate) seiten[n - 1].animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 200, easing: "cubic-bezier(.23,1,.32,1)" });
+      }
+    }
+    function male() {
+      var fest = !!S.wahlFest[key], st = etappeStand(i);
+      pills.forEach(function (b, j) {
+        var zu = j > 0 && !fest;
+        b.disabled = zu; b.setAttribute("data-stand", (j === 0 && fest) || (j > 0 && fest && j + 1 < akt) ? "fertig" : (zu ? "zu" : "offen"));
+        if (j + 1 === akt) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+        b.setAttribute("aria-label", "Schritt " + (j + 1) + ": " + TEILE[j] + (zu ? " – öffnet sich nach Ihrer Festlegung" : ""));
+      });
+      zur.hidden = akt === 1; wei.hidden = akt === 3;
+      wei.disabled = !fest; hin.textContent = !fest ? "Legen Sie sich zuerst fest." : "";
+      /* Kopf: Fortschritt der Etappe */
+      balken(fb, st.teile, st.fertig + " von " + st.von + " erledigt" + (st.kommt ? " · " + st.kommt + (st.kommt === 1 ? " Station kommt" : " Stationen kommen") + " im Lauf des Jahres dazu" : ""));
+      /* Seite: Einstieg und Stationen mit Stand */
+      ol.textContent = "";
+      var li0 = el("li", { "data-stand": fest ? "fertig" : "offen", "data-hier": "" });
+      li0.appendChild(el("span", { "class": "rail__marke", "aria-hidden": "true" }, fest ? "✓" : "1"));
+      var t0 = el("div"); t0.appendChild(el("b", {}, "Einstieg: " + e.szene.titel));
+      t0.appendChild(el("span", { "class": "rail__wozu" }, "Eine Szene, eine Festlegung, die wichtigsten Begriffe."));
+      t0.appendChild(el("span", { "class": "rail__stand" }, "10 Minuten · " + (fest ? "erledigt" : "Sie sind hier")));
+      li0.appendChild(t0); ol.appendChild(li0);
+      var naechste = null;
+      e.weg.forEach(function (x, j) {
+        var s = stationStand(x), li = el("li", { "data-stand": s });
+        li.appendChild(el("span", { "class": "rail__marke", "aria-hidden": "true" }, s === "fertig" ? "✓" : String(j + 2)));
+        var d = el("div");
+        if (x[2]) { var a = el("a", { href: x[2] }); a.appendChild(el("b", {}, x[1])); d.appendChild(a); if (!naechste && s !== "fertig") naechste = x; }
+        else d.appendChild(el("b", {}, x[1]));
+        d.appendChild(el("span", { "class": "rail__wozu" }, x[3]));
+        d.appendChild(el("span", { "class": "rail__stand" }, x[4] + " · " + STANDWORT[s]));
+        li.appendChild(d); ol.appendChild(li);
+      });
+      ziel.textContent = "";
+      ziel.appendChild(el("b", {}, st.fertig === st.von ? "Alles Offene ist erledigt." : "Fertig sind Sie hier, wenn"));
+      ziel.appendChild(el("span", {}, st.fertig === st.von ? (st.kommt ? "Die weiteren Stationen öffnen sich im Lauf des Jahres." : "Diese Etappe ist abgeschlossen.") : "der Einstieg und jede offene Station ein ✓ tragen. Am Ende nehmen Sie mit: " + e.mit + "."));
+      /* Abschluss des Einstiegs */
+      ende.textContent = "";
+      ende.appendChild(el("p", { "class": "erledigt__kopf" }, "✓ Einstieg erledigt"));
+      ende.appendChild(el("p", {}, naechste ? "Weiter geht es mit der Station »" + naechste[1] + "«." : "Die Stationen dieser Etappe kommen im Unterricht dazu. Sie können zurück zum Kompass."));
+      var r = el("div", { "class": "g-reihe" });
+      if (naechste) r.appendChild(el("a", { "class": "g-knopf g-knopf--primaer", href: naechste[2] }, "Zur Station →"));
+      r.appendChild(el("a", { "class": "g-knopf g-knopf--sekundaer", href: "#start" }, "Zum Kompass"));
+      if (i < 7) r.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: "#etappe-" + (i + 2) }, "Etappe " + (i + 2) + " ansehen →"));
+      ende.appendChild(r);
+    }
+    zur.addEventListener("click", function () { gehe(akt - 1, true); });
+    wei.addEventListener("click", function () { gehe(akt + 1, true); });
+    wahl(w, key, e.wahl.frage, e.wahl.optionen, function () { male(); });
+    bindeTexte(s3);
+    gehe(1, false);
   }
 
   /* ---------- Ausstellung: Plakat, Szene, Prüfstein, Alltagskarten, eigenes Plakat ---------- */
@@ -1801,7 +1953,9 @@ DATEN.alltag = [
     function stand() {
       var n = festZahl();
       D.stationen.forEach(function (s) { if (S.wahlFest[s.id]) knoepfe[s.id].setAttribute("data-stand", "fertig"); });
-      standP.textContent = n === 0 ? "Tippen Sie ein Plakat an." : n + " von " + D.stationen.length + " Plakaten festgelegt." + (n < 3 ? " Noch " + (3 - n) + " bis zu Ihrem eigenen Plakat." : "");
+      var teile = [0, 1, 2].map(function (k) { return n > k ? "fertig" : "offen"; }); teile.push(S.plakatZu ? "fertig" : "offen");
+      balken($("#aus-balken"), teile, (S.plakatZu && n >= 3 ? "Ausstellung erledigt. " : "") + Math.min(n, 3) + " von 3 Plakaten festgelegt · eigenes Plakat " + (S.plakatZu ? "fertig" : "noch offen") + (n > 3 ? " · " + (n - 3) + " weitere angesehen" : ""));
+      standP.textContent = n === 0 ? "Tippen Sie ein Plakat an." : (n < 3 ? "Noch " + (3 - n) + (3 - n === 1 ? " Plakat" : " Plakate") + " bis zu Ihrem eigenen Plakat." : (S.plakatZu ? "" : "Jetzt ist Ihr eigenes Plakat offen – weiter unten."));
       if (n >= 3) $("#plakat-box").removeAttribute("data-zu");
     }
     D.stationen.forEach(function (s, i) {
@@ -1892,7 +2046,7 @@ DATEN.alltag = [
     }
     function oeffne() { $("#plakat-raster").hidden = false; pk.hidden = true; ph.textContent = ""; male(); }
     satz.addEventListener("input", function () { pruefe(); male(); });
-    pk.addEventListener("click", function () { S.plakatZu = true; merke(); oeffne(); });
+    pk.addEventListener("click", function () { S.plakatZu = true; merke(); oeffne(); stand(); });
     window.addEventListener("pageshow", pruefe);
     pruefe(); if (S.plakatZu) oeffne();
   })();

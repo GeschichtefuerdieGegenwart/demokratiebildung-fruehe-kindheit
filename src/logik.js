@@ -503,6 +503,8 @@
       g.appendChild(sv("path", { d: ring(RA, RI, a1, a2) }));
       g.appendChild(sv("text", { x: m[0], y: m[1] - 6, "class": "rad-zahl" }, String(i + 1)));
       g.appendChild(sv("text", { x: m[0], y: m[1] + 16, "class": "rad-wort" }, e.kurz));
+      var haken = sv("text", { x: m[0], y: m[1] + 33, "class": "rad-haken" }, "");
+      g.appendChild(haken); g._haken = haken;
       if (i < D.hier) g.setAttribute("data-stand", "fertig");
       if (i === D.hier) { g.setAttribute("data-stand", "hier"); var h = pol(RA + 2, i * 45 + 22.5); g.appendChild(sv("circle", { cx: h[0], cy: h[1], r: 9, "class": "rad-hier" })); }
       g.addEventListener("click", function () { waehle(i, true); });
@@ -533,16 +535,26 @@
       panel.appendChild(el("h2", {}, e.titel));
       panel.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.frage));
       var dl = el("dl");
+      var st = etappeStand(i), fb = el("div"); panel.appendChild(fb);
+      balken(fb, st.teile, st.fertig + " von " + st.von + " erledigt" + (st.kommt ? " · " + st.kommt + (st.kommt === 1 ? " Station kommt später" : " Stationen kommen später") : ""));
       dl.appendChild(el("dt", {}, "Die Szene")); dl.appendChild(el("dd", {}, e.szene.titel));
       dl.appendChild(el("dt", {}, "Das nehmen Sie mit")); dl.appendChild(el("dd", {}, e.mit));
       dl.appendChild(el("dt", {}, "Im Vortrag")); dl.appendChild(el("dd", {}, e.vortrag));
       panel.appendChild(dl);
-      panel.appendChild(el("a", { "class": "knopf", href: "#etappe-" + (i + 1) }, "Etappe " + (i + 1) + " öffnen →"));
+      panel.appendChild(el("a", { "class": "knopf", href: "#etappe-" + (i + 1) }, (st.fertig ? "Etappe " + (i + 1) + " fortsetzen →" : "Etappe " + (i + 1) + " öffnen →")));
       if (bewegt && !RUHIG && panel.animate) panel.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 220, easing: "cubic-bezier(.23,1,.32,1)" });
     }
     $("#rad-heute").addEventListener("click", function () { waehle(D.hier, true); });
+    function frisch() {
+      segs.forEach(function (g, j) {
+        var st = etappeStand(j);
+        g._haken.textContent = st.fertig === st.von ? "✓" : (st.fertig ? st.fertig + "/" + st.von : "");
+        g.setAttribute("aria-label", "Etappe " + (j + 1) + ": " + D.etappen[j].titel + " – " + st.fertig + " von " + st.von + " erledigt" + (j === D.hier ? " – wir sind hier" : ""));
+      });
+      waehle(gewaehlt, false);
+    }
     waehle(D.hier, false);
-    return {};
+    return { frisch: frisch };
   })();
 
   /* ---------- Schritte, Freigaben, Ansichten ---------- */
@@ -579,6 +591,8 @@
       if (i + 1 === akt) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
       b.setAttribute("aria-label", "Schritt " + (i + 1) + ": " + schritte[i].dataset.titel + (f[i] ? " – erledigt" : (i + 1 > bis ? " – noch gesperrt" : "")));
     });
+    var nf = f.filter(Boolean).length;
+    balken($("#lern-balken"), f.map(function (x) { return x ? "fertig" : "offen"; }), nf === f.length ? "Lernseite erledigt: alle fünf Schritte abgeschlossen." : nf + " von " + f.length + " Schritten erledigt · Fertig sind Sie, wenn Ihr Satz verglichen und Ihre Position neu festgelegt ist.");
     var w = $("#weiter"), h = $("#weiter-hinweis");
     w.hidden = akt >= schritte.length; $("#zurueck").hidden = false;
     $("#zurueck").textContent = akt === 1 ? "← Zur Etappe 1" : "← Zurück";
@@ -607,6 +621,7 @@
     $$("[data-nav]").forEach(function (a) { if (a.dataset.nav === welche) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
     if (welche === "heute") gehe(Math.min(S.schritt || 1, offenBis()), true);
     if (welche === "etappe") zeigeModul(+m[1] - 1);
+    if (welche === "start") kompass.frisch();
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", ansicht);
@@ -650,62 +665,150 @@
     pruefe(); if (fest) zeige(false);
   }
 
-  /* ---------- Etappe: Szene, Festlegung, Kern, Begriffe, Stationen ---------- */
+  /* ---------- Fortschritt: zählt erledigte Festlegungen und Produkte, keine Klicks ---------- */
+  function balken(box, teile, satz) {
+    box.textContent = ""; box.className = "balken";
+    var spur = el("div", { "class": "balken__spur", "aria-hidden": "true" });
+    teile.forEach(function (x) { spur.appendChild(el("span", { "data-stand": x })); });
+    box.appendChild(spur); box.appendChild(el("p", { "class": "balken__text" }, satz));
+  }
+  function lernStand() { var f = stand(), n = f.filter(Boolean).length; return n === f.length ? "fertig" : (n > 0 ? "angefangen" : "offen"); }
+  function ausZahl() { return D.stationen.filter(function (s) { return S.wahlFest[s.id]; }).length; }
+  function ausStand() { var n = ausZahl(); return n >= 3 && S.plakatZu ? "fertig" : (n > 0 ? "angefangen" : "offen"); }
+  function stationStand(x) { return x[0] === "kommt" ? "kommt" : (x[2] === "#heute" ? lernStand() : (x[2] === "#ausstellung" ? ausStand() : "offen")); }
+  var STANDWORT = { fertig: "erledigt", angefangen: "angefangen", offen: "offen", kommt: "kommt später" };
+  function etappeStand(i) {
+    var e = D.etappen[i], teile = [S.wahlFest["e" + i] ? "fertig" : "offen"];
+    e.weg.forEach(function (x) { if (x[0] !== "kommt") teile.push(stationStand(x)); });
+    var n = teile.filter(function (x) { return x === "fertig"; }).length;
+    return { teile: teile, fertig: n, von: teile.length, kommt: e.weg.filter(function (x) { return x[0] === "kommt"; }).length };
+  }
+
+  /* ---------- Etappe: Weg an der Seite, Einstieg in drei Schritten im Fenster ---------- */
   function zeigeModul(i) {
-    var e = D.etappen[i], box = $("#modul"); box.textContent = "";
+    var e = D.etappen[i], box = $("#modul"), key = "e" + i, akt = 1; box.textContent = "";
     var kopf = el("div", { "class": "held" });
     kopf.appendChild(el("p", { "class": "kicker" }, "Etappe " + (i + 1) + " von 8 · " + D.blick[Math.floor(i / 2)] + " · " + e.vortrag));
     kopf.appendChild(el("h1", { id: "mod-titel" }, e.titel));
     kopf.appendChild(el("p", { "class": "leitfrage" }, e.frage));
+    var fb = el("div"); kopf.appendChild(fb);
     box.appendChild(kopf);
 
-    var karte = el("div", { "class": "schritt" });
+    var fenster = el("div", { "class": "fenster" });
+    /* Seite: der Weg durch die Etappe */
+    var rail = el("aside", { "class": "rail", "aria-labelledby": "rail-titel" });
+    rail.appendChild(el("h2", { id: "rail-titel" }, "Ihr Weg durch diese Etappe"));
+    rail.appendChild(el("p", { "class": "meta" }, "Der Einstieg führt in das Thema. In den Stationen arbeiten Sie daran – im Unterricht, gemeinsam geführt."));
+    var ol = el("ol", { "class": "rail__liste" }); rail.appendChild(ol);
+    var ziel = el("div", { "class": "rail__ziel" }); rail.appendChild(ziel);
+    fenster.appendChild(rail);
+
+    /* Fenster: Einstieg in drei Schritten */
+    var arb = el("div", { "class": "schritt arbeits" });
+    var leiste = el("ol", { "class": "schritte", "aria-label": "Schritte des Einstiegs" }); arb.appendChild(leiste);
+    var TEILE = ["Szene", "Dahinter", "Ihre Kita"], pills = [], seiten = [];
+    TEILE.forEach(function (name, n) {
+      var li = el("li"), b = el("button", { type: "button" });
+      b.appendChild(el("b", {}, String(n + 1))); b.appendChild(el("span", {}, name));
+      b.addEventListener("click", function () { if (!b.disabled) gehe(n + 1, true); });
+      li.appendChild(b); leiste.appendChild(li); pills.push(b);
+    });
+
+    var s1 = el("div", { "class": "seite" });
+    s1.appendChild(el("p", { "class": "meta" }, "Einstieg · Schritt 1 von 3 · etwa 5 Minuten · allein"));
     var sz = el("div", { "class": "falltext" });
     sz.appendChild(el("p", { "class": "etikett" }, e.szene.status));
-    sz.appendChild(el("h2", {}, e.szene.titel));
+    sz.appendChild(el("h2", { tabindex: "-1" }, e.szene.titel));
     e.szene.text.forEach(function (a) { sz.appendChild(el("p", { "class": "falltext__text" }, a)); });
-    karte.appendChild(sz);
-    karte.appendChild(el("p", { "class": "auftrag" }, "Lesen Sie die Szene. Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie, was dahintersteckt."));
-    var w = el("div", { "class": "teil" }); karte.appendChild(w);
-    var frei = el("div", { "class": "freigabe", "data-zu": "" });
-    frei.appendChild(el("p", { "class": "freigabe__sperre meta" }, "Kern, Begriffe und Ihr Auftrag für die Kita öffnen sich nach Ihrer Festlegung."));
-    var fi = el("div", { "class": "freigabe__inhalt" });
+    s1.appendChild(sz);
+    s1.appendChild(el("p", { "class": "auftrag" }, "Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung."));
+    var w = el("div", { "class": "teil" }); s1.appendChild(w);
+
+    var s2 = el("div", { "class": "seite" });
+    s2.appendChild(el("p", { "class": "meta" }, "Einstieg · Schritt 2 von 3 · etwa 5 Minuten · allein, dann zu zweit vergleichen"));
+    s2.appendChild(el("h2", { tabindex: "-1" }, "Das steckt dahinter"));
     var sich = el("div", { "class": "sicherung" });
-    sich.appendChild(el("p", { "class": "sicherung__kopf" }, "Das steckt dahinter")); sich.appendChild(el("p", {}, e.kern)); fi.appendChild(sich);
-    fi.appendChild(el("h3", { "class": "zwischen" }, "Begriffe dieser Etappe"));
+    sich.appendChild(el("p", { "class": "sicherung__kopf" }, "Ergebnissicherung")); sich.appendChild(el("p", {}, e.kern)); s2.appendChild(sich);
+    s2.appendChild(el("h3", { "class": "zwischen" }, "Begriffe dieser Etappe"));
     var dl = el("dl", { "class": "begriffe" });
     e.begriffe.forEach(function (b) { var d = el("div"); d.appendChild(el("dt", {}, b[0])); d.appendChild(el("dd", {}, b[1])); dl.appendChild(d); });
-    fi.appendChild(dl);
-    var kita = el("div", { "class": "praxis" });
-    kita.appendChild(el("h3", { "class": "zwischen" }, "In Ihrer Kita"));
-    kita.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.kita));
-    kita.appendChild(el("p", { "class": "meta" }, "Freiwillig und ohne Namen. Ihre Notiz bleibt auf diesem Gerät, bis Sie den Tab schließen."));
+    s2.appendChild(dl);
+
+    var s3 = el("div", { "class": "seite" });
+    s3.appendChild(el("p", { "class": "meta" }, "Einstieg · Schritt 3 von 3 · freiwillig · ohne Namen"));
+    s3.appendChild(el("h2", { tabindex: "-1" }, "In Ihrer Kita"));
+    s3.appendChild(el("p", { "class": "leitfrage leitfrage--klein" }, e.kita));
     var lab = el("label", { "class": "feld" }, "Das habe ich beobachtet:");
-    lab.appendChild(el("textarea", { rows: "2", "data-text": "kita-" + i, placeholder: "In meiner Einrichtung …" })); kita.appendChild(lab);
-    fi.appendChild(kita);
-    frei.appendChild(fi); karte.appendChild(frei);
-    box.appendChild(karte);
-    wahl(w, "e" + i, e.wahl.frage, e.wahl.optionen, function () { frei.removeAttribute("data-zu"); });
-    bindeTexte(kita);
+    lab.appendChild(el("textarea", { rows: "3", "data-text": "kita-" + i, placeholder: "In meiner Einrichtung …" })); s3.appendChild(lab);
+    s3.appendChild(el("p", { "class": "meta" }, "Ihre Notiz bleibt auf diesem Gerät, bis Sie den Tab schließen."));
+    var ende = el("div", { "class": "erledigt" }); s3.appendChild(ende);
 
-    var st = el("div", { "class": "stationen" });
-    st.appendChild(el("h2", {}, "Stationen dieser Etappe"));
-    st.appendChild(el("p", { "class": "lauf" }, "Am Ende nehmen Sie mit: " + e.mit + "."));
-    var ol = el("ol", { "class": "weg" });
-    e.weg.forEach(function (x) {
-      var li = el("li", { "data-stand": x[0] });
-      li.appendChild(el("span", { "class": "weg__marke" }, x[0] === "offen" ? "→" : ""));
-      if (x[2]) li.appendChild(el("a", { href: x[2] }, x[1])); else li.appendChild(el("span", {}, x[1]));
-      li.appendChild(el("span", { "class": x[0] === "offen" ? "weg__heute" : "weg__kommt" }, x[0] === "offen" ? "offen" : "kommt"));
-      ol.appendChild(li);
-    });
-    st.appendChild(ol); box.appendChild(st);
+    seiten = [s1, s2, s3]; seiten.forEach(function (s) { arb.appendChild(s); });
+    var nav = el("div", { "class": "weiter" });
+    var zur = el("button", { type: "button", "class": "g-knopf g-knopf--still" }, "← Zurück");
+    var hin = el("p", { "class": "meta", "aria-live": "polite" });
+    var wei = el("button", { type: "button", "class": "g-knopf g-knopf--primaer" }, "Weiter →");
+    nav.appendChild(zur); nav.appendChild(hin); nav.appendChild(wei); arb.appendChild(nav);
+    fenster.appendChild(arb); box.appendChild(fenster);
 
-    var nav = el("nav", { "class": "weiter", "aria-label": "Zwischen den Etappen wechseln" });
-    nav.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: i > 0 ? "#etappe-" + i : "#start" }, i > 0 ? "← Etappe " + i : "← Zum Kompass"));
-    nav.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: "#start" }, "Kompass"));
-    nav.appendChild(el("a", { "class": "g-knopf g-knopf--sekundaer", href: i < 7 ? "#etappe-" + (i + 2) : "#start" }, i < 7 ? "Etappe " + (i + 2) + " →" : "Zum Kompass →"));
-    box.appendChild(nav);
+    function gehe(n, fokus) {
+      akt = n;
+      seiten.forEach(function (s, j) { s.hidden = j + 1 !== n; });
+      male();
+      if (fokus) {
+        var h = $("h2", seiten[n - 1]); arb.scrollIntoView({ block: "start", behavior: "auto" }); h.focus({ preventScroll: true });
+        if (!RUHIG && seiten[n - 1].animate) seiten[n - 1].animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 200, easing: "cubic-bezier(.23,1,.32,1)" });
+      }
+    }
+    function male() {
+      var fest = !!S.wahlFest[key], st = etappeStand(i);
+      pills.forEach(function (b, j) {
+        var zu = j > 0 && !fest;
+        b.disabled = zu; b.setAttribute("data-stand", (j === 0 && fest) || (j > 0 && fest && j + 1 < akt) ? "fertig" : (zu ? "zu" : "offen"));
+        if (j + 1 === akt) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+        b.setAttribute("aria-label", "Schritt " + (j + 1) + ": " + TEILE[j] + (zu ? " – öffnet sich nach Ihrer Festlegung" : ""));
+      });
+      zur.hidden = akt === 1; wei.hidden = akt === 3;
+      wei.disabled = !fest; hin.textContent = !fest ? "Legen Sie sich zuerst fest." : "";
+      /* Kopf: Fortschritt der Etappe */
+      balken(fb, st.teile, st.fertig + " von " + st.von + " erledigt" + (st.kommt ? " · " + st.kommt + (st.kommt === 1 ? " Station kommt" : " Stationen kommen") + " im Lauf des Jahres dazu" : ""));
+      /* Seite: Einstieg und Stationen mit Stand */
+      ol.textContent = "";
+      var li0 = el("li", { "data-stand": fest ? "fertig" : "offen", "data-hier": "" });
+      li0.appendChild(el("span", { "class": "rail__marke", "aria-hidden": "true" }, fest ? "✓" : "1"));
+      var t0 = el("div"); t0.appendChild(el("b", {}, "Einstieg: " + e.szene.titel));
+      t0.appendChild(el("span", { "class": "rail__wozu" }, "Eine Szene, eine Festlegung, die wichtigsten Begriffe."));
+      t0.appendChild(el("span", { "class": "rail__stand" }, "10 Minuten · " + (fest ? "erledigt" : "Sie sind hier")));
+      li0.appendChild(t0); ol.appendChild(li0);
+      var naechste = null;
+      e.weg.forEach(function (x, j) {
+        var s = stationStand(x), li = el("li", { "data-stand": s });
+        li.appendChild(el("span", { "class": "rail__marke", "aria-hidden": "true" }, s === "fertig" ? "✓" : String(j + 2)));
+        var d = el("div");
+        if (x[2]) { var a = el("a", { href: x[2] }); a.appendChild(el("b", {}, x[1])); d.appendChild(a); if (!naechste && s !== "fertig") naechste = x; }
+        else d.appendChild(el("b", {}, x[1]));
+        d.appendChild(el("span", { "class": "rail__wozu" }, x[3]));
+        d.appendChild(el("span", { "class": "rail__stand" }, x[4] + " · " + STANDWORT[s]));
+        li.appendChild(d); ol.appendChild(li);
+      });
+      ziel.textContent = "";
+      ziel.appendChild(el("b", {}, st.fertig === st.von ? "Alles Offene ist erledigt." : "Fertig sind Sie hier, wenn"));
+      ziel.appendChild(el("span", {}, st.fertig === st.von ? (st.kommt ? "Die weiteren Stationen öffnen sich im Lauf des Jahres." : "Diese Etappe ist abgeschlossen.") : "der Einstieg und jede offene Station ein ✓ tragen. Am Ende nehmen Sie mit: " + e.mit + "."));
+      /* Abschluss des Einstiegs */
+      ende.textContent = "";
+      ende.appendChild(el("p", { "class": "erledigt__kopf" }, "✓ Einstieg erledigt"));
+      ende.appendChild(el("p", {}, naechste ? "Weiter geht es mit der Station »" + naechste[1] + "«." : "Die Stationen dieser Etappe kommen im Unterricht dazu. Sie können zurück zum Kompass."));
+      var r = el("div", { "class": "g-reihe" });
+      if (naechste) r.appendChild(el("a", { "class": "g-knopf g-knopf--primaer", href: naechste[2] }, "Zur Station →"));
+      r.appendChild(el("a", { "class": "g-knopf g-knopf--sekundaer", href: "#start" }, "Zum Kompass"));
+      if (i < 7) r.appendChild(el("a", { "class": "g-knopf g-knopf--still", href: "#etappe-" + (i + 2) }, "Etappe " + (i + 2) + " ansehen →"));
+      ende.appendChild(r);
+    }
+    zur.addEventListener("click", function () { gehe(akt - 1, true); });
+    wei.addEventListener("click", function () { gehe(akt + 1, true); });
+    wahl(w, key, e.wahl.frage, e.wahl.optionen, function () { male(); });
+    bindeTexte(s3);
+    gehe(1, false);
   }
 
   /* ---------- Ausstellung: Plakat, Szene, Prüfstein, Alltagskarten, eigenes Plakat ---------- */
@@ -715,7 +818,9 @@
     function stand() {
       var n = festZahl();
       D.stationen.forEach(function (s) { if (S.wahlFest[s.id]) knoepfe[s.id].setAttribute("data-stand", "fertig"); });
-      standP.textContent = n === 0 ? "Tippen Sie ein Plakat an." : n + " von " + D.stationen.length + " Plakaten festgelegt." + (n < 3 ? " Noch " + (3 - n) + " bis zu Ihrem eigenen Plakat." : "");
+      var teile = [0, 1, 2].map(function (k) { return n > k ? "fertig" : "offen"; }); teile.push(S.plakatZu ? "fertig" : "offen");
+      balken($("#aus-balken"), teile, (S.plakatZu && n >= 3 ? "Ausstellung erledigt. " : "") + Math.min(n, 3) + " von 3 Plakaten festgelegt · eigenes Plakat " + (S.plakatZu ? "fertig" : "noch offen") + (n > 3 ? " · " + (n - 3) + " weitere angesehen" : ""));
+      standP.textContent = n === 0 ? "Tippen Sie ein Plakat an." : (n < 3 ? "Noch " + (3 - n) + (3 - n === 1 ? " Plakat" : " Plakate") + " bis zu Ihrem eigenen Plakat." : (S.plakatZu ? "" : "Jetzt ist Ihr eigenes Plakat offen – weiter unten."));
       if (n >= 3) $("#plakat-box").removeAttribute("data-zu");
     }
     D.stationen.forEach(function (s, i) {
@@ -806,7 +911,7 @@
     }
     function oeffne() { $("#plakat-raster").hidden = false; pk.hidden = true; ph.textContent = ""; male(); }
     satz.addEventListener("input", function () { pruefe(); male(); });
-    pk.addEventListener("click", function () { S.plakatZu = true; merke(); oeffne(); });
+    pk.addEventListener("click", function () { S.plakatZu = true; merke(); oeffne(); stand(); });
     window.addEventListener("pageshow", pruefe);
     pruefe(); if (S.plakatZu) oeffne();
   })();

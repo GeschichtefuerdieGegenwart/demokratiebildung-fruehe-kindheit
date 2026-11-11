@@ -359,6 +359,52 @@ a.g-knopf--still{text-decoration:underline}
 .meinplakat__satz{font:600 clamp(1.7rem,1.3rem + 2vw,2.6rem)/1.15 var(--serif);color:var(--pc);text-wrap:balance;overflow-wrap:anywhere}
 #plakat-box h2{font-size:1.5rem}
 
+
+/* Fortschritt */
+.balken{display:grid;gap:6px;max-width:34rem}
+.balken__spur{display:flex;gap:4px}
+.balken__spur span{flex:1;height:10px;border-radius:5px;background:var(--sand);box-shadow:inset 0 0 0 1.5px #8B979A}
+.balken__spur span[data-stand=fertig]{background:var(--tuerkis);box-shadow:none}
+.balken__spur span[data-stand=angefangen]{background:linear-gradient(90deg,var(--tuerkis) 50%,var(--sand) 50%);box-shadow:inset 0 0 0 1.5px var(--tuerkis)}
+.balken__text{font:600 1rem/1.35 var(--sans);color:var(--leise)}
+.etappe .balken{margin-block:2px 4px}
+.rad-haken{font:600 13px var(--sans);fill:var(--tuerkis);text-anchor:middle}
+.rad-seg[aria-pressed=true] .rad-haken{fill:#fff}
+
+/* Etappe: Weg an der Seite, Arbeit im Fenster */
+.modul{gap:clamp(16px,2.5vw,24px)}
+.modul .held{gap:8px}
+.modul .held h1{font-size:clamp(1.7rem,1.3rem + 1.8vw,2.4rem)}
+.modul .held .leitfrage{font-size:clamp(1.25rem,1.1rem + .8vw,1.6rem)}
+.fenster{display:grid;gap:clamp(16px,2.5vw,28px);align-items:start}
+.fenster>*{min-width:0}
+@media (min-width:760px){.fenster{grid-template-columns:minmax(15rem,19rem) minmax(0,1fr)}.rail{position:sticky;top:76px}}
+.rail{background:var(--flaeche);border-radius:var(--r);padding:20px;box-shadow:var(--schatten);display:grid;gap:12px}
+.rail h2{font-size:1.25rem}
+.rail__liste{list-style:none;padding:0;display:grid;gap:4px}
+.rail__liste li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:10px;border-radius:var(--r-klein)}
+.rail__liste li[data-hier]{background:var(--eis-hell)}
+.rail__marke{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:600 1rem/1 var(--sans);background:var(--sand);color:var(--petrol)}
+.rail__liste li[data-stand=fertig] .rail__marke{background:var(--tuerkis);color:#fff}
+.rail__liste li[data-stand=angefangen] .rail__marke{box-shadow:inset 0 0 0 3px var(--tuerkis)}
+.rail__liste li[data-stand=kommt]{color:var(--leise)}
+.rail__liste li[data-stand=kommt] .rail__marke{background:none;border:1.5px dashed #8B979A;color:var(--leise)}
+.rail__liste div{display:grid;gap:2px}
+.rail__liste b{font:600 1.05rem/1.3 var(--sans)}
+.rail__liste a{color:var(--petrol);min-height:28px}
+.rail__wozu{font-size:1rem;line-height:1.4}
+.rail__stand{font:600 .9rem/1.3 var(--sans);color:var(--leise)}
+.rail__liste li[data-stand=fertig] .rail__stand{color:var(--tuerkis)}
+.rail__ziel{border-top:1px solid var(--linie);padding-top:12px;display:grid;gap:2px;font-size:1rem;line-height:1.45}
+.arbeits{gap:18px;scroll-margin-top:76px}
+.arbeits .schritte{margin-top:0}
+.arbeits .seite{display:grid;gap:18px}
+.arbeits .seite>h2{outline:none;font-size:1.6rem}
+.arbeits .falltext h2{font-size:1.4rem;outline:none}
+.erledigt{background:var(--gut-hell);border-left:6px solid var(--gut);border-radius:0 var(--r-klein) var(--r-klein) 0;padding:14px 18px;display:grid;gap:10px}
+.erledigt__kopf{font:600 1.1rem/1.2 var(--sans);color:var(--gut)}
+@media (max-width:759px){.rail{order:2}}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{
   .top,.sprung,.g-knopf,.knopf,.chips,.fallwahl,.weiter,.schritte,#loesch-frage,.ende,.fuss details,.freigabe__sperre,.woerter,.lege__stapel,#lege-rueck,.g-stempel,.plakate,#plakat-stand{display:none!important}
