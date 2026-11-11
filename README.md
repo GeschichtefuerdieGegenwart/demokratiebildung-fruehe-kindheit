@@ -2,7 +2,7 @@
 
 Digitaler Leitfaden für das Wahlfach »Demokratie, jetzt und in Zukunft: Demokratiebildung in der frühen Kindheit« (Fachschule für Sozialpädagogik, Abschlussklasse, Tablet-Klasse).
 
-**Stand:** Version 2 vom 11.11.2026. Entwurf, noch nicht im Unterricht erprobt.
+**Stand:** Version 2.1 vom 11.11.2026. Entwurf, noch nicht im Unterricht erprobt.
 
 ## Was hier liegt
 
@@ -11,7 +11,7 @@ Digitaler Leitfaden für das Wahlfach »Demokratie, jetzt und in Zukunft: Demokr
 | Bereich | Adresse | Inhalt |
 | --- | --- | --- |
 | Jahreskompass | `#start` | Acht Etappen durch das Schuljahr, in der Mitte die Kinderrechte. Darunter der rote Faden: der Impulsvortrag vom Fachtag (29.04.2026) in drei Teilen. |
-| Etappen | `#etappe-1` bis `#etappe-8` | Je Etappe eine Szene aus dem Vortrag, eine Festlegung mit Begründung, danach Kern, Begriffe, Auftrag für die eigene Kita und die Stationen der Etappe. |
+| Etappen | `#etappe-1` bis `#etappe-8` | Zweigeteiltes Fenster: an der Seite »Ihr Weg durch diese Etappe« (Einstieg und Stationen, je mit Zweck, Dauer und Stand, dazu »Fertig sind Sie hier, wenn …«); im Fenster der Einstieg in drei Schritten – Szene mit Festlegung, Kern und Begriffe, Auftrag für die eigene Kita. |
 | Lernseite | `#heute` | »Drei Formen – ein Ganzes« (Etappe 1) in fünf Schritten: Szene und Position, lesen und markieren, Begriffsnetz legen, Kita-Fall mit dem Dreibein prüfen, eigener Satz. |
 | Ausstellung | `#ausstellung` | »Kinderrechte im Kita-Alltag« (Etappe 3): sechs Plakate mit Szene und Prüfstein, sechs Alltagskarten, eigenes Plakat für die Kita. |
 
@@ -37,6 +37,7 @@ Der Vortrag ist das Kerncurriculum. Die Etappen 1 bis 6 und 8 folgen seinen Kapi
 - **Anrede:** »Sie« (erwachsene Lernende).
 - **Interaktionsmuster** (höchstens drei je Bereich): Einfachwahl mit Erklärung je Option und eigener Begründung (Etappen, Ausstellung) · Aufdecken nach Festlegung (Alltagskarten) · Satzanfang mit Kriterienvergleich (eigener Satz, eigenes Plakat). In der Lernseite zusätzlich Markieren im Text, Zuordnen mit Begründung und Regler mit sichtbarer Folge (Dreibein).
 - **Freigaben:** Kern, Begriffe und Rückmeldung öffnen sich erst nach der eigenen Festlegung. In der Lernseite öffnet `index.html#heute-alle` alle Schritte für das Smartboard. Das ist kein Schutz, nur eine Bremse gegen Vorblättern.
+- **Fortschritt** (Version 2.1, nach dem Vorbild der Politik-Werkstatt): ein Balken je Etappe, in der Lernseite und in der Ausstellung, immer mit Satz daneben. Er zählt erledigte Festlegungen und Produkte, keine Klicks: Einstieg = Festlegung getroffen · Lernseite = alle fünf Schritte abgeschlossen · Ausstellung = drei Plakate festgelegt und eigenes Plakat verglichen. Stationen, die noch kommen, zählen nicht mit. Der Kompass zeigt den Stand je Etappe (»1/2« oder ✓).
 - **Bewegung:** nur nach einer Handlung (Nadel des Kompasses, Öffnen einer Freigabe, Dreibein). Dauern 100 bis 420 ms; die Nadel dreht 800 ms. Bei »weniger Bewegung« im System steht alles still.
 - **Speichern:** Auswahl und Legebild im `localStorage` (Schlüssel `wpb-demokratie-leitfaden:v3`, nur Kennungen und Zahlen), Texte im `sessionStorage` bis zum Schließen des Tabs. »Eingaben löschen« steht im letzten Schritt der Lernseite und löscht alles.
 

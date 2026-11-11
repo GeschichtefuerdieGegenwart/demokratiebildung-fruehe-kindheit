@@ -23,7 +23,7 @@ DATEN.etappen = [
       ["Selbstwirksamkeit", "Die Erfahrung: Meine Stimme zählt. Was ich tue, verändert etwas."]],
     mit: "die drei Formen der Demokratie – und Ihren eigenen Satz, wann Demokratie in der Kita beginnt",
     kita: "Wo wird in Ihrer Einrichtung entschieden – und von wem?",
-    weg: [["offen", "Lernseite: Drei Formen – ein Ganzes", "#heute"], ["kommt", "Was steht auf dem Spiel? Warum Demokratie gelernt werden muss"]] },
+    weg: [["offen", "Lernseite: Drei Formen – ein Ganzes", "#heute", "Sie klären, was Demokratie ist, und schreiben Ihren eigenen Satz dazu.", "90 Minuten"], ["kommt", "Was steht auf dem Spiel? Warum Demokratie gelernt werden muss", "", "Sie begründen, warum Demokratiebildung heute dringlich ist.", "45 Minuten"]] },
 
   { kurz: "Warum Kita?", titel: "Warum gerade die Kita?", vortrag: "Teil II · Warum die frühe Kindheit",
     frage: "Warum beginnt Demokratiebildung nicht erst in der Schule?",
@@ -42,7 +42,7 @@ DATEN.etappen = [
       ["Aushandlung", "Verschiedene Wünsche werden besprochen, bis eine Lösung steht, die alle mittragen können."]],
     mit: "vier Gründe, mit denen Sie Demokratiebildung im Team und vor Eltern begründen können",
     kita: "Wo haben Sie zuletzt erlebt, dass Kinder einen Streit ohne Erwachsene gelöst haben? Was hatten sie dafür schon gelernt?",
-    weg: [["kommt", "Vier Gründe für die frühe Kindheit"], ["kommt", "Welche Demokratie lernen Kinder bei uns?"]] },
+    weg: [["kommt", "Vier Gründe für die frühe Kindheit", "", "Sie sammeln Argumente, mit denen Sie vor Team und Eltern bestehen.", "45 Minuten"], ["kommt", "Welche Demokratie lernen Kinder bei uns?", "", "Sie prüfen eine Situation aus Ihrer eigenen Einrichtung.", "45 Minuten"]] },
 
   { kurz: "Kinderrechte", titel: "Kinder haben Rechte", vortrag: "Teil II · Korczak und der gesetzliche Auftrag",
     frage: "Geben wir Kindern Rechte – oder haben sie welche?",
@@ -62,7 +62,7 @@ DATEN.etappen = [
       ["Drei Prüfsteine", "Schutz vor Gewalt, Beschämung und Ausgrenzung · Förderung durch Beziehung, Spiel, Sprache und Teilhabe · Beteiligung an allem, was das Kind betrifft."]],
     mit: "die drei Prüfsteine Schutz, Förderung, Beteiligung – und ein Kinderrechte-Plakat für Ihre Kita",
     kita: "Welche Rechte der Kinder sind in Ihrer Einrichtung aufgeschrieben – und wo können die Kinder sie sehen?",
-    weg: [["offen", "Ausstellung: Kinderrechte im Kita-Alltag", "#ausstellung"], ["kommt", "Vom Gesetz in den Alltag: Was heißt Artikel 12 in der Kita?"]] },
+    weg: [["offen", "Ausstellung: Kinderrechte im Kita-Alltag", "#ausstellung", "Sie prüfen sechs Kita-Szenen an den Kinderrechten und gestalten ein Plakat.", "45 Minuten"], ["kommt", "Vom Gesetz in den Alltag: Was heißt Artikel 12 in der Kita?", "", "Sie übersetzen einen Gesetzestext in das, was Kinder täglich erleben.", "45 Minuten"]] },
 
   { kurz: "Macht", titel: "Macht und Haltung", vortrag: "Teil III · Das Herzstück: die Haltung",
     frage: "Was mache ich mit der Macht, die ich als Erwachsene oder Erwachsener habe?",
@@ -81,7 +81,7 @@ DATEN.etappen = [
       ["Vorurteilsbewusste Bildung", "Ansatz mit vier Zielen (Anti-Bias): Identitäten stärken, Vielfalt erfahrbar machen, kritisch über Vorurteile nachdenken, gegen Diskriminierung aktiv werden."]],
     mit: "eine persönliche Handlungsleitlinie für Essen, Schlafen, Anziehen und Wickeln",
     kita: "Bei welcher Alltagsfrage entscheiden Sie allein, obwohl das Kind mitentscheiden könnte?",
-    weg: [["kommt", "Einladende und verschließende Sätze"], ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung"], ["kommt", "Stereotype Aussagen unter Kindern aufgreifen"]] },
+    weg: [["kommt", "Einladende und verschließende Sätze", "", "Sie formulieren Alltagssätze so um, dass Kinder mitentscheiden können.", "45 Minuten"], ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung", "", "Sie prüfen Bücher, Bilder und Routinen: Wer kommt vor, wer nicht?", "90 Minuten"], ["kommt", "Stereotype Aussagen unter Kindern aufgreifen", "", "Sie üben, wie Sie reagieren, wenn ein Kind ein anderes abwertet.", "90 Minuten"]] },
 
   { kurz: "Strukturen", titel: "Strukturen, die verlässlich sind", vortrag: "Teil III · Formelle Demokratiebildung",
     frage: "Welche festen Verfahren sichern die Rechte der Kinder – und was gilt, wenn die Mehrheit jemanden überstimmt?",
@@ -102,7 +102,7 @@ DATEN.etappen = [
       ["Ambiguitätstoleranz", "Die Fähigkeit, Uneindeutiges und Widersprüche auszuhalten, statt nach einfachen Antworten zu greifen."]],
     mit: "den Ablauf einer Kinderkonferenz und ein kleines Beschwerdekonzept",
     kita: "Welche festen Verfahren gibt es in Ihrer Einrichtung – und wissen die Kinder davon?",
-    weg: [["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose"], ["kommt", "Eine Kinderkonferenz gestalten"], ["kommt", "Beschwerdewege für Kinder"]] },
+    weg: [["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose", "", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein.", "90 Minuten"], ["kommt", "Eine Kinderkonferenz gestalten", "", "Sie planen den Ablauf einer Kinderkonferenz und erproben die Moderation.", "90 Minuten"], ["kommt", "Beschwerdewege für Kinder", "", "Sie entwerfen einen Weg, auf dem auch kleine Kinder sich beschweren können.", "90 Minuten"]] },
 
   { kurz: "Alltag", titel: "Demokratie im Alltag", vortrag: "Teil III · Informelle Demokratiebildung",
     frage: "Was erleben Kinder in den vielen Stunden zwischen den Gremien?",
@@ -121,7 +121,7 @@ DATEN.etappen = [
       ["Willkür", "Eine Fachkraft nimmt Kinder ernst. Am Nachbartisch gilt das Gegenteil, weil nichts vereinbart ist."]],
     mit: "einen Beteiligungscheck für Essen, Pflege, Schlafen und Morgenkreis",
     kita: "Beobachten Sie eine Mahlzeit: Wer entscheidet, was und wie viel auf den Teller kommt?",
-    weg: [["kommt", "Mahlzeiten: der wichtigste Übungsort"], ["kommt", "Wickeln, Schlafen, Eingewöhnung"], ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen"]] },
+    weg: [["kommt", "Mahlzeiten: der wichtigste Übungsort", "", "Sie untersuchen, wer beim Essen was entscheidet.", "45 Minuten"], ["kommt", "Wickeln, Schlafen, Eingewöhnung", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"], ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen", "", "Sie prüfen, wo Ihrer Einrichtung eher das Verfahren fehlt und wo die Haltung.", "90 Minuten"]] },
 
   { kurz: "Position", titel: "Haltung zeigen", vortrag: "Teil I · Was steht auf dem Spiel? – weitergedacht",
     frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
@@ -140,7 +140,7 @@ DATEN.etappen = [
       ["Beutelsbacher Konsens", "Drei Grundsätze politischer Bildung: niemanden überwältigen, Kontroverses kontrovers darstellen, zum eigenen Urteil befähigen."]],
     mit: "einen Gesprächsleitfaden und eine Intervention in fünf Sätzen",
     kita: "Welche Aussage haben Sie schon gehört, bei der Sie gern etwas gesagt hätten?",
-    weg: [["kommt", "Diskriminierung erkennen und benennen"], ["kommt", "Populismus verstehen – die aktuelle Lage"], ["kommt", "Zuhören, nachfragen, klar widersprechen"]] },
+    weg: [["kommt", "Diskriminierung erkennen und benennen", "", "Sie lernen Formen der Abwertung kennen und ordnen Aussagen ein.", "mehrere Stunden"], ["kommt", "Populismus verstehen – die aktuelle Lage", "", "Sie prüfen politische Aussagen an Quellen und an den Grundrechten.", "mehrere Stunden"], ["kommt", "Zuhören, nachfragen, klar widersprechen", "", "Sie üben Gespräche mit Erwachsenen, die abwertend sprechen.", "mehrere Stunden"]] },
 
   { kurz: "Praxis", titel: "Ihr Praxisprojekt", vortrag: "Teil III · Kinder können Demokratie",
     frage: "Was nehmen Sie mit in Ihre Einrichtung?",
@@ -158,7 +158,7 @@ DATEN.etappen = [
       ["Zukunftswerkstatt", "Methode in drei Schritten: Kritik sammeln, Wünsche entwickeln, Umsetzung planen."]],
     mit: "Ihr eigenes Demokratieprojekt – geplant, erprobt und vorgestellt",
     kita: "Welche kleine Veränderung in Ihrer Einrichtung würden die Kinder sofort bemerken?",
-    weg: [["kommt", "Projektwerkstatt"], ["kommt", "Erprobung und kollegiale Beratung"], ["kommt", "Präsentation und Ausblick"]] }
+    weg: [["kommt", "Projektwerkstatt", "", "Sie planen Ihr eigenes Vorhaben für die Praxisstelle.", "mehrere Stunden"], ["kommt", "Erprobung und kollegiale Beratung", "", "Sie probieren Ihr Vorhaben aus und holen Rückmeldung ein.", "mehrere Stunden"], ["kommt", "Präsentation und Ausblick", "", "Sie stellen Ihr Projekt vor und halten fest, was Sie mitnehmen.", "mehrere Stunden"]] }
 ];
 
 /* ---------- Ausstellung: Kinderrechte im Kita-Alltag (aus der Mitmach-Ausstellung zum Tag der Kinderrechte, für Fachkräfte umgebaut) ---------- */
