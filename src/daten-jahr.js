@@ -1,11 +1,28 @@
-/* Leitfaden durch das Jahr: acht Etappen entlang des Impulsvortrags (Fachtag 29.04.2026) und die Kinderrechte-Ausstellung.
-   Status: Zuschnitt der Etappen, Rückmeldetexte und Zuordnung zu den Prüfsteinen sind Vorschläge – noch nicht geprüft. */
-DATEN.hier = 0; /* Etappe, in der die Klasse gerade arbeitet (0 = erste) */
-DATEN.blick = ["Verstehen", "Reflektieren", "Handeln", "Positionieren"];
-DATEN.urteilWort = { zentral: "Das trifft den Kern.", begruendbar: "Lässt sich begründen.", kaum: "Passt kaum." };
+/* Leitfaden durch das Jahr: acht Etappen entlang des Impulsvortrags (Fachtag 29.04.2026).
+   Status: Zuschnitt der Etappen, Rückmeldetexte und Einstufungen sind Vorschläge – noch nicht geprüft.
+   Jede Etappe hat ein Blatt (#e1 … #e8): Etappe 1 und 3 als Arbeitsblatt einer Doppelstunde, die anderen als kurzes Einstiegsblatt. */
+var DATEN = {
+  schluessel: "wpb-demokratie-leitfaden:v4",
+  schluesselAlt: "wpb-demokratie-leitfaden:v3",
+  hier: 0, /* Etappe, in der die Klasse gerade arbeitet (0 = Etappe 1). Hier umstellen, wenn die Klasse weiterzieht. */
+  blick: ["Verstehen", "Reflektieren", "Handeln", "Positionieren"],
+  urteilWort: { zentral: "Das trifft den Kern.", begruendbar: "Lässt sich begründen.", kaum: "Passt kaum." },
+  urteilKurz: { zentral: "zentral", begruendbar: "auch begründbar", kaum: "passt kaum" },
+  pruefsteine: [
+    ["s", "Schutz", "vor körperlicher und seelischer Gewalt – auch vor Beschämung, Abwertung und Ausschluss. Das Recht auf Schutz kann keine Mehrheit überstimmen."],
+    ["f", "Förderung", "durch Beziehung, Spiel, Ruhe, Sprache und Unterstützung. Gleich behandeln ist nicht automatisch gerecht."],
+    ["b", "Beteiligung", "an allem, was das Kind betrifft: gefragt werden, gehört werden, etwas verändern können. Beteiligung hebt den Schutz nicht auf."]
+  ],
+  vortragTeile: [
+    ["I", "Demokratie jetzt und in Zukunft", "Was Demokratie ist – und warum sie gelernt werden muss.", "Etappen 1 und 7"],
+    ["II", "Warum die frühe Kindheit?", "Warum die Kita der wichtigste Ort dafür ist. Was Korczak und das Gesetz dazu sagen.", "Etappen 2 und 3"],
+    ["III", "Die praktische Umsetzung", "Feste Verfahren, gelebter Alltag – und die Haltung, die beides trägt.", "Etappen 4, 5, 6 und 8"]
+  ]
+};
 
+/* Stunden je Etappe: [Art, Titel, Blatt, wozu, Dauer] – Art: blatt (Arbeitsblatt einer Doppelstunde) · einstieg (kurzes Einstiegsblatt) · kommt (im Lauf des Jahres) */
 DATEN.etappen = [
-  { kurz: "Verstehen", titel: "Demokratie verstehen", vortrag: "Teil I · Demokratie jetzt und in Zukunft",
+  { kurz: "Verstehen", titel: "Demokratie verstehen", vortrag: "Teil I · Demokratie jetzt und in Zukunft", blatt: "e1",
     frage: "Was ist Demokratie – und wo beginnt sie?",
     szene: { titel: "Drei Kinder am Fenster",
       status: "Szene aus der Forschung zur »Kinderstube der Demokratie« · nach dem Impulsvortrag erzählt · Fundstelle noch zu prüfen",
@@ -23,9 +40,10 @@ DATEN.etappen = [
       ["Selbstwirksamkeit", "Die Erfahrung: Meine Stimme zählt. Was ich tue, verändert etwas."]],
     mit: "die drei Formen der Demokratie – und Ihren eigenen Satz, wann Demokratie in der Kita beginnt",
     kita: "Wo wird in Ihrer Einrichtung entschieden – und von wem?",
-    weg: [["offen", "Lernseite: Drei Formen – ein Ganzes", "#heute", "Sie klären, was Demokratie ist, und schreiben Ihren eigenen Satz dazu.", "90 Minuten"], ["kommt", "Was steht auf dem Spiel? Warum Demokratie gelernt werden muss", "", "Sie begründen, warum Demokratiebildung heute dringlich ist.", "45 Minuten"]] },
+    weg: [["blatt", "Drei Formen – ein Ganzes", "e1", "Sie klären, was Demokratie ist, und schreiben Ihren eigenen Satz dazu.", "90 Minuten"],
+          ["kommt", "Was steht auf dem Spiel? Warum Demokratie gelernt werden muss", "", "Sie begründen, warum Demokratiebildung heute dringlich ist.", "45 Minuten"]] },
 
-  { kurz: "Warum Kita?", titel: "Warum gerade die Kita?", vortrag: "Teil II · Warum die frühe Kindheit",
+  { kurz: "Warum Kita?", titel: "Warum gerade die Kita?", vortrag: "Teil II · Warum die frühe Kindheit", blatt: "e2",
     frage: "Warum beginnt Demokratiebildung nicht erst in der Schule?",
     szene: { titel: "»Wir brauchen einen Chef«",
       status: "ausgedachte Szene aus dem Impulsvortrag · angelehnt an Beobachtungen aus der Forschung",
@@ -42,29 +60,30 @@ DATEN.etappen = [
       ["Aushandlung", "Verschiedene Wünsche werden besprochen, bis eine Lösung steht, die alle mittragen können."]],
     mit: "vier Gründe, mit denen Sie Demokratiebildung im Team und vor Eltern begründen können",
     kita: "Wo haben Sie zuletzt erlebt, dass Kinder einen Streit ohne Erwachsene gelöst haben? Was hatten sie dafür schon gelernt?",
-    weg: [["kommt", "Vier Gründe für die frühe Kindheit", "", "Sie sammeln Argumente, mit denen Sie vor Team und Eltern bestehen.", "45 Minuten"], ["kommt", "Welche Demokratie lernen Kinder bei uns?", "", "Sie prüfen eine Situation aus Ihrer eigenen Einrichtung.", "45 Minuten"]] },
+    weg: [["einstieg", "Einstieg: »Wir brauchen einen Chef«", "e2", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+          ["kommt", "Vier Gründe für die frühe Kindheit", "", "Sie sammeln Argumente, mit denen Sie vor Team und Eltern bestehen.", "45 Minuten"],
+          ["kommt", "Welche Demokratie lernen Kinder bei uns?", "", "Sie prüfen eine Situation aus Ihrer eigenen Einrichtung.", "45 Minuten"]] },
 
-  { kurz: "Kinderrechte", titel: "Kinder haben Rechte", vortrag: "Teil II · Korczak und der gesetzliche Auftrag",
+  { kurz: "Kinderrechte", titel: "Kinder haben Rechte", vortrag: "Teil II · Korczak und der gesetzliche Auftrag", blatt: "e3",
     frage: "Geben wir Kindern Rechte – oder haben sie welche?",
     szene: { titel: "Ein Erzieher zeigt sich selbst an",
-      status: "nach Janusz Korczak · im Impulsvortrag zitiert · Fundstelle (Sämtliche Werke, Band 4) noch am Original zu prüfen",
+      status: "nach Janusz Korczak · im Impulsvortrag zitiert (Korczak 1999, S. 312) · am Original noch zu prüfen",
       text: ["Der Arzt und Pädagoge Janusz Korczak leitete in Warschau ein Waisenhaus. Dort gab es eine Verfassung, ein Parlament und ein Gericht der Kinder. Korczak berichtet, er habe sich in einem halben Jahr fünfmal selbst bei diesem Gericht angezeigt – zum Beispiel, weil er einen Jungen aus dem Schlafsaal geworfen hatte.",
              "Er wollte ein Erzieher sein, der Kindern nicht deshalb kein Unrecht tut, weil er sie gern hat – sondern weil es eine Einrichtung gibt, die sie vor Willkür schützt."] },
     wahl: { frage: "Warum genügt es Korczak nicht, Kinder gern zu haben?", optionen: [
-      ["Weil Zuneigung von der Tagesform abhängt. Rechte brauchen Regeln, die auch an schlechten Tagen gelten.", "zentral", "Kinder sollen nicht vom guten Willen und von den Launen einzelner Erwachsener abhängen. In Deutschland ist das heute Gesetz: Ohne Verfahren für Beteiligung und Beschwerde gibt es keine Betriebserlaubnis (§ 45 Abs. 2 Satz 2 Nr. 4 SGB VIII)."],
-      ["Weil Kinder vor allem klare Strenge brauchen.", "kaum", "Korczak geht es nicht um mehr Strenge gegenüber Kindern. Die Regeln binden bei ihm zuerst die Erwachsenen."],
+      ["Weil Zuneigung von der Tagesform abhängt. Rechte brauchen Regeln, die auch an schlechten Tagen gelten.", "zentral", "Kinder sollen nicht vom guten Willen und von den Launen einzelner Erwachsener abhängen. Eine feste Einrichtung – bei Korczak das Gericht – greift auch dann, wenn die Zuneigung fehlt oder die Nerven blank liegen."],
+      ["Weil Kinder vor allem klare Strenge brauchen.", "kaum", "Korczak geht es nicht um mehr Strenge gegenüber Kindern. Die Regeln binden bei ihm zuerst die Erwachsenen – er zeigt sich ja selbst an."],
       ["Weil auch liebevolle Erwachsene Fehler machen.", "begruendbar", "Stimmt – deshalb zeigt er sich selbst an. Der Kern liegt eine Ebene höher: Es braucht ein verbindliches Verfahren, das greift, wenn Fehler passieren."]] },
     kern: "Kinder bekommen ihre Rechte nicht von uns geschenkt. Sie haben sie. Unsere Aufgabe ist, Räume zu schaffen, in denen sie diese Rechte ausüben können. Der Maßstab sind drei Prüfsteine: Schutz, Förderung, Beteiligung.",
     begriffe: [
-      ["UN-Kinderrechtskonvention", "Übereinkommen der Vereinten Nationen von 1989. Artikel 12, sinngemäß: Kinder dürfen in allen Angelegenheiten, die sie betreffen, ihre Meinung sagen. Die Meinung wird nach Alter und Reife berücksichtigt."],
-      ["§ 8 Abs. 1 SGB VIII", "Kinder und Jugendliche sind entsprechend ihrem Entwicklungsstand an allen sie betreffenden Entscheidungen der öffentlichen Jugendhilfe zu beteiligen."],
-      ["§ 45 SGB VIII", "Eine Kita bekommt die Betriebserlaubnis nur, wenn es Verfahren für Beteiligung und Beschwerde und ein Konzept zum Schutz vor Gewalt gibt (Abs. 2 Satz 2 Nr. 4)."],
-      ["Drei Prüfsteine", "Schutz vor Gewalt, Beschämung und Ausgrenzung · Förderung durch Beziehung, Spiel, Sprache und Teilhabe · Beteiligung an allem, was das Kind betrifft."]],
+      ["UN-Kinderrechtskonvention", "Übereinkommen der Vereinten Nationen vom 20. November 1989, in Deutschland seit 1992 in Kraft. Artikel 12: Jedes Kind darf seine Meinung in allen Angelegenheiten sagen, die es betreffen."],
+      ["§ 45 SGB VIII", "Eine Kita bekommt die Betriebserlaubnis in der Regel nur mit Verfahren für Beteiligung und Beschwerde und einem Konzept zum Schutz vor Gewalt (Abs. 2 Satz 2 Nr. 4)."],
+      ["Drei Prüfsteine", "Schutz · Förderung · Beteiligung – der Maßstab für jede Situation."]],
     mit: "die drei Prüfsteine Schutz, Förderung, Beteiligung – und ein Kinderrechte-Plakat für Ihre Kita",
     kita: "Welche Rechte der Kinder sind in Ihrer Einrichtung aufgeschrieben – und wo können die Kinder sie sehen?",
-    weg: [["offen", "Ausstellung: Kinderrechte im Kita-Alltag", "#ausstellung", "Sie prüfen sechs Kita-Szenen an den Kinderrechten und gestalten ein Plakat.", "45 Minuten"], ["kommt", "Vom Gesetz in den Alltag: Was heißt Artikel 12 in der Kita?", "", "Sie übersetzen einen Gesetzestext in das, was Kinder täglich erleben.", "45 Minuten"]] },
+    weg: [["blatt", "Kinder haben Rechte – mit der Ausstellung »Kinderrechte im Kita-Alltag«", "e3", "Sie prüfen Kita-Szenen an den Kinderrechten, übersetzen das Gesetz in den Alltag und gestalten ein Plakat für Ihre Kita.", "90 Minuten"]] },
 
-  { kurz: "Macht", titel: "Macht und Haltung", vortrag: "Teil III · Das Herzstück: die Haltung",
+  { kurz: "Macht", titel: "Macht und Haltung", vortrag: "Teil III · Das Herzstück: die Haltung", blatt: "e4",
     frage: "Was mache ich mit der Macht, die ich als Erwachsene oder Erwachsener habe?",
     szene: { titel: "»Wollt ihr heute rausgehen?«",
       status: "ausgedachte Szene · nach einem Beispiel aus dem Impulsvortrag",
@@ -81,9 +100,12 @@ DATEN.etappen = [
       ["Vorurteilsbewusste Bildung", "Ansatz mit vier Zielen (Anti-Bias): Identitäten stärken, Vielfalt erfahrbar machen, kritisch über Vorurteile nachdenken, gegen Diskriminierung aktiv werden."]],
     mit: "eine persönliche Handlungsleitlinie für Essen, Schlafen, Anziehen und Wickeln",
     kita: "Bei welcher Alltagsfrage entscheiden Sie allein, obwohl das Kind mitentscheiden könnte?",
-    weg: [["kommt", "Einladende und verschließende Sätze", "", "Sie formulieren Alltagssätze so um, dass Kinder mitentscheiden können.", "45 Minuten"], ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung", "", "Sie prüfen Bücher, Bilder und Routinen: Wer kommt vor, wer nicht?", "90 Minuten"], ["kommt", "Stereotype Aussagen unter Kindern aufgreifen", "", "Sie üben, wie Sie reagieren, wenn ein Kind ein anderes abwertet.", "90 Minuten"]] },
+    weg: [["einstieg", "Einstieg: »Wollt ihr heute rausgehen?«", "e4", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+          ["kommt", "Einladende und verschließende Sätze", "", "Sie formulieren Alltagssätze so um, dass Kinder mitentscheiden können.", "45 Minuten"],
+          ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung", "", "Sie prüfen Bücher, Bilder und Routinen: Wer kommt vor, wer nicht?", "90 Minuten"],
+          ["kommt", "Stereotype Aussagen unter Kindern aufgreifen", "", "Sie üben, wie Sie reagieren, wenn ein Kind ein anderes abwertet.", "90 Minuten"]] },
 
-  { kurz: "Strukturen", titel: "Strukturen, die verlässlich sind", vortrag: "Teil III · Formelle Demokratiebildung",
+  { kurz: "Strukturen", titel: "Strukturen, die verlässlich sind", vortrag: "Teil III · Formelle Demokratiebildung", blatt: "e5",
     frage: "Welche festen Verfahren sichern die Rechte der Kinder – und was gilt, wenn die Mehrheit jemanden überstimmt?",
     szene: { titel: "Das Mopslied",
       status: "Beispiel aus einer Hamburger Kita · im Impulsvortrag nach Benedikt Sturzenhecker erzählt · Fundstelle noch zu prüfen",
@@ -102,9 +124,12 @@ DATEN.etappen = [
       ["Ambiguitätstoleranz", "Die Fähigkeit, Uneindeutiges und Widersprüche auszuhalten, statt nach einfachen Antworten zu greifen."]],
     mit: "den Ablauf einer Kinderkonferenz und ein kleines Beschwerdekonzept",
     kita: "Welche festen Verfahren gibt es in Ihrer Einrichtung – und wissen die Kinder davon?",
-    weg: [["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose", "", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein.", "90 Minuten"], ["kommt", "Eine Kinderkonferenz gestalten", "", "Sie planen den Ablauf einer Kinderkonferenz und erproben die Moderation.", "90 Minuten"], ["kommt", "Beschwerdewege für Kinder", "", "Sie entwerfen einen Weg, auf dem auch kleine Kinder sich beschweren können.", "90 Minuten"]] },
+    weg: [["einstieg", "Einstieg: Das Mopslied", "e5", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+          ["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose", "", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein.", "90 Minuten"],
+          ["kommt", "Eine Kinderkonferenz gestalten", "", "Sie planen den Ablauf einer Kinderkonferenz und erproben die Moderation.", "90 Minuten"],
+          ["kommt", "Beschwerdewege für Kinder", "", "Sie entwerfen einen Weg, auf dem auch kleine Kinder sich beschweren können.", "90 Minuten"]] },
 
-  { kurz: "Alltag", titel: "Demokratie im Alltag", vortrag: "Teil III · Informelle Demokratiebildung",
+  { kurz: "Alltag", titel: "Demokratie im Alltag", vortrag: "Teil III · Informelle Demokratiebildung", blatt: "e6",
     frage: "Was erleben Kinder in den vielen Stunden zwischen den Gremien?",
     szene: { titel: "»Erbsen esse ich nicht!«",
       status: "Szene nach Doll, Herrmann u. a. (2020) · im Impulsvortrag erzählt · Fundstelle noch zu prüfen · die drei Reaktionen sind zugespitzt",
@@ -121,9 +146,12 @@ DATEN.etappen = [
       ["Willkür", "Eine Fachkraft nimmt Kinder ernst. Am Nachbartisch gilt das Gegenteil, weil nichts vereinbart ist."]],
     mit: "einen Beteiligungscheck für Essen, Pflege, Schlafen und Morgenkreis",
     kita: "Beobachten Sie eine Mahlzeit: Wer entscheidet, was und wie viel auf den Teller kommt?",
-    weg: [["kommt", "Mahlzeiten: der wichtigste Übungsort", "", "Sie untersuchen, wer beim Essen was entscheidet.", "45 Minuten"], ["kommt", "Wickeln, Schlafen, Eingewöhnung", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"], ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen", "", "Sie prüfen, wo Ihrer Einrichtung eher das Verfahren fehlt und wo die Haltung.", "90 Minuten"]] },
+    weg: [["einstieg", "Einstieg: »Erbsen esse ich nicht!«", "e6", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+          ["kommt", "Mahlzeiten: der wichtigste Übungsort", "", "Sie untersuchen, wer beim Essen was entscheidet.", "45 Minuten"],
+          ["kommt", "Wickeln, Schlafen, Eingewöhnung", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"],
+          ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen", "", "Sie prüfen, wo Ihrer Einrichtung eher das Verfahren fehlt und wo die Haltung.", "90 Minuten"]] },
 
-  { kurz: "Position", titel: "Haltung zeigen", vortrag: "Teil I · Was steht auf dem Spiel? – weitergedacht",
+  { kurz: "Position", titel: "Haltung zeigen", vortrag: "Teil I · Was steht auf dem Spiel? – weitergedacht", blatt: "e7",
     frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
     szene: { titel: "Beim Abholen",
       status: "ausgedachte Szene · die Aussage steht in den Gesprächskarten des Curriculums",
@@ -140,9 +168,12 @@ DATEN.etappen = [
       ["Beutelsbacher Konsens", "Drei Grundsätze politischer Bildung: niemanden überwältigen, Kontroverses kontrovers darstellen, zum eigenen Urteil befähigen."]],
     mit: "einen Gesprächsleitfaden und eine Intervention in fünf Sätzen",
     kita: "Welche Aussage haben Sie schon gehört, bei der Sie gern etwas gesagt hätten?",
-    weg: [["kommt", "Diskriminierung erkennen und benennen", "", "Sie lernen Formen der Abwertung kennen und ordnen Aussagen ein.", "mehrere Stunden"], ["kommt", "Populismus verstehen – die aktuelle Lage", "", "Sie prüfen politische Aussagen an Quellen und an den Grundrechten.", "mehrere Stunden"], ["kommt", "Zuhören, nachfragen, klar widersprechen", "", "Sie üben Gespräche mit Erwachsenen, die abwertend sprechen.", "mehrere Stunden"]] },
+    weg: [["einstieg", "Einstieg: Beim Abholen", "e7", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+          ["kommt", "Diskriminierung erkennen und benennen", "", "Sie lernen Formen der Abwertung kennen und ordnen Aussagen ein.", "mehrere Stunden"],
+          ["kommt", "Populismus verstehen – die aktuelle Lage", "", "Sie prüfen politische Aussagen an Quellen und an den Grundrechten.", "mehrere Stunden"],
+          ["kommt", "Zuhören, nachfragen, klar widersprechen", "", "Sie üben Gespräche mit Erwachsenen, die abwertend sprechen.", "mehrere Stunden"]] },
 
-  { kurz: "Praxis", titel: "Ihr Praxisprojekt", vortrag: "Teil III · Kinder können Demokratie",
+  { kurz: "Praxis", titel: "Ihr Praxisprojekt", vortrag: "Teil III · Kinder können Demokratie", blatt: "e8",
     frage: "Was nehmen Sie mit in Ihre Einrichtung?",
     szene: { titel: "Der Mülleimer",
       status: "Szene aus dem Film »Die Kinderstube der Demokratie« (2008) · nach dem Impulsvortrag erzählt · noch am Film zu prüfen",
@@ -158,72 +189,8 @@ DATEN.etappen = [
       ["Zukunftswerkstatt", "Methode in drei Schritten: Kritik sammeln, Wünsche entwickeln, Umsetzung planen."]],
     mit: "Ihr eigenes Demokratieprojekt – geplant, erprobt und vorgestellt",
     kita: "Welche kleine Veränderung in Ihrer Einrichtung würden die Kinder sofort bemerken?",
-    weg: [["kommt", "Projektwerkstatt", "", "Sie planen Ihr eigenes Vorhaben für die Praxisstelle.", "mehrere Stunden"], ["kommt", "Erprobung und kollegiale Beratung", "", "Sie probieren Ihr Vorhaben aus und holen Rückmeldung ein.", "mehrere Stunden"], ["kommt", "Präsentation und Ausblick", "", "Sie stellen Ihr Projekt vor und halten fest, was Sie mitnehmen.", "mehrere Stunden"]] }
-];
-
-/* ---------- Ausstellung: Kinderrechte im Kita-Alltag (aus der Mitmach-Ausstellung zum Tag der Kinderrechte, für Fachkräfte umgebaut) ---------- */
-DATEN.pruefsteine = [["s", "Schutz"], ["f", "Förderung"], ["b", "Beteiligung"]];
-DATEN.stationen = [
-  { id: "p1", farbe: "glut", satz: "Ich werde gemocht, so wie ich bin.",
-    quelle: "Kein einzelner Paragraf. Die Präambel der UN-Kinderrechtskonvention nennt als Ziel, dass Kinder in einer Umgebung von Glück, Liebe und Verständnis aufwachsen. Verwandt: das Verbot der Diskriminierung (Artikel 2).",
-    status: "sinngemäß wiedergegeben",
-    szene: "Morgens im Flur. Ben kommt wie oft als Letzter. Die Fachkraft ruft, ohne aufzusehen: »Na, auch schon da? Dann beeil dich mal.« Die Kinder vor ihm wurden mit Namen und einem Lächeln begrüßt.",
-    urteil: { s: ["begruendbar", "Stimmt: Wer vor anderen bloßgestellt wird, braucht Schutz vor Beschämung. Hier fehlt aber zuerst etwas, das jedes Kind braucht: gesehen zu werden."],
-              f: ["zentral", "Förderung beginnt mit Beziehung. Ein Kind, das sich willkommen fühlt, kann sich auf den Tag einlassen."],
-              b: ["kaum", "Hier wird nichts entschieden, bei dem Ben mitreden könnte. Schauen Sie auf das, was ihm an diesem Morgen fehlt."] },
-    kita: ["Jedes Kind wird mit Namen begrüßt – auch das, das spät kommt.", "Kritik gilt dem Verhalten, nie dem Kind.", "Im Team fragen: Welches Kind habe ich diese Woche kaum gesehen?"] },
-  { id: "p2", farbe: "kuli", satz: "Ich darf Nein sagen.",
-    quelle: "UN-Kinderrechtskonvention, Artikel 12 (Meinung des Kindes) und Artikel 19 (Schutz vor Gewalt).",
-    status: "sinngemäß wiedergegeben",
-    szene: "Lina ist hingefallen und weint. Eine Fachkraft will sie trösten und hebt sie auf den Schoß. Lina macht sich steif und dreht den Kopf weg. Die Fachkraft hält sie fest: »Komm, ist doch gleich wieder gut.«",
-    urteil: { s: ["zentral", "Über den eigenen Körper bestimmt das Kind – auch beim Trösten. Ein Nein, das gehört wird, schützt: Kinder lernen, dass ihre Grenze zählt."],
-              f: ["kaum", "Lina braucht Trost, das stimmt. Das Problem ist aber nicht fehlende Unterstützung, sondern eine Grenze, die übergangen wird."],
-              b: ["begruendbar", "Stimmt: Linas Körper sagt etwas, und es wird nicht gehört. Weil es um ihre körperliche Grenze geht, steht der Schutz an erster Stelle."] },
-    kita: ["Fragen, bevor man anfasst: »Magst du auf den Schoß – oder soll ich mich neben dich setzen?«", "Ein Nein ohne Worte gilt auch: wegdrehen, steif werden, weinen.", "Ein Stopp-Zeichen, das jedem Kind gehört."] },
-  { id: "p3", farbe: "schwach", satz: "Niemand darf mir wehtun – auch nicht mit Worten.",
-    quelle: "UN-Kinderrechtskonvention, Artikel 19. Für Eltern gilt § 1631 Absatz 2 BGB: Das Kind hat ein Recht auf Pflege und Erziehung unter Ausschluss von Gewalt, körperlichen Bestrafungen, seelischen Verletzungen und anderen entwürdigenden Maßnahmen. Für Kitas gehört ein Konzept zum Schutz vor Gewalt zur Betriebserlaubnis (§ 45 Abs. 2 Satz 2 Nr. 4 SGB VIII).",
-    status: "§ 1631 BGB und § 45 SGB VIII am Gesetzestext geprüft",
-    szene: "Tom hat beim Essen Wasser verschüttet, zum zweiten Mal. Die Fachkraft sagt laut vor allen: »Du schon wieder! Setz dich da drüben allein hin, bis du dich benehmen kannst.« Die anderen Kinder schauen zu.",
-    urteil: { s: ["zentral", "Beschämen vor der Gruppe ist eine seelische Verletzung. Das Recht auf Schutz kann nicht überstimmt werden – auch nicht durch Stress am Mittagstisch."],
-              f: ["begruendbar", "Stimmt: Tom bräuchte Hilfe, etwa einen kleineren Krug. Zuerst muss aber die Beschämung aufhören."],
-              b: ["kaum", "Mitreden wäre gut – aber erst, wenn Tom nicht mehr vor allen bloßgestellt ist."] },
-    kita: ["Kein Kind wird vor anderen bloßgestellt, ausgeschlossen oder festgehalten.", "Unter vier Augen klären, was passiert ist.", "Im Team ansprechen, wenn jemand diese Grenze überschreitet."] },
-  { id: "p4", farbe: "h", satz: "Ich werde gefragt und gehört.",
-    quelle: "UN-Kinderrechtskonvention, Artikel 12. § 8 Absatz 1 SGB VIII. Verfahren für Beteiligung und Beschwerde als Voraussetzung der Betriebserlaubnis: § 45 Abs. 2 Satz 2 Nr. 4 SGB VIII.",
-    status: "§ 8 und § 45 SGB VIII am Gesetzestext geprüft",
-    szene: "Am Montag ist der Bauraum umgeräumt. Das Team hat am Wochenende neue Regale aufgestellt und die große Baustelle der Kinder abgebaut. Emil steht in der Tür: »Wo ist unsere Burg?«",
-    urteil: { s: ["kaum", "Niemand wurde verletzt oder bedroht. Schauen Sie darauf, wer bei dieser Entscheidung gefehlt hat."],
-              f: ["begruendbar", "Stimmt: Neue Regale können das Spiel fördern. Über den Raum der Kinder wurde aber ohne die Kinder entschieden."],
-              b: ["zentral", "Der Raum betrifft die Kinder unmittelbar. Sie hätten gefragt werden müssen – mindestens informiert, besser beteiligt."] },
-    kita: ["Vor Veränderungen fragen: Was soll bleiben? Was stört euch?", "Entscheidungen sichtbar machen – mit Fotos oder Symbolen an der Wand.", "Jede Beschwerde bekommt eine Antwort."] },
-  { id: "p5", farbe: "gut", satz: "Ich darf spielen und mich ausruhen.",
-    quelle: "UN-Kinderrechtskonvention, Artikel 31 (Ruhe, Freizeit, Spiel).",
-    status: "sinngemäß wiedergegeben",
-    szene: "Nach dem Mittagessen legen sich alle hin. Mia ist nicht müde. Sie liegt mit offenen Augen auf der Matte und flüstert mit ihrer Nachbarin. Die Fachkraft: »Augen zu, jetzt wird geschlafen.«",
-    urteil: { s: ["begruendbar", "Stimmt: Über Schlaf bestimmt der eigene Körper. Im Kern geht es aber darum, was Mia jetzt für ihre Entwicklung braucht."],
-              f: ["zentral", "Ruhe und Spiel gehören zu den Förderrechten. Kinder brauchen unterschiedlich viel Ruhe – gleiche Behandlung ist hier nicht automatisch gerecht."],
-              b: ["begruendbar", "Stimmt: Mia könnte mitentscheiden, wie sie ausruht. Das ist der Weg. Das Recht dahinter ist das auf Ruhe und Spiel."] },
-    kita: ["Ausruhen ja, schlafen müssen nein: ein leiser Platz mit Büchern für Kinder, die wach sind.", "Freies Spiel nicht ohne Not unterbrechen.", "Mit den Kindern klären: Woran merkst du, dass du müde bist?"] },
-  { id: "p6", farbe: "g", satz: "Alle meine Gefühle sind erlaubt.",
-    quelle: "Steht so in keinem Gesetz. Es folgt aus der Würde des Kindes und aus dem Recht, gehört zu werden (Artikel 12 der UN-Kinderrechtskonvention).",
-    status: "Alltagsrecht – kein Gesetzestext",
-    szene: "Abschied am Morgen. Jonas klammert sich an seinen Vater und weint. Die Fachkraft nimmt ihn an der Hand: »Ist doch nicht schlimm. Große Jungs weinen nicht.«",
-    urteil: { s: ["begruendbar", "Stimmt: Der Satz beschämt Jonas. Und er gibt ein enges Bild davon weiter, wie Jungen zu sein haben."],
-              f: ["zentral", "Kinder lernen den Umgang mit Gefühlen, wenn Erwachsene sie benennen und aushalten. »Du bist traurig, dass Papa geht« fördert. »Nicht schlimm« nimmt das Gefühl weg."],
-              b: ["kaum", "Jonas kann nicht entscheiden, ob der Vater geht. Er kann aber erleben, dass sein Gefühl ernst genommen wird."] },
-    kita: ["Gefühle benennen, statt sie kleinzureden.", "Das Gefühl ist erlaubt, nicht jedes Verhalten: »Du darfst wütend sein. Hauen geht nicht.«", "Sätze über »richtige Jungen« und »richtige Mädchen« im Team sammeln und ersetzen."] }
-];
-DATEN.alltag = [
-  { id: "a1", name: "Wickeln", oft: "Das Kind wird aus dem Spiel geholt und gewickelt, während die Fachkraft mit einer Kollegin spricht.",
-    braucht: "Eine Ankündigung, Blickkontakt und eine Wahl.", weg: "»Ich möchte dich gleich wickeln. Spielst du noch fertig? Wer soll dich wickeln?«", recht: "Ich darf Nein sagen · Ich werde gefragt und gehört" },
-  { id: "a2", name: "Anziehen", oft: "»Zieh die Jacke an, es ist kalt.« Das Kind sagt: »Mir ist nicht kalt.«",
-    braucht: "Die eigene Erfahrung prüfen dürfen.", weg: "»Geh kurz vor die Tür und fühl nach. Reicht dir die Jacke, oder brauchst du etwas Dickeres?«", recht: "Ich werde gefragt und gehört" },
-  { id: "a3", name: "Essen", oft: "Der Teller wird gefüllt hingestellt. »Probieren musst du.«",
-    braucht: "Selbst bestimmen, was und wie viel in den eigenen Körper kommt.", weg: "»Wie viel möchtest du haben? Magst du probieren – oder heute nicht?«", recht: "Ich darf Nein sagen" },
-  { id: "a4", name: "Wut", oft: "Ein Kind wirft sich schreiend auf den Boden. »Hör sofort auf, sonst gehst du raus.«",
-    braucht: "Jemanden, der bleibt, bis der Sturm vorbei ist.", weg: "In der Nähe bleiben, wenig reden: »Du bist richtig wütend. Ich bin da.« Später gemeinsam schauen, was los war.", recht: "Alle meine Gefühle sind erlaubt · Niemand darf mir wehtun" },
-  { id: "a5", name: "Teilen", oft: "Zwei Kinder ziehen am selben Laufrad. »Jetzt ist Schluss, du gibst es ab.«",
-    braucht: "Hilfe beim Aushandeln, kein Urteil von oben.", weg: "»Ihr wollt beide das Rad. Wie können wir das lösen, sodass es für beide passt?«", recht: "Ich werde gefragt und gehört" },
-  { id: "a6", name: "Morgenkreis", oft: "Ein Kind will nicht mitsingen. »Alle machen mit.«",
-    braucht: "Dabei sein dürfen, ohne mitmachen zu müssen.", weg: "»Heute keine Lust? Dann setz dich dazu und hör zu – oder geh leise in die Bauecke.«", recht: "Ich darf Nein sagen" }
+    weg: [["einstieg", "Einstieg: Der Mülleimer", "e8", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+          ["kommt", "Projektwerkstatt", "", "Sie planen Ihr eigenes Vorhaben für die Praxisstelle.", "mehrere Stunden"],
+          ["kommt", "Erprobung und kollegiale Beratung", "", "Sie probieren Ihr Vorhaben aus und holen Rückmeldung ein.", "mehrere Stunden"],
+          ["kommt", "Präsentation und Ausblick", "", "Sie stellen Ihr Projekt vor und halten fest, was Sie mitnehmen.", "mehrere Stunden"]] }
 ];
