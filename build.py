@@ -16,8 +16,17 @@ fonts = "\n".join([
 ])
 lies = lambda n: (src / n).read_text(encoding="utf-8")
 html = lies("seite.html")
-for marke, inhalt in {"/*FONTS*/": fonts, "/*SEITE*/": lies("seite.css"), "/*DATEN*/": lies("daten.js"), "/*LEITFADEN*/": lies("leitfaden.js"), "/*LOGIK*/": lies("logik.js")}.items():
-    assert marke in html, marke
+teile = {
+    "/*FONTS*/": fonts,
+    "/*SEITE*/": lies("seite.css"),
+    "/*DATEN*/": lies("daten-jahr.js"),
+    "/*KERN*/": lies("kern.js"),
+    "/*BLAETTER*/": "\n".join(lies(n) for n in ["blatt-e1.js", "blatt-e3.js", "blatt-einstieg.js"]),
+    "/*HUB*/": lies("hub.js"),
+    "/*START*/": lies("start.js"),
+}
+for marke, inhalt in teile.items():
+    assert html.count(marke) == 1, marke
     html = html.replace(marke, inhalt)
 (root / "index.html").write_text(html, encoding="utf-8")
 print("index.html", len(html) // 1024, "KB")
