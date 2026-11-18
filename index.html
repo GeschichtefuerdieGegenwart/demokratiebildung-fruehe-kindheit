@@ -23,7 +23,7 @@
   --serif:"Lora",Georgia,serif;--sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:14px;--r-klein:8px;--schatten:0 1px 2px rgba(23,41,44,.06),0 8px 24px -12px rgba(23,41,44,.18);
   --aus:cubic-bezier(.23,1,.32,1);
-  --kopf-h:3.75rem;--reg-b:15.5rem;
+  --kopf-h:3.75rem;--reg-b:17rem;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--kopf-h) + 16px)}
@@ -98,7 +98,9 @@ label.btn{user-select:none}
 .view{max-width:70rem;margin-inline:auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,40px) 40px;display:grid;gap:clamp(28px,4vw,44px)}
 .held{display:grid;gap:12px}
 .kompass{display:grid;gap:clamp(20px,3vw,36px);align-items:center}
-@media (min-width:900px){.kompass{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}}
+/* Fassung 4.0: Schrift im Kompass wirksam mindestens 16 px – zwei Spalten erst ab 1024 px, dort mit mehr Platz für das Bild; auf dem Telefon nur die Nummern (die Namen stehen in den Karten darunter) */
+@media (min-width:1024px){.kompass{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+@media (max-width:599px){.rad-wort,.rad-haken,.rad-blicktext,.rad-kernwort,.rad-kerntitel{display:none}#rad .rad-kernschmal{display:inline}}
 .kompass__bild{max-width:34rem;width:100%;margin-inline:auto;display:grid;gap:8px}
 .kompass__bild svg{width:100%;height:auto;display:block;overflow:visible}
 .kompass__bild figcaption{font-size:1rem;color:var(--leise);text-align:center;min-height:2.8em}
@@ -110,18 +112,19 @@ label.btn{user-select:none}
 .rad-seg:focus-visible path{stroke:var(--tinte);stroke-width:4}
 @media (hover:hover){.rad-seg:not([aria-pressed=true]):hover path{fill:var(--eis)}}
 .rad-zahl{font:600 30px var(--serif);fill:var(--petrol);text-anchor:middle}
-.rad-wort{font:600 15.5px var(--sans);fill:var(--petrol);text-anchor:middle}
-.rad-haken{font:600 15px var(--sans);fill:var(--tuerkis);text-anchor:middle}
+.rad-wort{font:600 18px var(--sans);fill:var(--petrol);text-anchor:middle}
+.rad-haken{font:600 18px var(--sans);fill:var(--tuerkis);text-anchor:middle}
 .rad-seg[aria-pressed=true] text{fill:#fff}
 .rad-hier{fill:var(--glut);stroke:var(--papier);stroke-width:3}
 .rad-blick{fill:var(--sand)}
-.rad-blicktext{font:600 15px var(--sans);fill:var(--leise);text-anchor:middle;letter-spacing:.03em}
+.rad-blicktext{font:600 18px var(--sans);fill:var(--leise);text-anchor:middle;letter-spacing:.03em}
 .rad-mitte{fill:var(--flaeche)}
 .rad-nadel{transform-origin:280px 280px;transform-box:view-box;transition:transform .8s cubic-bezier(.3,1.5,.5,1)}
 .rad-nadel path{fill:var(--glut)}
 .rad-kern{fill:var(--petrol)}
-.rad-kerntitel{font:600 17px var(--serif);fill:#fff;text-anchor:middle}
-.rad-kernwort{font:400 14px var(--sans);fill:var(--eis);text-anchor:middle}
+.rad-kerntitel{font:600 19.5px var(--serif);fill:#fff;text-anchor:middle}
+.rad-kernwort{font:400 18px var(--sans);fill:var(--eis);text-anchor:middle}
+.rad-kernschmal{display:none;font:600 28px var(--serif);fill:#fff;text-anchor:middle}
 .etappe{background:var(--flaeche);border-radius:var(--r);padding:clamp(20px,3vw,32px);box-shadow:var(--schatten);display:grid;gap:14px;align-content:start;min-height:24rem}
 .etappe h2{font-size:clamp(1.5rem,1.2rem + 1vw,1.9rem)}
 .etappe dl{display:grid;gap:2px}
@@ -135,6 +138,10 @@ label.btn{user-select:none}
 .stunden li div{display:grid;gap:2px}
 .stunden a,.stunden b{font:600 1.05rem/1.3 var(--sans)}
 .stunden a{color:var(--petrol)}
+/* Fassung 4.0: die ganze Karte ist die Zielfläche (mindestens 44 px), nicht nur die Zeile mit dem Titel */
+.stunden li{position:relative;min-height:44px}
+.stunden a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.stunden li:has(a:hover){background:var(--eis)}
 .stunden__wozu{font-size:1rem;line-height:1.4}
 .stunden__stand{font:600 1rem/1.3 var(--sans);color:var(--leise)}
 .balken{display:grid;gap:6px;max-width:34rem}
@@ -187,13 +194,15 @@ label.btn{user-select:none}
 .reg__liste{list-style:none;padding:0;display:grid;gap:2px}
 .reg__knopf{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:2px solid transparent;background:none;border-radius:var(--r-klein);padding:6px 8px;min-height:48px;color:inherit;cursor:pointer;font:inherit;line-height:1.25}
 .reg__knopf b{display:block;font:600 1.02rem/1.25 var(--sans)}
-.reg__unter{display:none;font-size:1rem;color:#34474A;line-height:1.3}
-.reg__stand{display:block;font:600 1rem/1.3 var(--sans);color:#34474A}
+.reg__unter{display:inline;font-size:1rem;color:#34474A;line-height:1.3}
+.reg__unter::after{content:" · "}
+.reg__unter:last-child::after{content:none}
+.reg__stand{display:inline;font:600 1rem/1.3 var(--sans);color:#34474A}
 .reg__nr{flex:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--petrol);background:var(--flaeche);color:var(--petrol);font:600 1rem/1 var(--serif)}
 .reg__nr--deck{border-style:dotted}
 .reg__knopf.hier{background:rgba(255,253,248,.9);border-color:var(--petrol)}
 .reg__knopf.hier .reg__nr{background:var(--petrol);color:#fff}
-.reg__knopf.hier .reg__unter{display:block}
+.reg__knopf.hier .reg__unter{display:none}
 .reg__knopf.hier .reg__stand{color:var(--glut)}
 .reg__knopf.fertig .reg__nr,.reg__knopf.ist-fertig .reg__nr{background:var(--tuerkis);border-color:var(--tuerkis);color:#fff}
 .reg__knopf.fertig .reg__stand{color:var(--tuerkis)}
@@ -495,7 +504,11 @@ details.mehr ul{padding-left:1.2em;display:grid;gap:8px}
 /* ---------- Etappe 1: Dreibein ---------- */
 .dreibein{display:grid;gap:18px;align-items:start}
 .dreibein>*{min-width:0}
-@media (min-width:1000px){.dreibein{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.dreibein__bild{position:sticky;top:calc(var(--kopf-h) + 12px)}}
+/* Fassung 4.0: zwei Spalten nur, wenn das Blatt breit genug ist (Containerabfrage statt Bildschirmbreite); unter 460 px verschiebt sich das Bild in seinem Rahmen, statt die Schrift unter 16 px zu verkleinern */
+.ab-teil{container-type:inline-size}
+.dreibein__bild{overflow-x:auto}
+.dreibein__bild svg{min-width:460px}
+@container (min-width:56rem){.dreibein{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.dreibein__bild{position:sticky;top:calc(var(--kopf-h) + 12px)}}
 .dreibein__bild{background:var(--papier);border-radius:var(--r);padding:14px 14px 16px;display:grid;gap:6px}
 .dreibein__bild svg{width:100%;height:auto;display:block}
 .dreibein__wort{font:600 1.25rem/1.3 var(--serif);text-align:center;min-height:2.6em}
@@ -634,6 +647,46 @@ details.mehr ul{padding-left:1.2em;display:grid;gap:8px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-bewegung=weniger] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 
+/* ---------- Fassung 4.0 · Das Blatt auf DIN-A4-Grundlage ----------
+   Vorbild: Psycho-Labor (Einheit Motivation 2.1) und GGK »Arbeitsblatt Geschichte« (18.11.2026).
+   A4 ist die Regel: höchstens 52,5 rem breit, links der Heftrand mit der Nummer des Auftrags.
+   Breit (.weit) wird ein Blatt nur, wenn sein Material die Breite braucht. Tiefe nur als versetzte Platte, keine weichen Schatten. */
+:root{--a4:52.5rem;--zeile:2rem;--platte:var(--eis);--schreiblinie:#B7C5C6}
+.blatt{width:calc(100% - 2 * clamp(10px,2vw,28px));max-width:var(--a4);margin:18px auto 32px;padding:16px clamp(18px,3vw,40px) 24px;border-radius:3px;box-shadow:6px 6px 0 0 var(--platte)}
+.blatt.weit{max-width:none}
+.ab-h{position:relative}
+@media (min-width:900px){
+  .blatt:not(.weit){padding-left:76px}
+  .blatt:not(.weit) .ab-h__nr{position:absolute;left:-58px;top:-2px}
+  .blatt:not(.weit) .ab-meta{margin-left:0}
+}
+.feld textarea,.verb textarea{line-height:var(--zeile);padding:0 14px;min-height:calc(var(--zeile) * 2 + 4px);border-radius:3px;background-color:#fff;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--zeile) - 1px),var(--schreiblinie) calc(var(--zeile) - 1px),var(--schreiblinie) var(--zeile));background-attachment:local}
+.feld textarea:read-only{background-color:var(--papier)}
+.schreib-druck{border-top:1px dashed var(--linie);padding-top:12px}
+.ab-h__text{display:grid;gap:2px}
+.ab-h__kicker{font:600 1rem/1.3 var(--sans);color:var(--leise)}
+.ab-h__nr--extra{border-radius:6px}
+.reg__knopf{padding-block:3px;min-height:48px}
+.reg__knopf b{line-height:1.2}
+.reg__unter,.reg__stand{line-height:1.22}
+.reg__knopf.zusatz .reg__nr{border-radius:6px;border-style:dashed}
+.reg__werk{justify-self:stretch}
+.reg__werk>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:8px;font:600 1rem/1.3 var(--sans);color:var(--petrol);list-style:none}
+.reg__werk>summary::-webkit-details-marker{display:none}
+.reg__werk>summary::before{content:"▸"}
+.reg__werk[open]>summary::before{content:"▾"}
+.reg__werk-in{display:grid;gap:8px;justify-items:start;padding:2px 0 6px}
+.reg__werk-in .frage-box{justify-self:stretch}
+.kann{display:grid;gap:6px;margin-top:6px}
+.kann__kopf{font-size:1rem;color:var(--leise)}
+.kann__liste{list-style:none;padding:0;display:grid;gap:6px}
+.kann__liste li{display:flex;gap:10px;align-items:baseline}
+.kann__stufe{flex:none;min-width:6.5rem;font:600 1rem/1.3 var(--sans)}
+.kann__stufe--0{color:var(--gut)}.kann__stufe--1{color:var(--mittel)}.kann__stufe--2{color:var(--schwach)}
+/* Ansicht für den Beamer: Grund und Blatt weiß, Schrift schwarz. Eine dunkle Ansicht gibt es bewusst nicht – das Blatt ist Papier. */
+:root[data-ansicht="beamer"]{--papier:#FFFFFF;--flaeche:#FFFFFF;--sand:#EFEFEF;--linie:#A9B3B4;--tinte:#000000;--leise:#273133;--schreiblinie:#8C9A9B}
+:root[data-ansicht="beamer"] .reg{background:#F3F5F5;background-image:none}
+
 /* ---------- Druck ---------- */
 @media print{
   @page{size:A4;margin:14mm 15mm 15mm}
@@ -679,6 +732,36 @@ html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-be
   body[data-druck=spur] .faden textarea,body[data-druck=spur] .faden .feld label,body[data-druck=spur] .faden__leer a{display:none}
   body[data-druck=spur] .nur-druck{display:block}
 }
+
+/* ---------- Fassung 4.0 · Druck auf A4 (Paper-Proof) – steht zuletzt, damit keine spätere Grundregel ihn aufhebt ----------
+   Deckblatt eine Seite, Schreibblatt eine Seite, Zusammenfassung zwei. Schreibfelder drucken als Text auf Linien. */
+@media print{
+  @page{size:A4;margin:14mm 14mm 14mm 22mm}
+  .blatt,.blatt.weit{width:auto;max-width:none;margin:0;padding:0!important;box-shadow:none;border:0;border-radius:0}
+  body:not([data-druck]) .blattzeile,body[data-druck=sb] .blattzeile{display:flex!important;font-size:9.5pt;color:#000;border-bottom:1pt solid #000;margin-bottom:3mm;padding-bottom:1.5mm}
+  .ab-h__nr{position:static!important}
+  .druck-weg{display:none!important}
+  .druckfeld{--zeile:7.6mm;display:block;white-space:pre-wrap;overflow-wrap:anywhere;color:#000;font:400 11pt/7.6mm var(--sans);padding:0 2mm;border-left:2pt solid #999;min-height:calc(var(--zeile) * var(--zeilen,2));background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--zeile) - .8pt),#777 calc(var(--zeile) - .8pt),#777 var(--zeile));-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .schreib-druck,.reg__werk{display:none!important}
+  body[data-druck=sb] .rm,body[data-druck=sb] .stempel,body[data-druck=sb] .zaehler,body[data-druck=sb] .reihe,body[data-druck=sb] .raster,body[data-druck=sb] .kasten--raum{display:none!important}
+  /* Deckblatt auf einer Seite: Die Druckseite ist schmaler als 900 px – Spalten und Farben deshalb mit eigenen Regeln */
+  .band{background:#fff!important;color:#000!important;border:1.5pt solid #000;padding:5mm 6mm;gap:4mm;grid-template-columns:minmax(0,1fr) 24mm}
+  .band *{color:#000!important}
+  .band .btn{display:none!important}
+  .band h1{font-size:20pt}
+  .band__frage{font-size:12pt}
+  .band__bild svg{width:24mm;height:24mm}
+  .deck{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:4mm 7mm}
+  .deck .abschnitt{font-size:12pt;margin-bottom:1.5mm}
+  .deck p,.deck li{font-size:9.5pt;line-height:1.35}
+  .ablauf{gap:0}
+  .ablauf li{padding-block:.7mm;font-size:9.5pt;line-height:1.3;grid-template-columns:6mm minmax(0,1fr)}
+  .ablauf li>b{font-size:10pt}
+  .ablauf small{font-size:8.5pt;line-height:1.3}
+  .so{display:none!important}
+  .deck .kasten{padding:2mm 3mm}
+  .wo{margin-block:2mm}
+}
 </style>
 </head>
 <body>
@@ -715,7 +798,7 @@ html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-be
 
   <section class="abschnitt-start faden" id="faden" aria-labelledby="faden-titel">
     <h2 id="faden-titel">Ihr roter Faden durch das Jahr</h2>
-    <p class="lauf">Am Ende jedes Arbeitsblatts schreiben Sie einen Satz. Er erscheint hier – Etappe für Etappe. Dazu können Sie die Leitfrage jeder Etappe in eigenen Worten beantworten.</p>
+    <p class="lauf">Das ist Ihr Hefter. Am Ende jedes Arbeitsblatts schreiben Sie einen Satz und schätzen ein, was Sie jetzt können. Beides erscheint hier – Etappe für Etappe, und nur, was Sie schon bearbeitet haben. Dazu können Sie die Leitfrage jeder Etappe in eigenen Worten beantworten.</p>
     <ol class="faden__liste" id="faden-liste"></ol>
   </section>
 
@@ -1323,9 +1406,34 @@ function selbst(box, key, aussagen) {
 /* ---------- Drucken: Zusammenfassung, Plakat, Lernspur ---------- */
 function drucke(modus) {
   document.body.setAttribute("data-druck", modus);
+  druckVorbereiten();
   window.print();
 }
-window.addEventListener("afterprint", function () { document.body.removeAttribute("data-druck"); });
+/* Ein Feld druckt sonst nur seinen sichtbaren Ausschnitt: Beim Drucken wird jedes Schreibfeld zu Text auf Linien.
+   Im Schreibblatt (»sb«) bleiben die Linien leer – zum Schreiben von Hand. */
+function druckVorbereiten() {
+  druckAufraeumen();
+  var hand = document.body.getAttribute("data-druck") === "sb";
+  $$("#blatt textarea, #v-start textarea").forEach(function (t) {
+    var text = hand ? "" : t.value, zeilen = hand ? Math.max(6, 2 * (+t.getAttribute("rows") || 3)) : Math.max(2, text.split("\n").length + Math.floor(text.length / 75));
+    var d = h("div", { class: "druckfeld" + (text ? "" : " leer"), text: text });
+    d.style.setProperty("--zeilen", String(zeilen));
+    t.parentNode.insertBefore(d, t.nextSibling); t.classList.add("druck-weg");
+  });
+}
+function druckAufraeumen() {
+  $$(".druckfeld").forEach(function (d) { d.remove(); });
+  $$(".druck-weg").forEach(function (t) { t.classList.remove("druck-weg"); });
+}
+window.__druckVorbereiten = druckVorbereiten;
+window.addEventListener("beforeprint", function () { if (!document.querySelector(".druckfeld")) druckVorbereiten(); });
+window.addEventListener("afterprint", function () { document.body.removeAttribute("data-druck"); druckAufraeumen(); });
+/* Extra: freiwillig, hängt an der eigenen Praxisstelle, verlangt eine Fundstelle aus dem Blatt und endet mit einem Satz zum eigenen Urteil */
+function extraSeite(box, key, c) {
+  box.appendChild(kasten("auftrag", null, p(c.auftrag)));
+  c.felder.forEach(function (f) { box.appendChild(feld(key + "." + f[0], { label: f[1], platz: f[2], rows: 3 })); });
+  box.appendChild(p(c.schluss, "meta lauf"));
+}
 
 /* ======================================================================
    Blatt-Rahmen
@@ -1366,7 +1474,8 @@ function zeigeBlatt(id, seite) {
   register(def, true);
   var main = $("#blatt"); main.textContent = "";
   main.classList.toggle("deckblatt", seite === "deck");
-  main.appendChild(h("div", { class: "blattzeile" }, h("span", { text: "Wahlfach Demokratiebildung · Etappe " + def.etappe }), h("span", { text: def.art === "einstieg" ? "Einstiegsblatt" : "Arbeitsblatt" }), h("span", { text: "Datum: " + new Date().toLocaleDateString("de-DE") })));
+  main.classList.toggle("weit", !!(a && a.breit && istOffen(a)) || seite === "lk");
+  main.appendChild(h("div", { class: "blattzeile" }, h("span", { text: "Wahlfach Demokratiebildung · Leitfaden" }), h("span", { text: "Etappe " + def.etappe + " von 8 · " + (def.art === "einstieg" ? "Einstiegsblatt" : "Arbeitsblatt") }), h("span", { text: "Datum: " + new Date().toLocaleDateString("de-DE") })));
   if (seite === "deck") deckblatt(def, main);
   else if (seite === "lk") lehrkraft(def, main);
   else auftragSeite(def, a, main);
@@ -1384,8 +1493,8 @@ function frisch() { if (AKT.blatt && !$("#v-blatt").hidden) { register(AKT.blatt
 function zustand(a) {
   if (AKT.seite === a.id) return ["Sie sind hier", "hier"];
   if (istFertig(a)) return ["fertig", "fertig"];
-  if (istOffen(a)) return ["offen", "offen"];
-  return a.frei === "ansage" ? ["öffnet auf Ansage", "ansage"] : ["öffnet nach Ihrer Antwort", "antwort"];
+  if (istOffen(a)) return a.zusatz ? ["freiwillig", "offen"] : ["offen", "offen"];
+  return a.frei === "ansage" ? ["öffnet auf Ansage", "ansage", "auf Ansage"] : ["öffnet nach Ihrer Antwort", "antwort", "nach Antwort"];
 }
 function register(def, immer) {
   var r = $("#reg");
@@ -1400,10 +1509,10 @@ function register(def, immer) {
     h("span", { class: "reg__nr reg__nr--deck", "aria-hidden": "true", text: "◇" }), h("span", {}, h("b", { text: "Deckblatt" }), h("span", { class: "reg__unter", text: "Worum es geht" })))));
   def.auftraege.forEach(function (a) {
     var z = zustand(a), fertig = istFertig(a);
-    ol.appendChild(h("li", {}, h("button", { type: "button", class: "reg__knopf " + z[1] + (fertig ? " ist-fertig" : ""), "data-geh": a.id, "aria-current": z[1] === "hier" ? "step" : null,
-      "aria-label": "Auftrag " + a.nr + ": " + a.kurz + ", " + a.form + ", " + a.min + " Minuten, " + z[0] + (fertig && z[1] === "hier" ? ", fertig" : ""), on: { click: function () { geh(def.id, a.id); } } },
+    ol.appendChild(h("li", {}, h("button", { type: "button", class: "reg__knopf " + z[1] + (fertig ? " ist-fertig" : "") + (a.zusatz ? " zusatz" : ""), "data-geh": a.id, "aria-current": z[1] === "hier" ? "step" : null,
+      "aria-label": (a.zusatz ? "Extra, freiwillig: " + a.name + ", " : "Auftrag " + a.nr + ": " + a.kurz + ", " + a.form + ", " + a.min + " Minuten, ") + z[0] + (fertig && z[1] === "hier" ? ", fertig" : ""), on: { click: function () { geh(def.id, a.id); } } },
       h("span", { class: "reg__nr", "aria-hidden": "true", text: fertig && z[1] !== "hier" ? "✓" : a.nr }),
-      h("span", {}, h("b", { text: a.kurz }), h("span", { class: "reg__unter", text: a.form + " · " + a.min + " Min." + (a.zusatz ? " · Zusatz" : "") }), h("span", { class: "reg__stand", text: z[0] + (fertig && z[1] === "hier" ? " · fertig" : "") })))));
+      h("span", {}, h("b", { text: a.kurz }), a.zusatz ? null : h("span", { class: "reg__unter", text: a.min + " Min." }), h("span", { class: "reg__stand", text: (z[2] || z[0]) + (fertig && z[1] === "hier" ? " · fertig" : "") })))));
   });
   r.appendChild(ol);
   r.appendChild(regFuss(def));
@@ -1414,12 +1523,54 @@ function regFuss(def) {
   var frage = h("div", { class: "frage-box", hidden: true },
     p("<b>Alle Eingaben dieses Blatts löschen?</b> Ihre Antworten und Texte auf diesem Gerät werden entfernt. Andere Etappen bleiben."),
     h("div", { class: "reihe" }, knopf("Ja, löschen", { art: "primaer", klick: function () { loescheBlatt(def); } }), knopf("Nein, behalten", { klick: function () { frage.hidden = true; } })));
+  var status = h("p", { class: "reg__hinweis reg__status", role: "status", "aria-live": "polite" });
+  var datei = h("input", { type: "file", accept: ".json,application/json", class: "sr", tabindex: "-1", "aria-hidden": "true" });
+  var ladeFrage = h("div", { class: "frage-box", hidden: true });
+  datei.addEventListener("change", function () { dateiLaden(datei, status, ladeFrage, function () { zeigeBlatt(def.id, AKT.seite); }); });
   var ruhigKn = knopf("Weniger Bewegung", { art: "schalter", gedrueckt: String(document.documentElement.getAttribute("data-bewegung") === "weniger"), klick: function (e) { schalteBewegung(e.currentTarget); } });
-  return h("div", { class: "reg__fuss" },
-    knopf("Eingaben dieses Blatts löschen", { art: "klein", klick: function () { frage.hidden = false; $("button", frage).focus(); } }), frage,
-    ruhigKn,
-    h("p", { class: "reg__hinweis", text: "Alles bleibt auf diesem Gerät. Nichts wird übertragen." }),
-    h("button", { type: "button", class: "link", "data-geh": "lk", on: { click: function () { geh(def.id, "lk"); } } }, "Hinweise für die Lehrkraft"));
+  var beamerKn = knopf("Ansicht für den Beamer", { art: "schalter", gedrueckt: String(document.documentElement.getAttribute("data-ansicht") === "beamer"), klick: function (e) { schalteAnsicht(e.currentTarget); } });
+  var werk = h("details", { class: "reg__werk" }, h("summary", { text: "Sichern · Laden · Ansicht" }),
+    h("div", { class: "reg__werk-in" },
+      knopf("Stand als Datei sichern", { art: "klein", klick: function () { dateiSichern(status); } }),
+      h("button", { type: "button", class: "btn btn--klein", on: { click: function () { datei.click(); } } }, "Stand aus Datei laden"), datei, ladeFrage,
+      knopf("Eingaben dieses Blatts löschen", { art: "klein", klick: function () { frage.hidden = false; $("button", frage).focus(); } }), frage,
+      beamerKn, ruhigKn, status,
+      h("p", { class: "reg__hinweis", text: "Alles bleibt auf diesem Gerät. Nichts wird übertragen." })));
+  if (WERK_OFFEN) werk.open = true;
+  werk.addEventListener("toggle", function () { WERK_OFFEN = werk.open; });
+  return h("div", { class: "reg__fuss" }, werk,
+    h("button", { type: "button", class: "link", "data-geh": "lk", on: { click: function () { geh(def.id, "lk"); } } }, "Für Lehrkräfte: Hinweise und Freigabe"));
+}
+var WERK_OFFEN = false;
+function schalteAnsicht(b) {
+  var an = document.documentElement.getAttribute("data-ansicht") !== "beamer";
+  if (an) document.documentElement.setAttribute("data-ansicht", "beamer"); else document.documentElement.removeAttribute("data-ansicht");
+  S.ansicht = an ? "beamer" : ""; speichere();
+  $$("[aria-pressed]").forEach(function (x) { if (x.textContent === "Ansicht für den Beamer") x.setAttribute("aria-pressed", String(an)); });
+}
+/* ---------- Stand als Datei: eine Datei für den ganzen Leitfaden (Device-Switch) ---------- */
+function dateiSichern(status) {
+  var datum = new Date().toISOString().slice(0, 10);
+  var inhalt = JSON.stringify({ art: "wpb-demokratie-lernspur", version: 4, gesichert: new Date().toISOString(), stand: S }, null, 1);
+  var blob = new Blob([inhalt], { type: "application/json" });
+  var a = h("a", { href: URL.createObjectURL(blob), download: "demokratiebildung-mein-stand-" + datum + ".json" });
+  document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  if (status) status.textContent = "Gesichert als »demokratiebildung-mein-stand-" + datum + ".json«. Auf dem iPad liegt die Datei in der Dateien-App unter »Downloads«.";
+}
+function dateiLaden(input, status, frageBox, nachher) {
+  var f = input.files && input.files[0]; if (!f) return;
+  var r = new FileReader();
+  r.onload = function () {
+    var x = null; try { x = JSON.parse(r.result); } catch (e) { x = null; }
+    input.value = "";
+    if (!x || x.art !== "wpb-demokratie-lernspur" || !x.stand) { status.textContent = "Diese Datei passt nicht. Laden Sie eine Datei, die Sie hier gesichert haben."; return; }
+    var tag = new Date(x.gesichert).toLocaleDateString("de-DE");
+    var ja = knopf("Ja, laden", { art: "primaer", klick: function () { S = norm(x.stand); speichere(); frageBox.hidden = true; if (nachher) nachher(); } });
+    frageBox.textContent = "";
+    haenge(frageBox, [p("<b>Stand vom " + tag + " laden?</b> Was jetzt auf diesem Gerät steht, wird ersetzt."), h("div", { class: "reihe" }, ja, knopf("Nein, nichts ändern", { klick: function () { frageBox.hidden = true; status.textContent = "Nichts geändert."; } }))]);
+    frageBox.hidden = false; ja.focus();
+  };
+  r.readAsText(f);
 }
 function schalteBewegung(b) {
   var an = document.documentElement.getAttribute("data-bewegung") !== "weniger";
@@ -1442,7 +1593,7 @@ function geh(id, seite) { var ziel = "#" + id + (seite && seite !== "deck" ? "/"
 
 function deckblatt(def, main) {
   var et = D.etappen[def.etappe - 1];
-  var weiter = def.auftraege.filter(function (a) { return !istFertig(a); })[0];
+  var weiter = def.auftraege.filter(function (a) { return !a.zusatz && !istFertig(a); })[0];
   var start = def.auftraege[0];
   var beg = BS(def.id).durch.deck || def.auftraege.some(istFertig);
   var los = h("button", { type: "button", class: "btn btn--primaer btn--gross", on: { click: function () { BS(def.id).durch.deck = true; geh(def.id, (weiter || start).id); } } },
@@ -1458,8 +1609,8 @@ function deckblatt(def, main) {
   var links = h("div", {}, h("h2", { class: "abschnitt", text: "Darum geht es" }), p(def.darum));
   if (def.ziele) haenge(links, [h("h2", { class: "abschnitt", text: "Am Ende können Sie" }), liste(def.ziele, "ziele")]);
   var rechts = h("div", {}, h("h2", { class: "abschnitt", text: "So läuft dieses Blatt" }),
-    h("ol", { class: "ablauf" }, def.auftraege.map(function (a) { return h("li", {}, h("b", { text: a.nr }), h("span", {}, a.name, h("small", { text: a.form + " · " + a.min + " Min." + (a.frei === "ansage" ? " · öffnet auf Ansage" : "") + (a.zusatz ? " · Zusatz" : "") }))); })),
-    liste(["Links stehen alle Aufträge. Sie sehen immer, wo Sie sind und was noch kommt.", "Jeder Auftrag ist eine Seite. Sie scrollen von oben nach unten.", "Manche Aufträge öffnen sich erst nach Ihrer Antwort, manche auf Ansage Ihrer Lehrkraft."], "so"));
+    h("ol", { class: "ablauf" }, def.auftraege.map(function (a) { return h("li", {}, h("b", { text: a.nr }), h("span", {}, a.name, h("small", { text: (a.zusatz ? "freiwillig · zählt nicht zur Zeit" : a.form + " · " + a.min + " Min.") + (a.frei === "ansage" ? " · öffnet auf Ansage" : "") }))); })),
+    liste(["Links stehen alle Aufträge. Sie sehen immer, wo Sie sind und was noch kommt.", "Jeder Auftrag ist eine Seite. Sie scrollen von oben nach unten.", "Manche Aufträge öffnen sich erst nach Ihrer Antwort, manche auf Ansage Ihrer Lehrkraft.", "Jedes Blatt lässt sich auf A4 drucken. Was Sie schreiben, steht im Ausdruck auf Linien – Schreibaufträge gibt es auch als leeres Schreibblatt für den Stift."], "so"));
   main.appendChild(h("div", { class: "deck" }, links, rechts));
   if (def.hinweis) main.appendChild(kasten("hinweis", null, p(def.hinweis)));
   if (def.weg) main.appendChild(def.weg());
@@ -1486,11 +1637,15 @@ function minikompass(i) {
 
 function auftragSeite(def, a, main) {
   var offen = istOffen(a);
-  main.appendChild(h("h1", { class: "ab-h", id: "seitentitel", tabindex: "-1" }, h("span", { class: "reg__nr ab-h__nr", "aria-hidden": "true", text: a.nr }), h("span", { text: a.kopf ? a.name : "Arbeitsauftrag " + a.nr + ": " + a.name })));
-  main.appendChild(h("p", { class: "ab-meta" }, a.form + " · " + a.min + " Minuten", a.marke ? h("span", { class: "ab-marke", text: a.marke }) : null));
+  main.appendChild(h("h1", { class: "ab-h", id: "seitentitel", tabindex: "-1" }, h("span", { class: "reg__nr ab-h__nr" + (a.zusatz ? " ab-h__nr--extra" : ""), "aria-hidden": "true", text: a.nr }),
+    h("span", { class: "ab-h__text" }, a.kopf ? null : h("span", { class: "ab-h__kicker", text: a.zusatz ? "Extra · freiwillig" : "Arbeitsauftrag " + a.nr }), h("span", { class: "ab-h__titel", text: a.name }))));
+  main.appendChild(h("p", { class: "ab-meta" }, a.zusatz ? a.form + " · zählt nicht zur Zeit" : a.form + " · " + a.min + " Minuten", a.marke ? h("span", { class: "ab-marke", text: a.marke }) : null));
   var teil = h("section", { class: "ab-teil" });
   main.appendChild(teil);
-  if (offen) { BS(def.id).gesehen = BS(def.id).gesehen || {}; a.seite(teil); }
+  if (offen) {
+    BS(def.id).gesehen = BS(def.id).gesehen || {}; a.seite(teil);
+    if (a.schreib) teil.appendChild(h("div", { class: "reihe schreib-druck" }, knopf("Als Schreibblatt drucken", { klick: function () { drucke("sb"); } }), h("span", { class: "meta", text: "Ein Blatt A4 mit leeren Linien – zum Schreiben von Hand." })));
+  }
   else zuSeite(def, a, teil);
   main.appendChild(h("div", { class: "ab-fuss", id: "ab-fuss" }));
   fussFrisch();
@@ -1526,15 +1681,16 @@ function fokusTitel() {
 function lehrkraft(def, main) {
   main.appendChild(h("h1", { class: "ab-h", id: "seitentitel", tabindex: "-1", text: "Hinweise für die Lehrkraft" }));
   main.appendChild(p("Offen und ohne Lösungen. Die Rückmeldetexte erscheinen den Lernenden ohnehin erst nach ihrer Festlegung. Erwartungshorizonte gehören nicht in diese Seite.", "meta lauf"));
+  if (def.papier) main.appendChild(h("p", { class: "lauf" }, h("b", { text: "Papierfrage: " }), def.papier));
   var b = BS(def.id);
   main.appendChild(h("div", { class: "reihe" },
     knopf(b.alle ? "Freigaben auf diesem Gerät zurücksetzen" : "Alle Aufträge auf diesem Gerät freigeben (Smartboard)", { art: b.alle ? "" : "dunkel", klick: function () { b.alle = !b.alle; if (!b.alle) b.frei = {}; speichere(); zeigeBlatt(def.id, "lk"); } }),
     h("span", { class: "meta", text: b.alle ? "Alle Aufträge sind auf diesem Gerät offen." : "Nur für das Gerät vorne – die Lernenden öffnen auf Ansage." })));
-  var tab = h("table", { class: "lk-tab" }, h("thead", {}, h("tr", {}, ["Nr.", "Auftrag", "Sozialform", "Min.", "Freigabe", "Was das Gerät tut", "Im Raum"].map(function (x) { return h("th", { scope: "col", text: x }); }))),
-    h("tbody", {}, def.auftraege.map(function (a) { return h("tr", {}, h("td", { text: a.nr }), h("td", { text: a.name }), h("td", { text: a.form }), h("td", { text: String(a.min) }), h("td", { text: a.frei === "ansage" ? "auf Ansage" : (a.frei === "antwort" ? "nach Antwort in " + AUF(def, a.nach).nr : "offen") }), h("td", { text: a.prinzip || "–" }), h("td", { text: a.raum || "–" })); })));
+  var tab = h("table", { class: "lk-tab" }, h("thead", {}, h("tr", {}, ["Nr.", "Auftrag", "Lehrfunktion", "Sozialform", "Min.", "Freigabe", "Was das Gerät tut", "Im Raum"].map(function (x) { return h("th", { scope: "col", text: x }); }))),
+    h("tbody", {}, def.auftraege.map(function (a) { return h("tr", {}, h("td", { text: a.nr }), h("td", { text: a.name }), h("td", { text: a.phase || "–" }), h("td", { text: a.form }), h("td", { text: a.zusatz ? "frei" : String(a.min) }), h("td", { text: a.frei === "ansage" ? "auf Ansage" : (a.frei === "antwort" ? "nach Antwort in " + AUF(def, a.nach).nr : "offen") }), h("td", { text: a.prinzip || "–" }), h("td", { text: a.raum || "–" })); })));
   var summe = def.auftraege.reduce(function (s, a) { return s + (a.zusatz ? 0 : a.min); }, 0);
   main.appendChild(h("div", { class: "tabelle-rahmen" }, tab));
-  main.appendChild(p("Summe der Zeiten: " + summe + " Minuten (geschätzt, nicht erprobt). »Was das Gerät tut« folgt den sechs Prinzipien aus Kidu: Verdecken · Rückmelden · Messen · Variieren · Stufen · Bündeln.", "meta"));
+  main.appendChild(p("Summe der Zeiten: " + summe + " Minuten (geschätzt, nicht erprobt; ein Extra zählt nicht mit). »Lehrfunktion« nach den Phasen aus Kidu: Einstieg · Erarbeitung · Sichern und üben · Übertragen und Ausblick. »Was das Gerät tut« folgt den sechs Prinzipien aus Kidu: Verdecken · Rückmelden · Messen · Variieren · Stufen · Bündeln.", "meta"));
   (def.lk || []).forEach(function (x) { main.appendChild(h("h2", { class: "abschnitt", text: x[0] })); haenge(main, Array.isArray(x[1]) ? liste(x[1]) : p(x[1])); });
   main.appendChild(h("div", { class: "ab-fuss" }, h("button", { type: "button", class: "btn", on: { click: function () { geh(def.id, "deck"); } } }, "‹ Deckblatt")));
   fokusTitel();
@@ -1625,6 +1781,8 @@ blatt({
   ziele: ["die drei Formen der Demokratie unterscheiden – Herrschaftsform, Gesellschaftsform, Lebensform,", "begründen, warum Demokratie mehr ist als der Wille der Mehrheit,", "eine Kita-Situation daraufhin prüfen, welche Form zu kurz kommt."],
   hinweis: "Der Lesetext in Auftrag 2 liegt auch auf Papier bereit. Der Blick in die eigene Praxisstelle am Ende ist freiwillig und bleibt auf Ihrem Gerät – ohne Namen.",
   spur: "e1.spur", spurAnfang: "Demokratie beginnt in der Kita, wenn …",
+  kann: ["Ich kann die drei Formen der Demokratie unterscheiden.", "Ich kann begründen, warum Demokratie mehr ist als der Wille der Mehrheit.", "Ich kann eine Kita-Situation mit dem Dreibein prüfen."],
+  papier: "Digital ist der Kern dort, wo das Gerät verdeckt, aufdeckt und erklärt: die Szene vor der Festlegung, das Begriffsnetz mit Rückmeldung, das Dreibein. Der Lesetext liegt auch auf Papier; den eigenen Satz schreiben die Lernenden auch von Hand (Schreibblatt).",
   lk: [
     ["Vor der Stunde", ["Lesetext (Arbeitsblatt 1 aus DS 1) als Kopie bereitlegen.", "Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« – für das Smartboard."]],
     ["Plenumsstellen", ["Nach Auftrag 1: Positionslinie 0–10, zwei bis drei Begründungen.", "Nach Auftrag 3: Eine Gruppe zeigt ihr Netz am Smartboard.", "Auftrag 4: Jede Gruppe stellt ihre Karte in höchstens 90 Sekunden vor.", "Auftrag 5: Zwei oder drei Sätze vorlesen.", "Auftrag 6: Positionslinie noch einmal; Stimmkarte zählen."]],
@@ -1632,7 +1790,7 @@ blatt({
     ["Status der Inhalte", ["Bürgermeister-Szene: nach dem Impulsvortrag, Fundstelle noch zu prüfen.", "Lesetext aus dem Arbeitsblatt der ersten Stunde; die Angaben dort (Schmidt 2010, Schultze 2015) sind noch am Original zu prüfen.", "Rückmeldungen zu den zwölf Begriffen und den Karten A–F, die sechs Prüffragen des Dreibeins: Vorschlag.", "Das Dreibein ist ein Modell – es misst nichts."]]
   ],
   auftraege: [
-    { id: "a1", nr: "1", kurz: "Die Szene", name: "Drei Kinder am Fenster", form: "allein, dann Linie im Raum", min: 10, frei: "offen", prinzip: "Verdecken – erst festlegen, dann deuten", raum: "Positionslinie 0–10",
+    { id: "a1", nr: "1", kurz: "Die Szene", phase: "Einstieg", name: "Drei Kinder am Fenster", form: "allein, dann Linie im Raum", min: 10, frei: "offen", prinzip: "Verdecken – erst festlegen, dann deuten", raum: "Positionslinie 0–10",
       fertig: function () { return !!(S.w["e1.vor"] && S.w["e1.vor"].fest && S.w["e1.max"] && S.w["e1.max"].fest); },
       seite: function (box) {
         var e = D.etappen[0];
@@ -1651,19 +1809,19 @@ blatt({
         }
       } },
 
-    { id: "a2", nr: "2", kurz: "Lesen", name: "Was ist überhaupt Demokratie?", form: "allein · Text auch auf Papier", min: 15, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "Rückmelden – Vergleich nach dem eigenen Markieren", raum: "–",
+    { id: "a2", nr: "2", kurz: "Lesen", phase: "Erarbeitung", name: "Was ist überhaupt Demokratie?", form: "allein · Text auch auf Papier", min: 15, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "Rückmelden – Vergleich nach dem eigenen Markieren", raum: "–",
       fertig: function () { return !!(S.w["e1.lese"] && S.w["e1.lese"].zu); },
       seite: lesenSeite },
 
-    { id: "a3", nr: "3", kurz: "Legen", name: "Das Begriffsnetz legen", form: "zu zweit an einem Gerät", min: 20, frei: "ansage", gleich: "Sie legen zwölf Begriffe zu den drei Formen und verbinden sie zu einem Netz.", breit: true, prinzip: "Rückmelden – Zwischenstand ab fünf Karten", raum: "Eine Gruppe zeigt ihr Netz am Smartboard",
+    { id: "a3", nr: "3", kurz: "Legen", phase: "Erarbeitung", name: "Das Begriffsnetz legen", form: "zu zweit an einem Gerät", min: 20, frei: "ansage", gleich: "Sie legen zwölf Begriffe zu den drei Formen und verbinden sie zu einem Netz.", breit: true, prinzip: "Rückmelden – Zwischenstand ab fünf Karten", raum: "Eine Gruppe zeigt ihr Netz am Smartboard",
       fertig: function () { var w = S.w["e1.netz"]; return !!(w && w.geprueft && ((w.links || []).length >= 2 || Object.keys(w.lage || {}).length >= 12)); },
       seite: netzSeite },
 
-    { id: "a4", nr: "4", kurz: "Kita-Fall", name: "Trägt die Situation?", form: "in Gruppen · jede Gruppe eine Karte", min: 20, frei: "ansage", gleich: "Sie prüfen einen Kita-Fall mit einem Modell: dem Dreibein der Demokratie.", prinzip: "Variieren – sechs Antworten, ein Brett", raum: "Jede Gruppe stellt ihre Karte in 90 Sekunden vor",
+    { id: "a4", nr: "4", kurz: "Kita-Fall", breit: true, phase: "Sichern und üben", name: "Trägt die Situation?", form: "in Gruppen · jede Gruppe eine Karte", min: 20, frei: "ansage", gleich: "Sie prüfen einen Kita-Fall mit einem Modell: dem Dreibein der Demokratie.", prinzip: "Variieren – sechs Antworten, ein Brett", raum: "Jede Gruppe stellt ihre Karte in 90 Sekunden vor",
       fertig: function () { var w = S.w["e1.fall"]; return !!(w && w.geprueft && Object.keys(w.geprueft).length); },
       seite: fallSeite },
 
-    { id: "a5", nr: "5", kurz: "Ihr Satz", name: "Ihr Satz", form: "allein, dann Plenum", min: 12, frei: "ansage", gleich: "Sie schreiben Ihren eigenen Satz: Demokratie beginnt in der Kita, wenn …", prinzip: "keines der sechs – Kriterien erst nach dem eigenen Text", raum: "Zwei oder drei Sätze vorlesen",
+    { id: "a5", nr: "5", kurz: "Ihr Satz", schreib: true, phase: "Übertragen und Ausblick", name: "Ihr Satz", form: "allein, dann Plenum", min: 12, frei: "ansage", gleich: "Sie schreiben Ihren eigenen Satz: Demokratie beginnt in der Kita, wenn …", prinzip: "keines der sechs – Kriterien erst nach dem eigenen Text", raum: "Zwei oder drei Sätze vorlesen",
       fertig: function () { return !!(S.w["e1.spur"] && S.w["e1.spur"].zu); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Schreiben Sie Ihren eigenen Satz – so, dass er für <b>jedes Kind in der Kita</b> stimmt. Begründen Sie ihn mit einer der drei Formen. Ihr Satz geht in Ihre Lernspur.")));
@@ -1672,13 +1830,13 @@ blatt({
           danach: function () { return [p("Überarbeiten Sie Ihren Satz, wenn etwas fehlt. Er erscheint im Kompass unter »Ihr roter Faden durch das Jahr«."), kasten("raum", null, p("Zwei oder drei Sätze werden im Plenum vorgelesen."))]; } });
       } },
 
-    { id: "a6", nr: "6", kurz: "Rückblick", name: "Rückblick", form: "allein, dann Linie im Raum", min: 10, frei: "antwort", nach: "a5", fehlt: "Der Rückblick öffnet sich, wenn Sie Ihren Satz verglichen haben (Auftrag 5).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
+    { id: "a6", nr: "6", kurz: "Rückblick", phase: "Übertragen und Ausblick", name: "Rückblick", form: "allein, dann Linie im Raum", min: 10, frei: "antwort", nach: "a5", fehlt: "Der Rückblick öffnet sich, wenn Sie Ihren Satz verglichen haben (Auftrag 5).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
       fertig: function () { return !!(S.w["e1.nach"] && S.w["e1.nach"].fest); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Zurück zum Satz vom Anfang. Wo stehen Sie jetzt – und warum?")));
         skala(box, "e1.nach", { satz: D.e1.these, ref: "e1.vor", wertWort: "Ihre Wahl jetzt", warumLabel: "Was denken Sie jetzt – und warum?", platz: "Meine Position hat sich (nicht) verändert, weil …", danach: function (w) { return kasten("raum", null, p(esc(vergleichSatz(S.w["e1.vor"], w)))); } });
         box.appendChild(h("h2", { class: "abschnitt", text: "Was können Sie jetzt?" }));
-        selbst(box, "e1.selbst", ["Ich kann die drei Formen der Demokratie unterscheiden.", "Ich kann begründen, warum Demokratie mehr ist als der Wille der Mehrheit.", "Ich kann eine Kita-Situation mit dem Dreibein prüfen."]);
+        selbst(box, "e1.selbst", BLAETTER.e1.kann);
         box.appendChild(h("details", { class: "mehr praxis" }, h("summary", {}, h("b", { text: "Freiwillig:" }), "Und in Ihrer Praxisstelle?"),
           p("Denken Sie an eine Situation aus dieser Woche – ohne Namen. Stellen Sie die sechs Fragen ein und sehen Sie, worauf die Situation steht. Alles bleibt auf Ihrem Gerät.", "lauf"),
           (function () { var b = h("div"); instrument(b, "praxis", {}); return b; })(),
@@ -1690,9 +1848,14 @@ blatt({
         box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
       } },
 
-    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a6", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 6).", prinzip: "–", raum: "–",
+    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", phase: "Sichern und üben", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a6", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 6).", prinzip: "–", raum: "–",
       fertig: function () { return !!BS("e1").durch.aZ || !!(S.w["e1.zf"] && S.w["e1.zf"].gesehen); },
-      seite: function (box) { W("e1.zf").gesehen = true; speichereBald(); zfE1(box); frisch(); } }
+      seite: function (box) { W("e1.zf").gesehen = true; speichereBald(); zfE1(box); frisch(); } },
+    { id: "aX", nr: "＋", kurz: "Extra", name: "Nachgefragt in Ihrer Praxisstelle", form: "freiwillig · in Ihrer Praxisstelle", min: 0, frei: "offen", zusatz: true, schreib: true, phase: "Übertragen und Ausblick", prinzip: "–", raum: "im Gespräch zeigen",
+      seite: function (box) { extraSeite(box, "e1.extra", {
+        auftrag: "Freiwillig – nur wenn Sie möchten. Fragen Sie in Ihrer Praxisstelle eine Fachkraft: »Wo erleben Kinder bei uns, dass sie mitbestimmen?« Notieren Sie die Antwort in Stichworten – ohne Namen von Kindern, Eltern oder Kolleginnen und Kollegen.",
+        felder: [["antwort", "Die Antwort in Stichworten", "Bei uns …"], ["form", "Welche Form nach Himmelmann zeigt sich darin? Nennen Sie die Stelle im Lesetext aus Auftrag 2.", "Lebensform, weil … (Lesetext: …)"], ["urteil", "Ein Satz: Hält Ihr Satz aus Auftrag 5 dieser Antwort stand?", "Mein Satz hält (nicht), weil …"]],
+        schluss: "Bringen Sie Ihre Notizen ins Gespräch mit. Das Extra zählt nicht zur Zeit und nicht zum Stand des Blatts." }); } }
   ]
 });
 
@@ -2221,6 +2384,8 @@ blatt({
   ziele: ["erklären, warum Kinder ihre Rechte nicht geschenkt bekommen, sondern haben,", "eine Kita-Szene mit den drei Prüfsteinen Schutz, Förderung und Beteiligung prüfen,", "Artikel 12 der UN-Kinderrechtskonvention in einen Satz für den Kita-Alltag übersetzen."],
   hinweis: "Zwei Aufträge fragen nach Ihrer Praxisstelle. Das ist freiwillig – Sie können auch an eine ausgedachte Kita denken. Schreiben Sie keine Namen von Kindern, Familien, Kolleginnen oder Kollegen auf.",
   spur: "e3.spur", spurAnfang: "Kinder haben Rechte. Für meine Arbeit heißt das: …", spurFrage: "Was heißt »Kinder haben Rechte« für Ihre Arbeit? Ein Satz genügt.",
+  kann: ["Ich kann erklären, warum Kinder ihre Rechte nicht geschenkt bekommen, sondern haben.", "Ich kann eine Kita-Szene mit den drei Prüfsteinen prüfen.", "Ich kann Artikel 12 in einen Satz für den Kita-Alltag übersetzen."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken – Position, Korczak, Gesetz – und beim Rundgang mit dem Plakat. Das Extra gibt es als Schreibblatt für den Stift; die Ausstellung kann zusätzlich als Stationen auf Papier im Raum hängen.",
   lk: [
     ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen – dann können Sie frei vor- und zurückgehen.", "Vorschlag: Wer die Plakate aus der Mitmach-Ausstellung zum Tag der Kinderrechte hat, hängt sie im Raum auf. Die Paare gehen herum und legen sich am Gerät fest."]],
     ["Plenumsstellen", ["Nach Auftrag 2: Positionslinie 0–10, zwei bis drei Begründungen.", "Nach Auftrag 4: Was hat am Gesetz überrascht? Zwei Übersetzungen von Artikel 12 vorlesen – Recht oder Erlaubnis?", "Nach Auftrag 5: Rundgang. Jedes Paar stellt ein Plakat vor; Handzeichen je Prüfstein; über die Plakate sprechen, bei denen die Klasse uneins war.", "Nach Auftrag 6: Plakate nebeneinander zeigen (eines am Gerät vorne).", "Auftrag 8: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
@@ -2228,7 +2393,7 @@ blatt({
     ["Status der Inhalte", ["Szenen der Plakate, Alltagskarten und der Fall in Auftrag 4: ausgedacht.", "Welcher Prüfstein »zentral« ist, ist ein Vorschlag – gute Begründungen für eine andere Wahl zählen.", "Art. 12, 19, 31, Art. 2 und Präambel der UN-Kinderrechtskonvention: am Wortlaut der amtlichen Übersetzung abgeglichen (17.11.2026). § 8 und § 45 SGB VIII: am Gesetzestext geprüft (01.11.2026). § 1631 Abs. 2 BGB: geprüft (11.11.2026).", "Korczak-Zitat, Träger-Leitbild und Kinderzitat: im Impulsvortrag zitiert, am Original noch zu prüfen. Daten zu Korczak: socialnet-Lexikon »Pädagogik der Achtung« und Jüdische Allgemeine (01.08.2022), abgeglichen 17.11.2026.", "Nicht übernommen: § 22a Abs. 1 SGB VIII aus dem Vortrag – der Absatz regelt die Qualitätssicherung. Die Interessen und Bedürfnisse des einzelnen Kindes stehen in § 22 Abs. 3 SGB VIII."]]
   ],
   auftraege: [
-    { id: "a1", nr: "1", kurz: "Erst erinnern", name: "Erst erinnern", form: "allein · ohne Unterlagen", min: 4, frei: "offen", prinzip: "Verdecken", raum: "–",
+    { id: "a1", nr: "1", kurz: "Erst erinnern", phase: "Einstieg", name: "Erst erinnern", form: "allein · ohne Unterlagen", min: 4, frei: "offen", prinzip: "Verdecken", raum: "–",
       fertig: function () { return abrufFertig("e3.abruf", 3); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Beantworten Sie jede Frage zuerst selbst – im Kopf, auf dem Zettel oder im Feld. Decken Sie erst danach auf.")));
@@ -2236,7 +2401,7 @@ blatt({
         box.appendChild(p("Heute geht es um das, was in der Mitte des Kompasses steht: <b>die Rechte der Kinder</b>.", "lauf"));
       } },
 
-    { id: "a2", nr: "2", kurz: "Ihre Position", name: "Ihre Position", form: "allein, dann Linie im Raum", min: 5, frei: "offen", prinzip: "Verdecken – die Festlegung bleibt stehen", raum: "Positionslinie 0–10",
+    { id: "a2", nr: "2", kurz: "Ihre Position", phase: "Einstieg", name: "Ihre Position", form: "allein, dann Linie im Raum", min: 5, frei: "offen", prinzip: "Verdecken – die Festlegung bleibt stehen", raum: "Positionslinie 0–10",
       fertig: function () { return !!(S.w["e3.vor"] && S.w["e3.vor"].fest); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Lesen Sie den Satz. Legen Sie fest, wie sehr Sie zustimmen, und begründen Sie in einem Satz. Am Ende des Blatts kommen Sie hierher zurück.")));
@@ -2244,7 +2409,7 @@ blatt({
         box.appendChild(p("Ein zugespitzter Satz zum Nachdenken – kein Zitat.", "meta"));
       } },
 
-    { id: "a3", nr: "3", kurz: "Korczak", name: "Ein Erzieher zeigt sich selbst an", form: "allein, dann zu zweit", min: 10, frei: "antwort", nach: "a2", fehlt: "Legen Sie zuerst Ihre Position in Auftrag 2 fest.", prinzip: "Verdecken · Rückmelden", raum: "Zu zweit: Begründungen vergleichen",
+    { id: "a3", nr: "3", kurz: "Korczak", phase: "Erarbeitung", name: "Ein Erzieher zeigt sich selbst an", form: "allein, dann zu zweit", min: 10, frei: "antwort", nach: "a2", fehlt: "Legen Sie zuerst Ihre Position in Auftrag 2 fest.", prinzip: "Verdecken · Rückmelden", raum: "Zu zweit: Begründungen vergleichen",
       fertig: function () { return !!(S.w["e3.korczak"] && S.w["e3.korczak"].fest); },
       seite: function (box) {
         var e = D.etappen[2];
@@ -2265,7 +2430,7 @@ blatt({
         } });
       } },
 
-    { id: "a4", nr: "4", kurz: "Das Gesetz", name: "Was das Gesetz verlangt", form: "allein", min: 12, frei: "ansage", gleich: "Sie vermuten, was das Gesetz von einer Kita verlangt – und prüfen es am Wortlaut.", prinzip: "Verdecken · Stufen (zwei Lesestufen)", raum: "Was hat überrascht? Zwei Übersetzungen vorlesen",
+    { id: "a4", nr: "4", kurz: "Das Gesetz", phase: "Erarbeitung", name: "Was das Gesetz verlangt", form: "allein", min: 12, frei: "ansage", gleich: "Sie vermuten, was das Gesetz von einer Kita verlangt – und prüfen es am Wortlaut.", prinzip: "Verdecken · Stufen (zwei Lesestufen)", raum: "Was hat überrascht? Zwei Übersetzungen vorlesen",
       fertig: function () { return !!(S.w["e3.gesetz"] && S.w["e3.gesetz"].fest && S.w["e3.uebersetz"] && S.w["e3.uebersetz"].zu); },
       seite: function (box) {
         box.appendChild(h("h2", { class: "abschnitt", text: "1 · Erst vermuten" }));
@@ -2276,19 +2441,19 @@ blatt({
         if (!(S.w["e3.gesetz"] && S.w["e3.gesetz"].fest)) weiter.appendChild(p("Teil 2 und 3 öffnen sich nach Ihrer Vermutung.", "meta gesperrt-hinweis"));
       } },
 
-    { id: "a5", nr: "5", kurz: "Rundgang", name: "Rundgang durch die Ausstellung", form: "zu zweit an einem Gerät", min: 25, frei: "ansage", gleich: "Sie gehen durch die Ausstellung »Kinderrechte im Kita-Alltag«: sechs Plakate, sechs Szenen.", prinzip: "Rückmelden – je Prüfstein mit Begründung", raum: "Jedes Paar stellt ein Plakat vor; Handzeichen je Prüfstein",
+    { id: "a5", nr: "5", kurz: "Rundgang", phase: "Erarbeitung", name: "Rundgang durch die Ausstellung", form: "zu zweit an einem Gerät", min: 25, frei: "ansage", gleich: "Sie gehen durch die Ausstellung »Kinderrechte im Kita-Alltag«: sechs Plakate, sechs Szenen.", prinzip: "Rückmelden – je Prüfstein mit Begründung", raum: "Jedes Paar stellt ein Plakat vor; Handzeichen je Prüfstein",
       fertig: function () { return plakateFest() >= 3; },
       seite: rundgang },
 
-    { id: "a6", nr: "6", kurz: "Ihr Plakat", name: "Ihr Plakat für die Kita", form: "allein", min: 12, frei: "antwort", nach: "a5", fehlt: "Ihr Plakat öffnet sich, sobald Sie sich bei drei Plakaten der Ausstellung festgelegt haben (Auftrag 5).", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text und den Ausdruck", raum: "Plakate nebeneinander",
+    { id: "a6", nr: "6", kurz: "Ihr Plakat", phase: "Sichern und üben", name: "Ihr Plakat für die Kita", form: "allein", min: 12, frei: "antwort", nach: "a5", fehlt: "Ihr Plakat öffnet sich, sobald Sie sich bei drei Plakaten der Ausstellung festgelegt haben (Auftrag 5).", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text und den Ausdruck", raum: "Plakate nebeneinander",
       fertig: function () { return !!(S.w["e3.plakat"] && S.w["e3.plakat"].zu); },
       seite: plakatSeite },
 
-    { id: "a7", nr: "7", kurz: "Ihre Kita", name: "Worüber dürfen Kinder bei Ihnen bestimmen?", form: "allein · freiwillig mit Praxisbezug", min: 8, frei: "offen", prinzip: "Ihr Bild auf einen Blick – Legen mit Spalten", raum: "Zu zweit: Wo verlangen die Kinderrechte eine andere Spalte?",
+    { id: "a7", nr: "7", kurz: "Ihre Kita", phase: "Übertragen und Ausblick", name: "Worüber dürfen Kinder bei Ihnen bestimmen?", form: "allein · freiwillig mit Praxisbezug", min: 8, frei: "offen", prinzip: "Ihr Bild auf einen Blick – Legen mit Spalten", raum: "Zu zweit: Wo verlangen die Kinderrechte eine andere Spalte?",
       fertig: function () { var w = S.w["e3.kita"]; return !!(w && w.lage && Object.keys(w.lage).length >= 6); },
       seite: kitaSeite },
 
-    { id: "a8", nr: "8", kurz: "Rückblick", name: "Rückblick und Lernspur", form: "allein, dann Linie im Raum", min: 6, frei: "antwort", nach: "a6", fehlt: "Der Rückblick öffnet sich, wenn Ihr Plakat fertig ist (Auftrag 6).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
+    { id: "a8", nr: "8", kurz: "Rückblick", phase: "Übertragen und Ausblick", name: "Rückblick und Lernspur", form: "allein, dann Linie im Raum", min: 6, frei: "antwort", nach: "a6", fehlt: "Der Rückblick öffnet sich, wenn Ihr Plakat fertig ist (Auftrag 6).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
       fertig: function () { return !!(S.w["e3.nach"] && S.w["e3.nach"].fest) && woerter(txt("e3.spur")) >= 8; },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Zurück zum Satz vom Anfang. Wo stehen Sie jetzt – und warum?")));
@@ -2296,16 +2461,21 @@ blatt({
         box.appendChild(h("h2", { class: "abschnitt", text: "Ihr Satz für die Lernspur" }));
         spurFeld(box, BLAETTER.e3);
         box.appendChild(h("h2", { class: "abschnitt", text: "Was können Sie jetzt?" }));
-        selbst(box, "e3.selbst", ["Ich kann erklären, warum Kinder ihre Rechte nicht geschenkt bekommen, sondern haben.", "Ich kann eine Kita-Szene mit den drei Prüfsteinen prüfen.", "Ich kann Artikel 12 in einen Satz für den Kita-Alltag übersetzen."]);
+        selbst(box, "e3.selbst", BLAETTER.e3.kann);
         box.appendChild(h("h2", { class: "abschnitt", text: "Ihre Rückmeldung zum Blatt" }));
         stimmkarte(box, "e3.stimme", { frage: "Wie hat Ihnen dieses Arbeitsblatt beim Lernen geholfen?", optionen: [["A", "sehr"], ["B", "teils"], ["C", "kaum"]], unter: "Halten Sie Ihre Karte hoch, wenn Ihre Lehrkraft fragt. Ihre Wahl bleibt auf diesem Gerät." });
         box.appendChild(feld("e3.rueck", { label: "Was würden Sie an diesem Blatt ändern? (freiwillig)", platz: "Mehr …, weniger …", rows: 2 }));
         box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
       } },
 
-    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a8", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 8). So verrät sie vorher nichts.", prinzip: "–", raum: "–",
+    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", phase: "Sichern und üben", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a8", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 8). So verrät sie vorher nichts.", prinzip: "–", raum: "–",
       fertig: function () { return !!BS("e3").durch.aZ || !!(S.w["e3.zf"] && S.w["e3.zf"].gesehen); },
-      seite: function (box) { W("e3.zf").gesehen = true; speichereBald(); zfE3(box); frisch(); } }
+      seite: function (box) { W("e3.zf").gesehen = true; speichereBald(); zfE3(box); frisch(); } },
+    { id: "aX", nr: "＋", kurz: "Extra", name: "Kinderrechte in Ihrer Praxisstelle finden", form: "freiwillig · in Ihrer Praxisstelle", min: 0, frei: "offen", zusatz: true, schreib: true, phase: "Übertragen und Ausblick", prinzip: "–", raum: "im Gespräch zeigen",
+      seite: function (box) { extraSeite(box, "e3.extra", {
+        auftrag: "Freiwillig – nur wenn Sie möchten. Sehen Sie sich in Ihrer Praxisstelle um: Woran können Kinder und Eltern erkennen, welche Rechte Kinder haben und wo sie sich beschweren können – ein Aushang, ein fester Ablauf, ein Ritual? Notieren oder skizzieren Sie, was Sie finden. Keine Fotos von Kindern, keine Namen.",
+        felder: [["fund", "Was ich gefunden habe – oder dass ich nichts gefunden habe", "Im Flur hängt … / Ich habe nichts gefunden."], ["saeule", "Wozu gehört das – Schutz, Förderung oder Beteiligung? Nennen Sie die Stelle auf diesem Blatt (Auftrag 4 oder Ihr Plakat).", "Beteiligung, weil … (Auftrag 4: …)"], ["urteil", "Ein Satz zu Ihrem Urteil: Wissen die Kinder dort, welche Rechte sie haben? Woran machen Sie das fest?", "Ich denke, die Kinder wissen (nicht) …, weil …"]],
+        schluss: "Bringen Sie Ihre Notizen ins Gespräch mit. Das Extra zählt nicht zur Zeit und nicht zum Stand des Blatts." }); } }
   ]
 });
 
@@ -2602,21 +2772,21 @@ function zfE3(box) {
     lk: [["Einsatz", ["Etwa 15 Minuten am Anfang der ersten Stunde dieser Etappe, gemeinsam geführt am Smartboard.", "Die Stunden der Etappe sind noch nicht als Arbeitsblatt gebaut. Ihr Einstieg wird später Auftrag 1."]],
          ["Status der Inhalte", [esc(e.szene.status) + ".", "Rückmeldetexte und Einstufungen: Vorschlag, noch nicht geprüft."]]],
     auftraege: [
-      { id: "a1", nr: "1", kurz: "Die Szene", name: e.szene.titel, form: "allein", min: 5, frei: "offen", prinzip: "Verdecken · Rückmelden", raum: "Begründungen vergleichen",
+      { id: "a1", nr: "1", kurz: "Die Szene", phase: "Einstieg", name: e.szene.titel, form: "allein", min: 5, frei: "offen", prinzip: "Verdecken · Rückmelden", raum: "Begründungen vergleichen",
         fertig: function () { return !!(S.w[id + ".szene"] && S.w[id + ".szene"].fest); },
         seite: function (box) {
           box.appendChild(h("div", { class: "falltext" }, etikett(e.szene.status), e.szene.text.map(function (t) { return p(esc(t), "falltext__text"); })));
           box.appendChild(kasten("auftrag", null, p("Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung.")));
           wahl(box, id + ".szene", { frage: e.wahl.frage, optionen: e.wahl.optionen });
         } },
-      { id: "a2", nr: "2", kurz: "Dahinter", name: "Das steckt dahinter", form: "allein, dann zu zweit", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "Zu zweit: einen Begriff erklären",
+      { id: "a2", nr: "2", kurz: "Dahinter", phase: "Erarbeitung", name: "Das steckt dahinter", form: "allein, dann zu zweit", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "Zu zweit: einen Begriff erklären",
         seite: function (box) {
           box.appendChild(kasten("sicherung", null, p(esc(e.kern))));
           box.appendChild(h("h2", { class: "abschnitt", text: "Begriffe dieser Etappe" }));
           box.appendChild(h("dl", { class: "begriffe" }, e.begriffe.map(function (b) { return h("div", {}, h("dt", { text: b[0] }), h("dd", { text: b[1] })); })));
           box.appendChild(kasten("raum", null, p("Zu zweit: Erklären Sie einander einen Begriff mit einem Beispiel aus der Kita – ohne auf den Bildschirm zu schauen.")));
         } },
-      { id: "a3", nr: "3", kurz: "Ihre Kita", name: "In Ihrer Kita", form: "allein · freiwillig · ohne Namen", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "–",
+      { id: "a3", nr: "3", kurz: "Ihre Kita", phase: "Übertragen und Ausblick", name: "In Ihrer Kita", form: "allein · freiwillig · ohne Namen", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "–",
         seite: function (box) {
           box.appendChild(h("p", { class: "leitfrage leitfrage--klein", text: e.kita }));
           box.appendChild(feld(id + ".kita", { label: "Das habe ich beobachtet:", platz: "In meiner Einrichtung …", rows: 3 }));
@@ -2657,8 +2827,8 @@ var kompass = (function () {
       var g = sv("g", { "class": "rad-seg", role: "button", tabindex: "0" });
       g.appendChild(sv("path", { d: ring(RA, RI, a1, a2) }));
       g.appendChild(sv("text", { x: m[0], y: m[1] - 6, "class": "rad-zahl" }, String(i + 1)));
-      g.appendChild(sv("text", { x: m[0], y: m[1] + 16, "class": "rad-wort" }, e.kurz));
-      var haken = sv("text", { x: m[0], y: m[1] + 34, "class": "rad-haken" }, ""); g.appendChild(haken); g._haken = haken;
+      g.appendChild(sv("text", { x: m[0], y: m[1] + 18, "class": "rad-wort" }, e.kurz));
+      var haken = sv("text", { x: m[0], y: m[1] + 38, "class": "rad-haken" }, ""); g.appendChild(haken); g._haken = haken;
       if (i < D.hier) g.setAttribute("data-stand", "fertig");
       if (i === D.hier) { g.setAttribute("data-stand", "hier"); var hh = pol(RA + 2, i * 45 + 22.5); g.appendChild(sv("circle", { cx: hh[0], cy: hh[1], r: 9, "class": "rad-hier" })); }
       g.addEventListener("click", function () { waehle(i, true); });
@@ -2669,9 +2839,10 @@ var kompass = (function () {
     nadel = sv("g", { "class": "rad-nadel" });
     nadel.appendChild(sv("path", { d: "M" + C + " " + (C - RB + 6) + "L" + (C + 13) + " " + C + "L" + C + " " + (C + 34) + "L" + (C - 13) + " " + C + "Z" }));
     svg.appendChild(nadel);
-    svg.appendChild(sv("circle", { cx: C, cy: C, r: 62, "class": "rad-kern" }));
-    svg.appendChild(sv("text", { x: C, y: C - 14, "class": "rad-kerntitel" }, "Kinderrechte"));
-    ["Schutz", "Förderung", "Beteiligung"].forEach(function (w, i) { svg.appendChild(sv("text", { x: C, y: C + 6 + i * 17, "class": "rad-kernwort" }, w)); });
+    svg.appendChild(sv("circle", { cx: C, cy: C, r: 80, "class": "rad-kern" }));
+    svg.appendChild(sv("text", { x: C, y: C - 18, "class": "rad-kerntitel" }, "Kinderrechte"));
+    ["Schutz", "Förderung", "Beteiligung"].forEach(function (w, i) { svg.appendChild(sv("text", { x: C, y: C + 8 + i * 21, "class": "rad-kernwort" }, w)); });
+    ["Kinder-", "rechte"].forEach(function (w, i) { svg.appendChild(sv("text", { x: C, y: C - 6 + i * 30, "class": "rad-kernschmal" }, w)); });
     $("#rad-heute").addEventListener("click", function () { waehle(D.hier, true); });
   }
   function waehle(i, bewegt) {
@@ -2751,23 +2922,25 @@ function lernspur() {
         h("p", { class: "faden__kopf" }, h("b", { text: "Etappe " + (i + 1) + " · " + e.titel }), " – " + e.frage),
         def.spur ? (satz ? h("blockquote", { class: "faden__satz", text: satz }) : h("p", { class: "faden__leer", html: "Noch leer. Am Ende des Arbeitsblatts schreiben Sie einen Satz – er erscheint hier. <a href=\"#" + e.blatt + "\">Zum Arbeitsblatt</a>" })) : null,
         feld("leit." + (i + 1), { label: "Meine Antwort auf die Leitfrage dieser Etappe", platz: "Schreiben Sie hier, wenn Sie die Stunden der Etappe bearbeitet haben.", rows: 2 }),
-        h("p", { class: "nur-druck mein", text: txt("leit." + (i + 1)) || "Meine Antwort auf die Leitfrage: –" }))));
+        h("p", { class: "nur-druck mein", text: txt("leit." + (i + 1)) || "Meine Antwort auf die Leitfrage: –" }),
+        kannListe(def))));
   });
   var rest = D.etappen.filter(function (e, i) { return !(blattStand(e.blatt).fertig > 0 || i <= D.hier || (BLAETTER[e.blatt].spur && txt(BLAETTER[e.blatt].spur))); });
   if (rest.length) box.appendChild(h("li", { class: "faden__etappe faden__rest" }, h("span", { class: "faden__punkt", "aria-hidden": "true", text: "…" }), h("div", { class: "faden__inhalt" }, h("p", { class: "faden__kopf", text: "Etappe " + rest.map(function (e) { return D.etappen.indexOf(e) + 1; }).join(", ") + ": kommen im Lauf des Jahres dazu." }))));
 }
 
+/* »Das kann ich«: nur, was die Lernenden am Ende eines Blatts selbst eingeschätzt haben (der Hefter zeigt nur Bearbeitetes) */
+function kannListe(def) {
+  if (!def || !def.kann) return null;
+  var w = S.w[def.id + ".selbst"] || {}, stufen = ["sicher", "teils", "noch nicht"];
+  var da = def.kann.map(function (k, i) { return typeof w[i] === "number" ? h("li", {}, h("span", { class: "kann__stufe kann__stufe--" + w[i], text: stufen[w[i]] }), h("span", { text: k })) : null; }).filter(Boolean);
+  return da.length ? h("div", { class: "kann" }, h("p", { class: "kann__kopf" }, h("b", { text: "Das kann ich" }), " – Ihre Einschätzung am Ende des Arbeitsblatts"), h("ul", { class: "kann__liste" }, da)) : null;
+}
+
 /* ---------- Sichern und Laden als Datei (Ergebnisse überleben den Gerätewechsel) ---------- */
 function sichernBauen() {
   var box = $("#sichern-knoepfe"), status = $("#sichern-status");
-  box.appendChild(knopf("Als Datei sichern", { art: "primaer", klick: function () {
-    var datum = new Date().toISOString().slice(0, 10);
-    var inhalt = JSON.stringify({ art: "wpb-demokratie-lernspur", version: 4, gesichert: new Date().toISOString(), stand: S }, null, 1);
-    var blob = new Blob([inhalt], { type: "application/json" });
-    var a = h("a", { href: URL.createObjectURL(blob), download: "demokratiebildung-mein-stand-" + datum + ".json" });
-    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-    status.textContent = "Gesichert als »demokratiebildung-mein-stand-" + datum + ".json«. Auf dem iPad liegt die Datei in der Dateien-App unter »Downloads«.";
-  } }));
+  box.appendChild(knopf("Als Datei sichern", { art: "primaer", klick: function () { dateiSichern(status); } }));
   var datei = h("input", { type: "file", accept: ".json,application/json", class: "sr", id: "laden-datei" });
   box.appendChild(datei);
   box.appendChild(h("label", { class: "btn", for: "laden-datei", tabindex: "0", on: { keydown: function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); datei.click(); } } } }, "Datei laden"));
@@ -2789,7 +2962,7 @@ function sichernBauen() {
   $("#loesch-nein").addEventListener("click", function () { $("#loesch-frage").hidden = true; });
   $("#loesch-ja").addEventListener("click", function () {
     try { window.localStorage.removeItem(D.schluessel); window.localStorage.removeItem(D.schluesselAlt); window.sessionStorage.clear(); } catch (e) { /* nichts gespeichert */ }
-    S = leer(); document.documentElement.removeAttribute("data-bewegung"); $("#loesch-frage").hidden = true;
+    S = leer(); document.documentElement.removeAttribute("data-bewegung"); document.documentElement.removeAttribute("data-ansicht"); $("#loesch-frage").hidden = true;
     status.textContent = "Alle Eingaben auf diesem Gerät sind gelöscht."; zeigeKompass();
   });
   var rb = $("#ruhig-start"); rb.setAttribute("aria-pressed", String(document.documentElement.getAttribute("data-bewegung") === "weniger"));
@@ -2802,6 +2975,7 @@ function sichernBauen() {
 (function () {
   document.documentElement.classList.add("js");
   if (S.ruhig) document.documentElement.setAttribute("data-bewegung", "weniger");
+  if (S.ansicht === "beamer") document.documentElement.setAttribute("data-ansicht", "beamer");
   function ansicht() {
     var hsh = decodeURIComponent(location.hash.replace(/^#/, ""));
     var alt = { "heute": "e1", "ausstellung": "e3/a5" };

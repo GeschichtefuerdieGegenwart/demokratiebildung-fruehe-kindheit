@@ -2,7 +2,7 @@
 
 Digitaler Leitfaden für das Wahlfach »Demokratie, jetzt und in Zukunft: Demokratiebildung in der frühen Kindheit« (Fachschule für Sozialpädagogik, Abschlussklasse, Tablet-Klasse).
 
-**Stand:** Version 3.0 vom 17.11.2026. Entwurf, noch nicht im Unterricht erprobt.
+**Stand:** Version 4.0 vom 18.11.2026 – das Blatt auf DIN-A4-Grundlage. Entwurf, noch nicht im Unterricht erprobt. Was sich geändert hat und warum: [`docs/version-4.0.md`](docs/version-4.0.md).
 
 ## Was hier liegt
 
@@ -15,9 +15,24 @@ Digitaler Leitfaden für das Wahlfach »Demokratie, jetzt und in Zukunft: Demokr
 | Arbeitsblatt Etappe 3 | `#e3` | »Kinder haben Rechte«, Doppelstunde, neun Aufträge, mit der Ausstellung »Kinderrechte im Kita-Alltag«. |
 | Einstiegsblätter | `#e2`, `#e4` bis `#e8` | Je drei kurze Aufträge (etwa 15 Minuten): Szene mit Festlegung, Das steckt dahinter, In Ihrer Kita. Die Stunden dieser Etappen kommen im Lauf des Jahres; ihr Einstieg wird dann Auftrag 1. |
 | Ein Auftrag | `#e3/a5` | Jeder Auftrag hat eine eigene Adresse (für QR-Codes und Links in Moodle). |
-| Hinweise für die Lehrkraft | `#e1/lk`, `#e3/lk` | Ablauf mit Zeiten, Freigaben, Plenumsstellen, Kürzungen, Status der Inhalte. Dort auch: »Alle Aufträge auf diesem Gerät freigeben« für das Smartboard. |
+| Extra | `#e1/aX`, `#e3/aX` | Je eine freiwillige Aufgabe für die Praxisstelle. Zählt nicht zur Zeit und nicht zum Stand. |
+| Hinweise für die Lehrkraft | `#e1/lk`, `#e3/lk` | Ablauf mit Zeiten, Lehrfunktion je Auftrag, Freigaben, Plenumsstellen, Kürzungen, Papierfrage, Status der Inhalte. Dort auch: »Alle Aufträge auf diesem Gerät freigeben« für das Smartboard. |
 
 Alte Adressen führen weiter: `#heute` → `#e1`, `#heute-alle` → `#e1` mit allen Freigaben, `#ausstellung` → `#e3/a5`, `#etappe-3` → `#e3`.
+
+## Fassung 4.0: Das Blatt auf DIN-A4-Grundlage
+
+Vorbild sind das Psycho-Labor (Einheit Motivation, Fassung 2.1) und seine Weiterführung im GGK-Labor (»Arbeitsblatt Geschichte«, Pilot M22, Stand 18.11.2026). Jedes Blatt sieht am Bildschirm aus und druckt wie ein Arbeitsblatt auf A4.
+
+- **A4 ist die Regel:** höchstens 52,5 rem breit, links der Heftrand mit der Nummer des Auftrags, eckig, mit versetzter Platte in Eisblau statt weichem Schatten. **Breit** werden nur Aufträge, deren Material die Breite braucht: Begriffsnetz und Dreibein (Etappe 1, Auftrag 3 und 4) und die Hinweise für die Lehrkraft (Tabelle).
+- **Blattkopf** auf jedem Blatt, auch im Druck: »Wahlfach Demokratiebildung · Leitfaden │ Etappe 3 von 8 · Arbeitsblatt │ Datum«.
+- **Titel in einer Zeile:** »Arbeitsauftrag 7« steht klein über dem Titel.
+- **Linien zum Schreiben** in jedem Schreibfeld. Beim Drucken wird jedes Feld zu Text auf Linien. Schreibaufträge gibt es zusätzlich als **Schreibblatt** mit leeren Linien für den Stift (Etappe 1, Auftrag 5, und die beiden Extras).
+- **Paper-Proof** (gedruckt geprüft): Deckblatt eine Seite, Schreibblatt eine Seite, Zusammenfassung zwei Seiten, Plakat und Lernspur je eine Seite.
+- **Register** mit Titel, Minuten und Stand in zwei Zeilen und kurzen Standwörtern (»nach Antwort«, »auf Ansage«; Vorleseprogramme hören den vollen Wortlaut). Darunter eingeklappt **Sichern · Laden · Ansicht:** Stand als Datei sichern und laden (auf jedem Blatt), Eingaben dieses Blatts löschen, Ansicht für den Beamer, Weniger Bewegung. Bei 1180 × 820 passen alle Einträge und die Werkzeuge ohne Scrollen.
+- **Ansicht für den Beamer:** Grund und Blatt weiß, Schrift schwarz. Eine dunkle Ansicht gibt es bewusst nicht – das Blatt ist Papier.
+- **Extra:** höchstens eine freiwillige Aufgabe je Arbeitsblatt, als letzter Eintrag im Register (eckiges Feld »＋«). Sie hängt an der eigenen Praxisstelle, verlangt eine Fundstelle aus dem Blatt und endet mit einem Satz zum eigenen Urteil; gezeigt wird sie im Gespräch. Keine Namen, keine Fotos von Kindern.
+- **Kompass als Hefter:** Im roten Faden steht je Etappe der eigene Satz und »Das kann ich« – die eigene Einschätzung am Ende des Arbeitsblatts. Es erscheint nur, was schon bearbeitet ist.
 
 ## Der Blatt-Standard
 
@@ -105,8 +120,10 @@ Gemessen am vollen Stand (alle Festlegungen getroffen), 150 Wörter pro Minute f
 
 | Blatt | geplant | Wörter | Lesezeit | engste Stellen |
 | --- | --- | --- | --- | --- |
-| Etappe 3 | 82 Min. + 3 Zusammenfassung | 3.290 (mit drei Plakaten) | etwa 22 Min. | Auftrag 4 (534 Wörter, 12 Min.) und Rundgang (665 Wörter mit drei Plakaten, 25 Min. mit Plenum) – Kürzungen K1 bis K3 in den Hinweisen |
-| Etappe 1 | 87 Min. + 3 Zusammenfassung | 2.117 | etwa 14 Min. | Begriffsnetz und Kita-Fall (je 20 Min.) – Kürzungen K1 und K2 |
+| Etappe 3 | 82 Min. + 3 Zusammenfassung | 3.316 (mit drei Plakaten) | etwa 22 Min. | Auftrag 4 (533 Wörter, 12 Min.) und Rundgang (664 Wörter mit einem Plakat, 934 mit drei; 25 Min. mit Plenum) – Kürzungen K1 bis K3 in den Hinweisen |
+| Etappe 1 | 87 Min. + 3 Zusammenfassung | 2.156 | etwa 14 Min. | Begriffsnetz und Kita-Fall (je 20 Min.) – Kürzungen K1 und K2 |
+
+Gemessen am 18.11.2026 (Fassung 4.0) am vollen Stand, ohne die Hinweise für die Lehrkraft und ohne das Extra (je etwa 110 bis 140 Wörter, außerhalb der Stunde).
 
 Schätzung, nicht erprobt. Nach der ersten Stunde mit der Beobachtung vergleichen.
 
@@ -120,9 +137,9 @@ setzt `src/seite.html`, `src/seite.css`, `src/daten-jahr.js` (Etappen), `src/ker
 
 ## Geprüft und nicht geprüft
 
-- **Gelaufen (automatisch, Chromium, 17.11.2026):** beide Arbeitsblätter vollständig wie eine Lernende durchgearbeitet (jede Festlegung, Freigabe auf Ansage, Rückmeldung erst nach dem Festlegen, Register und Fortschritt, Begriffsnetz mit Linien bis zum Kartenrand, Dreibein, Rundgang mit drei Plakaten, Plakat, Legen in Spalten, Rückblick, Zusammenfassung), Stand nach Neuladen, Sichern und Laden als Datei, falsche Datei, »Eingaben dieses Blatts löschen«, »Alle Eingaben löschen«, Übernahme eines Stands aus Version 2, »Weniger Bewegung« nach Neuladen, alte Adressen. Breiten 390, 820, 1180 und 1280 × 720 ohne waagrechten Überlauf; keine Schrift unter 16 Pixel im Text und keine Zielfläche unter 44 Pixel in den Blättern (Ausnahme: Beschriftungen in den Grafiken, siehe »Bekannt«); keine doppelten IDs, alle Felder beschriftet; keine Abrufe von fremden Servern, keine Fehler in der Konsole. Druck: beide Zusammenfassungen je zwei Seiten, Plakat eine Seite, Lernspur eine Seite. Bildschirmfotos aller Aufträge angesehen.
-- **Nicht gelaufen:** Safari auf einem echten iPad (hoch und quer), VoiceOver, Zoom 200 %, echter Beamer, Moodle, axe, Impeccable und Taste Skill.
-- **Bekannt:** Ohne JavaScript bleiben Kompass und Blätter leer. Auf dem Telefon (390 Pixel) überdecken die Linien des Begriffsnetzes andere Karten; die Beschriftung der Linien steht dort nur in der Liste darunter. Beschriftungen in den Grafiken liegen knapp unter 16 Pixel: im Dreibein auf dem Tablet quer etwa 15 Pixel, im Kompass 14 bis 16 Pixel.
+- **Gelaufen (automatisch, Chromium, 18.11.2026):** beide Arbeitsblätter vollständig wie eine Lernende durchgearbeitet (jede Festlegung, Freigabe auf Ansage, Rückmeldung erst nach dem Festlegen, Register und Fortschritt, Begriffsnetz, Dreibein, Rundgang mit drei Plakaten, Plakat, Legen in Spalten, Rückblick, »Das kann ich«, Zusammenfassung), Stand nach Neuladen, Sichern und Laden als Datei auf der Startseite und im Register jedes Blatts, falsche Datei, »Eingaben dieses Blatts löschen«, »Alle Eingaben löschen«, Ansicht für den Beamer und »Weniger Bewegung« nach Neuladen und auf dem nächsten Blatt, alte Adressen. Breiten 390, 820, 1024, 1180, 1280 × 720 und 1440 ohne waagrechten Überlauf; keine Schrift unter 16 Pixel und keine Zielfläche unter 44 Pixel in den Blättern und auf der Startseite; Schrift in allen Grafiken wirksam mindestens 16 Pixel; keine doppelten IDs, alle Felder beschriftet; keine Abrufe von fremden Servern, keine Fehler in der Konsole. Druck: Deckblätter je eine Seite, Schreibblätter je eine Seite, Zusammenfassungen je zwei Seiten, Plakat und Lernspur je eine Seite. Erster Knopf bei 1280 × 720 gemessen (Ausnahme: Szenenseiten, siehe `docs/version-4.0.md`, Abschnitt 4). Bildschirmfotos angesehen.
+- **Nicht gelaufen:** Safari auf einem echten iPad (hoch und quer), VoiceOver, Zoom 200 %, echter Beamer, echter Drucker und GoodNotes, Moodle, axe, Impeccable und Taste Skill.
+- **Bekannt:** Ohne JavaScript bleiben Kompass und Blätter leer. Auf dem Telefon (390 Pixel) überdecken die Linien des Begriffsnetzes andere Karten; die Beschriftung der Linien steht dort nur in der Liste darunter. Auf vier Szenenseiten liegt der erste Knopf bei 1280 × 720 unter dem ersten Bildschirm, weil die Szene vor der Festlegung steht.
 
 ## Schriften
 

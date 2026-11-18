@@ -15,21 +15,21 @@
     lk: [["Einsatz", ["Etwa 15 Minuten am Anfang der ersten Stunde dieser Etappe, gemeinsam geführt am Smartboard.", "Die Stunden der Etappe sind noch nicht als Arbeitsblatt gebaut. Ihr Einstieg wird später Auftrag 1."]],
          ["Status der Inhalte", [esc(e.szene.status) + ".", "Rückmeldetexte und Einstufungen: Vorschlag, noch nicht geprüft."]]],
     auftraege: [
-      { id: "a1", nr: "1", kurz: "Die Szene", name: e.szene.titel, form: "allein", min: 5, frei: "offen", prinzip: "Verdecken · Rückmelden", raum: "Begründungen vergleichen",
+      { id: "a1", nr: "1", kurz: "Die Szene", phase: "Einstieg", name: e.szene.titel, form: "allein", min: 5, frei: "offen", prinzip: "Verdecken · Rückmelden", raum: "Begründungen vergleichen",
         fertig: function () { return !!(S.w[id + ".szene"] && S.w[id + ".szene"].fest); },
         seite: function (box) {
           box.appendChild(h("div", { class: "falltext" }, etikett(e.szene.status), e.szene.text.map(function (t) { return p(esc(t), "falltext__text"); })));
           box.appendChild(kasten("auftrag", null, p("Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung.")));
           wahl(box, id + ".szene", { frage: e.wahl.frage, optionen: e.wahl.optionen });
         } },
-      { id: "a2", nr: "2", kurz: "Dahinter", name: "Das steckt dahinter", form: "allein, dann zu zweit", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "Zu zweit: einen Begriff erklären",
+      { id: "a2", nr: "2", kurz: "Dahinter", phase: "Erarbeitung", name: "Das steckt dahinter", form: "allein, dann zu zweit", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "Zu zweit: einen Begriff erklären",
         seite: function (box) {
           box.appendChild(kasten("sicherung", null, p(esc(e.kern))));
           box.appendChild(h("h2", { class: "abschnitt", text: "Begriffe dieser Etappe" }));
           box.appendChild(h("dl", { class: "begriffe" }, e.begriffe.map(function (b) { return h("div", {}, h("dt", { text: b[0] }), h("dd", { text: b[1] })); })));
           box.appendChild(kasten("raum", null, p("Zu zweit: Erklären Sie einander einen Begriff mit einem Beispiel aus der Kita – ohne auf den Bildschirm zu schauen.")));
         } },
-      { id: "a3", nr: "3", kurz: "Ihre Kita", name: "In Ihrer Kita", form: "allein · freiwillig · ohne Namen", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "–",
+      { id: "a3", nr: "3", kurz: "Ihre Kita", phase: "Übertragen und Ausblick", name: "In Ihrer Kita", form: "allein · freiwillig · ohne Namen", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "–",
         seite: function (box) {
           box.appendChild(h("p", { class: "leitfrage leitfrage--klein", text: e.kita }));
           box.appendChild(feld(id + ".kita", { label: "Das habe ich beobachtet:", platz: "In meiner Einrichtung …", rows: 3 }));
