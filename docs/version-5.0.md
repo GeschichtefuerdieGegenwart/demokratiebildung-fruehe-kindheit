@@ -98,7 +98,9 @@ Alle neuen Blätter folgen dem Bogen von Etappe 1 und 3:
 
 Schätzung, nicht erprobt.
 
-## Beim Bau gefunden und behoben (Vorschläge für die Skills)
+## Beim Bau gefunden und behoben
+
+Übernommen in »kidu-bau« 0.9.1 (18.11.2026), zusammen mit den sieben Vorschlägen aus `docs/version-4.0.md`, Abschnitt 11.
 
 1. **Zusammenfassung auf dem Telefon:** Eine Tabelle mit drei Spalten und langen Wörtern war so breit wie ihr längstes Wort und schob die ganze Seite über den Rand. Abhilfe: `table-layout: fixed` und Umbruch in den Zellen. Die Zusammenfassung jedes Blatts bei 390 Pixeln prüfen.
 2. **Schreibblatt mit vielen Feldern:** Es druckte auf zwei Seiten, weil jedes leere Feld sechs Linien bekam. Abhilfe: Ab vier Feldern teilen sich die Felder die Linien. Die Seitenzahl je Schreibblatt messen.
@@ -108,6 +110,7 @@ Schätzung, nicht erprobt.
 6. **Wörter in Kartenrunden zählen:** Die Zählung sah nur die sichtbare Karte. Abhilfe: alle Karten anklicken und mitzählen (beim Gruppenpuzzle von Etappe 2: 219 → 671 Wörter).
 7. **Lernspur wächst mit dem Jahr:** Mit acht Etappen druckte sie auf sechs Seiten. Abhilfe: eigene kompakte Druckregeln; mit Sätzen üblicher Länge und mit sehr langen Sätzen messen.
 8. **Ein Blatt ersetzt ein anderes:** Die Notizen des alten Einstiegsblatts hätten keinen Platz mehr gehabt. Abhilfe: vor dem Ersetzen nach den alten Schlüsseln suchen und ihnen auf der neuen Seite einen Ort geben.
+9. **Lieferung auf den Rechner:** Die Datei für den WPB-Ordner wurde unter demselben Ausgabe-Pfad wie am Vortag geschrieben. Gemeldet war »geschrieben«, auf dem Rechner lag danach aber die Fassung vom Vortag. Abhilfe: für jede Lieferung einen neuen Dateinamen nehmen, die Datei danach erneut vom Rechner holen und die Prüfsumme vergleichen.
 
 ## Nur du kannst das
 
