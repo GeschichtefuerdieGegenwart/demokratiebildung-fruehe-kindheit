@@ -361,8 +361,10 @@ function drucke(modus) {
 function druckVorbereiten() {
   druckAufraeumen();
   var hand = document.body.getAttribute("data-druck") === "sb";
+  /* Schreibblatt: genau eine Seite – bei vier und mehr Feldern teilen sich die Felder die Linien (Fassung 5.0) */
+  var viele = $$("#blatt textarea").length;
   $$("#blatt textarea, #v-start textarea").forEach(function (t) {
-    var text = hand ? "" : t.value, zeilen = hand ? Math.max(6, 2 * (+t.getAttribute("rows") || 3)) : Math.max(2, text.split("\n").length + Math.floor(text.length / 75));
+    var text = hand ? "" : t.value, zeilen = hand ? (viele >= 4 ? Math.max(2, Math.floor(14 / viele)) : Math.max(6, 2 * (+t.getAttribute("rows") || 3))) : Math.max(2, text.split("\n").length + Math.floor(text.length / 75));
     var d = h("div", { class: "druckfeld" + (text ? "" : " leer"), text: text });
     d.style.setProperty("--zeilen", String(zeilen));
     t.parentNode.insertBefore(d, t.nextSibling); t.classList.add("druck-weg");

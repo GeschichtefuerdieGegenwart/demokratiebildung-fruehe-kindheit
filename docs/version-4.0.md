@@ -206,6 +206,8 @@ Neue Zahlen, Zitate oder Paragrafen kamen nicht dazu. Die Inhalte aus 3.0 stehen
 
 ## 11 · Vorschläge für Fallstricke in den Skills
 
+Übernommen in »kidu-bau« 0.9.1 (18.11.2026).
+
 1. **`website-design-workflow`, CSS:** In einem Blatt mit fester A4-Breite schalteten Grafiken per `@media (min-width …)` nach der Fensterbreite um, nicht nach der Breite des Blatts. Das Dreibein wurde dadurch wirksam 12 Pixel klein (Tablet quer) bzw. 10,6 Pixel (Telefon). Abhilfe: Container-Abfragen am Blatt-Teil (`container-type: inline-size`), eine Mindestbreite und ein verschiebbarer Rahmen.
 2. **`lernseite-bauen`, Speichern und Freigaben:** Das freiwillige Extra stand im Register als letzter Auftrag. Der Knopf »Weiter« auf dem Deckblatt zeigte deshalb auf das Extra, sobald alle Pflichtaufträge fertig waren. Abhilfe: Freiwillige Aufträge zählen nicht zur Zeit, nicht zum Fortschritt und nicht für »Weiter«; das im Durchlauf prüfen.
 3. **`lernseite-bauen`, Aufgaben und Rückmeldung:** Das Schreibblatt für den Stift zeigte das Kriterienraster. Das verletzt Silent-Judgement, denn wer von Hand schreibt, sieht die Kriterien vor dem eigenen Text. Abhilfe: Im Handschrift-Druck Raster, Kriterien und »Zurück in den Raum« ausblenden.
