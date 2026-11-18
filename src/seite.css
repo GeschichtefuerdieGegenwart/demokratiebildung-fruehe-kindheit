@@ -12,7 +12,7 @@
   --serif:"Lora",Georgia,serif;--sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:14px;--r-klein:8px;--schatten:0 1px 2px rgba(23,41,44,.06),0 8px 24px -12px rgba(23,41,44,.18);
   --aus:cubic-bezier(.23,1,.32,1);
-  --kopf-h:3.75rem;--reg-b:15.5rem;
+  --kopf-h:3.75rem;--reg-b:17rem;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--kopf-h) + 16px)}
@@ -87,7 +87,9 @@ label.btn{user-select:none}
 .view{max-width:70rem;margin-inline:auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,40px) 40px;display:grid;gap:clamp(28px,4vw,44px)}
 .held{display:grid;gap:12px}
 .kompass{display:grid;gap:clamp(20px,3vw,36px);align-items:center}
-@media (min-width:900px){.kompass{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}}
+/* Fassung 4.0: Schrift im Kompass wirksam mindestens 16 px – zwei Spalten erst ab 1024 px, dort mit mehr Platz für das Bild; auf dem Telefon nur die Nummern (die Namen stehen in den Karten darunter) */
+@media (min-width:1024px){.kompass{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+@media (max-width:599px){.rad-wort,.rad-haken,.rad-blicktext,.rad-kernwort,.rad-kerntitel{display:none}#rad .rad-kernschmal{display:inline}}
 .kompass__bild{max-width:34rem;width:100%;margin-inline:auto;display:grid;gap:8px}
 .kompass__bild svg{width:100%;height:auto;display:block;overflow:visible}
 .kompass__bild figcaption{font-size:1rem;color:var(--leise);text-align:center;min-height:2.8em}
@@ -99,18 +101,19 @@ label.btn{user-select:none}
 .rad-seg:focus-visible path{stroke:var(--tinte);stroke-width:4}
 @media (hover:hover){.rad-seg:not([aria-pressed=true]):hover path{fill:var(--eis)}}
 .rad-zahl{font:600 30px var(--serif);fill:var(--petrol);text-anchor:middle}
-.rad-wort{font:600 15.5px var(--sans);fill:var(--petrol);text-anchor:middle}
-.rad-haken{font:600 15px var(--sans);fill:var(--tuerkis);text-anchor:middle}
+.rad-wort{font:600 18px var(--sans);fill:var(--petrol);text-anchor:middle}
+.rad-haken{font:600 18px var(--sans);fill:var(--tuerkis);text-anchor:middle}
 .rad-seg[aria-pressed=true] text{fill:#fff}
 .rad-hier{fill:var(--glut);stroke:var(--papier);stroke-width:3}
 .rad-blick{fill:var(--sand)}
-.rad-blicktext{font:600 15px var(--sans);fill:var(--leise);text-anchor:middle;letter-spacing:.03em}
+.rad-blicktext{font:600 18px var(--sans);fill:var(--leise);text-anchor:middle;letter-spacing:.03em}
 .rad-mitte{fill:var(--flaeche)}
 .rad-nadel{transform-origin:280px 280px;transform-box:view-box;transition:transform .8s cubic-bezier(.3,1.5,.5,1)}
 .rad-nadel path{fill:var(--glut)}
 .rad-kern{fill:var(--petrol)}
-.rad-kerntitel{font:600 17px var(--serif);fill:#fff;text-anchor:middle}
-.rad-kernwort{font:400 14px var(--sans);fill:var(--eis);text-anchor:middle}
+.rad-kerntitel{font:600 19.5px var(--serif);fill:#fff;text-anchor:middle}
+.rad-kernwort{font:400 18px var(--sans);fill:var(--eis);text-anchor:middle}
+.rad-kernschmal{display:none;font:600 28px var(--serif);fill:#fff;text-anchor:middle}
 .etappe{background:var(--flaeche);border-radius:var(--r);padding:clamp(20px,3vw,32px);box-shadow:var(--schatten);display:grid;gap:14px;align-content:start;min-height:24rem}
 .etappe h2{font-size:clamp(1.5rem,1.2rem + 1vw,1.9rem)}
 .etappe dl{display:grid;gap:2px}
@@ -124,6 +127,10 @@ label.btn{user-select:none}
 .stunden li div{display:grid;gap:2px}
 .stunden a,.stunden b{font:600 1.05rem/1.3 var(--sans)}
 .stunden a{color:var(--petrol)}
+/* Fassung 4.0: die ganze Karte ist die Zielfläche (mindestens 44 px), nicht nur die Zeile mit dem Titel */
+.stunden li{position:relative;min-height:44px}
+.stunden a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.stunden li:has(a:hover){background:var(--eis)}
 .stunden__wozu{font-size:1rem;line-height:1.4}
 .stunden__stand{font:600 1rem/1.3 var(--sans);color:var(--leise)}
 .balken{display:grid;gap:6px;max-width:34rem}
@@ -176,13 +183,15 @@ label.btn{user-select:none}
 .reg__liste{list-style:none;padding:0;display:grid;gap:2px}
 .reg__knopf{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:2px solid transparent;background:none;border-radius:var(--r-klein);padding:6px 8px;min-height:48px;color:inherit;cursor:pointer;font:inherit;line-height:1.25}
 .reg__knopf b{display:block;font:600 1.02rem/1.25 var(--sans)}
-.reg__unter{display:none;font-size:1rem;color:#34474A;line-height:1.3}
-.reg__stand{display:block;font:600 1rem/1.3 var(--sans);color:#34474A}
+.reg__unter{display:inline;font-size:1rem;color:#34474A;line-height:1.3}
+.reg__unter::after{content:" · "}
+.reg__unter:last-child::after{content:none}
+.reg__stand{display:inline;font:600 1rem/1.3 var(--sans);color:#34474A}
 .reg__nr{flex:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--petrol);background:var(--flaeche);color:var(--petrol);font:600 1rem/1 var(--serif)}
 .reg__nr--deck{border-style:dotted}
 .reg__knopf.hier{background:rgba(255,253,248,.9);border-color:var(--petrol)}
 .reg__knopf.hier .reg__nr{background:var(--petrol);color:#fff}
-.reg__knopf.hier .reg__unter{display:block}
+.reg__knopf.hier .reg__unter{display:none}
 .reg__knopf.hier .reg__stand{color:var(--glut)}
 .reg__knopf.fertig .reg__nr,.reg__knopf.ist-fertig .reg__nr{background:var(--tuerkis);border-color:var(--tuerkis);color:#fff}
 .reg__knopf.fertig .reg__stand{color:var(--tuerkis)}
@@ -484,7 +493,11 @@ details.mehr ul{padding-left:1.2em;display:grid;gap:8px}
 /* ---------- Etappe 1: Dreibein ---------- */
 .dreibein{display:grid;gap:18px;align-items:start}
 .dreibein>*{min-width:0}
-@media (min-width:1000px){.dreibein{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.dreibein__bild{position:sticky;top:calc(var(--kopf-h) + 12px)}}
+/* Fassung 4.0: zwei Spalten nur, wenn das Blatt breit genug ist (Containerabfrage statt Bildschirmbreite); unter 460 px verschiebt sich das Bild in seinem Rahmen, statt die Schrift unter 16 px zu verkleinern */
+.ab-teil{container-type:inline-size}
+.dreibein__bild{overflow-x:auto}
+.dreibein__bild svg{min-width:460px}
+@container (min-width:56rem){.dreibein{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.dreibein__bild{position:sticky;top:calc(var(--kopf-h) + 12px)}}
 .dreibein__bild{background:var(--papier);border-radius:var(--r);padding:14px 14px 16px;display:grid;gap:6px}
 .dreibein__bild svg{width:100%;height:auto;display:block}
 .dreibein__wort{font:600 1.25rem/1.3 var(--serif);text-align:center;min-height:2.6em}
@@ -623,6 +636,46 @@ details.mehr ul{padding-left:1.2em;display:grid;gap:8px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-bewegung=weniger] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 
+/* ---------- Fassung 4.0 · Das Blatt auf DIN-A4-Grundlage ----------
+   Vorbild: Psycho-Labor (Einheit Motivation 2.1) und GGK »Arbeitsblatt Geschichte« (18.11.2026).
+   A4 ist die Regel: höchstens 52,5 rem breit, links der Heftrand mit der Nummer des Auftrags.
+   Breit (.weit) wird ein Blatt nur, wenn sein Material die Breite braucht. Tiefe nur als versetzte Platte, keine weichen Schatten. */
+:root{--a4:52.5rem;--zeile:2rem;--platte:var(--eis);--schreiblinie:#B7C5C6}
+.blatt{width:calc(100% - 2 * clamp(10px,2vw,28px));max-width:var(--a4);margin:18px auto 32px;padding:16px clamp(18px,3vw,40px) 24px;border-radius:3px;box-shadow:6px 6px 0 0 var(--platte)}
+.blatt.weit{max-width:none}
+.ab-h{position:relative}
+@media (min-width:900px){
+  .blatt:not(.weit){padding-left:76px}
+  .blatt:not(.weit) .ab-h__nr{position:absolute;left:-58px;top:-2px}
+  .blatt:not(.weit) .ab-meta{margin-left:0}
+}
+.feld textarea,.verb textarea{line-height:var(--zeile);padding:0 14px;min-height:calc(var(--zeile) * 2 + 4px);border-radius:3px;background-color:#fff;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--zeile) - 1px),var(--schreiblinie) calc(var(--zeile) - 1px),var(--schreiblinie) var(--zeile));background-attachment:local}
+.feld textarea:read-only{background-color:var(--papier)}
+.schreib-druck{border-top:1px dashed var(--linie);padding-top:12px}
+.ab-h__text{display:grid;gap:2px}
+.ab-h__kicker{font:600 1rem/1.3 var(--sans);color:var(--leise)}
+.ab-h__nr--extra{border-radius:6px}
+.reg__knopf{padding-block:3px;min-height:48px}
+.reg__knopf b{line-height:1.2}
+.reg__unter,.reg__stand{line-height:1.22}
+.reg__knopf.zusatz .reg__nr{border-radius:6px;border-style:dashed}
+.reg__werk{justify-self:stretch}
+.reg__werk>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:8px;font:600 1rem/1.3 var(--sans);color:var(--petrol);list-style:none}
+.reg__werk>summary::-webkit-details-marker{display:none}
+.reg__werk>summary::before{content:"▸"}
+.reg__werk[open]>summary::before{content:"▾"}
+.reg__werk-in{display:grid;gap:8px;justify-items:start;padding:2px 0 6px}
+.reg__werk-in .frage-box{justify-self:stretch}
+.kann{display:grid;gap:6px;margin-top:6px}
+.kann__kopf{font-size:1rem;color:var(--leise)}
+.kann__liste{list-style:none;padding:0;display:grid;gap:6px}
+.kann__liste li{display:flex;gap:10px;align-items:baseline}
+.kann__stufe{flex:none;min-width:6.5rem;font:600 1rem/1.3 var(--sans)}
+.kann__stufe--0{color:var(--gut)}.kann__stufe--1{color:var(--mittel)}.kann__stufe--2{color:var(--schwach)}
+/* Ansicht für den Beamer: Grund und Blatt weiß, Schrift schwarz. Eine dunkle Ansicht gibt es bewusst nicht – das Blatt ist Papier. */
+:root[data-ansicht="beamer"]{--papier:#FFFFFF;--flaeche:#FFFFFF;--sand:#EFEFEF;--linie:#A9B3B4;--tinte:#000000;--leise:#273133;--schreiblinie:#8C9A9B}
+:root[data-ansicht="beamer"] .reg{background:#F3F5F5;background-image:none}
+
 /* ---------- Druck ---------- */
 @media print{
   @page{size:A4;margin:14mm 15mm 15mm}
@@ -667,4 +720,34 @@ html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-be
   body[data-druck=spur] .faden__etappe{box-shadow:none;border:1pt solid #bbb;break-inside:avoid;margin-bottom:6pt}
   body[data-druck=spur] .faden textarea,body[data-druck=spur] .faden .feld label,body[data-druck=spur] .faden__leer a{display:none}
   body[data-druck=spur] .nur-druck{display:block}
+}
+
+/* ---------- Fassung 4.0 · Druck auf A4 (Paper-Proof) – steht zuletzt, damit keine spätere Grundregel ihn aufhebt ----------
+   Deckblatt eine Seite, Schreibblatt eine Seite, Zusammenfassung zwei. Schreibfelder drucken als Text auf Linien. */
+@media print{
+  @page{size:A4;margin:14mm 14mm 14mm 22mm}
+  .blatt,.blatt.weit{width:auto;max-width:none;margin:0;padding:0!important;box-shadow:none;border:0;border-radius:0}
+  body:not([data-druck]) .blattzeile,body[data-druck=sb] .blattzeile{display:flex!important;font-size:9.5pt;color:#000;border-bottom:1pt solid #000;margin-bottom:3mm;padding-bottom:1.5mm}
+  .ab-h__nr{position:static!important}
+  .druck-weg{display:none!important}
+  .druckfeld{--zeile:7.6mm;display:block;white-space:pre-wrap;overflow-wrap:anywhere;color:#000;font:400 11pt/7.6mm var(--sans);padding:0 2mm;border-left:2pt solid #999;min-height:calc(var(--zeile) * var(--zeilen,2));background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--zeile) - .8pt),#777 calc(var(--zeile) - .8pt),#777 var(--zeile));-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .schreib-druck,.reg__werk{display:none!important}
+  body[data-druck=sb] .rm,body[data-druck=sb] .stempel,body[data-druck=sb] .zaehler,body[data-druck=sb] .reihe,body[data-druck=sb] .raster,body[data-druck=sb] .kasten--raum{display:none!important}
+  /* Deckblatt auf einer Seite: Die Druckseite ist schmaler als 900 px – Spalten und Farben deshalb mit eigenen Regeln */
+  .band{background:#fff!important;color:#000!important;border:1.5pt solid #000;padding:5mm 6mm;gap:4mm;grid-template-columns:minmax(0,1fr) 24mm}
+  .band *{color:#000!important}
+  .band .btn{display:none!important}
+  .band h1{font-size:20pt}
+  .band__frage{font-size:12pt}
+  .band__bild svg{width:24mm;height:24mm}
+  .deck{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:4mm 7mm}
+  .deck .abschnitt{font-size:12pt;margin-bottom:1.5mm}
+  .deck p,.deck li{font-size:9.5pt;line-height:1.35}
+  .ablauf{gap:0}
+  .ablauf li{padding-block:.7mm;font-size:9.5pt;line-height:1.3;grid-template-columns:6mm minmax(0,1fr)}
+  .ablauf li>b{font-size:10pt}
+  .ablauf small{font-size:8.5pt;line-height:1.3}
+  .so{display:none!important}
+  .deck .kasten{padding:2mm 3mm}
+  .wo{margin-block:2mm}
 }

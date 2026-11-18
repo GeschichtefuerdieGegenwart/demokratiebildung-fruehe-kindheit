@@ -28,8 +28,8 @@ var kompass = (function () {
       var g = sv("g", { "class": "rad-seg", role: "button", tabindex: "0" });
       g.appendChild(sv("path", { d: ring(RA, RI, a1, a2) }));
       g.appendChild(sv("text", { x: m[0], y: m[1] - 6, "class": "rad-zahl" }, String(i + 1)));
-      g.appendChild(sv("text", { x: m[0], y: m[1] + 16, "class": "rad-wort" }, e.kurz));
-      var haken = sv("text", { x: m[0], y: m[1] + 34, "class": "rad-haken" }, ""); g.appendChild(haken); g._haken = haken;
+      g.appendChild(sv("text", { x: m[0], y: m[1] + 18, "class": "rad-wort" }, e.kurz));
+      var haken = sv("text", { x: m[0], y: m[1] + 38, "class": "rad-haken" }, ""); g.appendChild(haken); g._haken = haken;
       if (i < D.hier) g.setAttribute("data-stand", "fertig");
       if (i === D.hier) { g.setAttribute("data-stand", "hier"); var hh = pol(RA + 2, i * 45 + 22.5); g.appendChild(sv("circle", { cx: hh[0], cy: hh[1], r: 9, "class": "rad-hier" })); }
       g.addEventListener("click", function () { waehle(i, true); });
@@ -40,9 +40,10 @@ var kompass = (function () {
     nadel = sv("g", { "class": "rad-nadel" });
     nadel.appendChild(sv("path", { d: "M" + C + " " + (C - RB + 6) + "L" + (C + 13) + " " + C + "L" + C + " " + (C + 34) + "L" + (C - 13) + " " + C + "Z" }));
     svg.appendChild(nadel);
-    svg.appendChild(sv("circle", { cx: C, cy: C, r: 62, "class": "rad-kern" }));
-    svg.appendChild(sv("text", { x: C, y: C - 14, "class": "rad-kerntitel" }, "Kinderrechte"));
-    ["Schutz", "Förderung", "Beteiligung"].forEach(function (w, i) { svg.appendChild(sv("text", { x: C, y: C + 6 + i * 17, "class": "rad-kernwort" }, w)); });
+    svg.appendChild(sv("circle", { cx: C, cy: C, r: 80, "class": "rad-kern" }));
+    svg.appendChild(sv("text", { x: C, y: C - 18, "class": "rad-kerntitel" }, "Kinderrechte"));
+    ["Schutz", "Förderung", "Beteiligung"].forEach(function (w, i) { svg.appendChild(sv("text", { x: C, y: C + 8 + i * 21, "class": "rad-kernwort" }, w)); });
+    ["Kinder-", "rechte"].forEach(function (w, i) { svg.appendChild(sv("text", { x: C, y: C - 6 + i * 30, "class": "rad-kernschmal" }, w)); });
     $("#rad-heute").addEventListener("click", function () { waehle(D.hier, true); });
   }
   function waehle(i, bewegt) {
@@ -122,23 +123,25 @@ function lernspur() {
         h("p", { class: "faden__kopf" }, h("b", { text: "Etappe " + (i + 1) + " · " + e.titel }), " – " + e.frage),
         def.spur ? (satz ? h("blockquote", { class: "faden__satz", text: satz }) : h("p", { class: "faden__leer", html: "Noch leer. Am Ende des Arbeitsblatts schreiben Sie einen Satz – er erscheint hier. <a href=\"#" + e.blatt + "\">Zum Arbeitsblatt</a>" })) : null,
         feld("leit." + (i + 1), { label: "Meine Antwort auf die Leitfrage dieser Etappe", platz: "Schreiben Sie hier, wenn Sie die Stunden der Etappe bearbeitet haben.", rows: 2 }),
-        h("p", { class: "nur-druck mein", text: txt("leit." + (i + 1)) || "Meine Antwort auf die Leitfrage: –" }))));
+        h("p", { class: "nur-druck mein", text: txt("leit." + (i + 1)) || "Meine Antwort auf die Leitfrage: –" }),
+        kannListe(def))));
   });
   var rest = D.etappen.filter(function (e, i) { return !(blattStand(e.blatt).fertig > 0 || i <= D.hier || (BLAETTER[e.blatt].spur && txt(BLAETTER[e.blatt].spur))); });
   if (rest.length) box.appendChild(h("li", { class: "faden__etappe faden__rest" }, h("span", { class: "faden__punkt", "aria-hidden": "true", text: "…" }), h("div", { class: "faden__inhalt" }, h("p", { class: "faden__kopf", text: "Etappe " + rest.map(function (e) { return D.etappen.indexOf(e) + 1; }).join(", ") + ": kommen im Lauf des Jahres dazu." }))));
 }
 
+/* »Das kann ich«: nur, was die Lernenden am Ende eines Blatts selbst eingeschätzt haben (der Hefter zeigt nur Bearbeitetes) */
+function kannListe(def) {
+  if (!def || !def.kann) return null;
+  var w = S.w[def.id + ".selbst"] || {}, stufen = ["sicher", "teils", "noch nicht"];
+  var da = def.kann.map(function (k, i) { return typeof w[i] === "number" ? h("li", {}, h("span", { class: "kann__stufe kann__stufe--" + w[i], text: stufen[w[i]] }), h("span", { text: k })) : null; }).filter(Boolean);
+  return da.length ? h("div", { class: "kann" }, h("p", { class: "kann__kopf" }, h("b", { text: "Das kann ich" }), " – Ihre Einschätzung am Ende des Arbeitsblatts"), h("ul", { class: "kann__liste" }, da)) : null;
+}
+
 /* ---------- Sichern und Laden als Datei (Ergebnisse überleben den Gerätewechsel) ---------- */
 function sichernBauen() {
   var box = $("#sichern-knoepfe"), status = $("#sichern-status");
-  box.appendChild(knopf("Als Datei sichern", { art: "primaer", klick: function () {
-    var datum = new Date().toISOString().slice(0, 10);
-    var inhalt = JSON.stringify({ art: "wpb-demokratie-lernspur", version: 4, gesichert: new Date().toISOString(), stand: S }, null, 1);
-    var blob = new Blob([inhalt], { type: "application/json" });
-    var a = h("a", { href: URL.createObjectURL(blob), download: "demokratiebildung-mein-stand-" + datum + ".json" });
-    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-    status.textContent = "Gesichert als »demokratiebildung-mein-stand-" + datum + ".json«. Auf dem iPad liegt die Datei in der Dateien-App unter »Downloads«.";
-  } }));
+  box.appendChild(knopf("Als Datei sichern", { art: "primaer", klick: function () { dateiSichern(status); } }));
   var datei = h("input", { type: "file", accept: ".json,application/json", class: "sr", id: "laden-datei" });
   box.appendChild(datei);
   box.appendChild(h("label", { class: "btn", for: "laden-datei", tabindex: "0", on: { keydown: function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); datei.click(); } } } }, "Datei laden"));
@@ -160,7 +163,7 @@ function sichernBauen() {
   $("#loesch-nein").addEventListener("click", function () { $("#loesch-frage").hidden = true; });
   $("#loesch-ja").addEventListener("click", function () {
     try { window.localStorage.removeItem(D.schluessel); window.localStorage.removeItem(D.schluesselAlt); window.sessionStorage.clear(); } catch (e) { /* nichts gespeichert */ }
-    S = leer(); document.documentElement.removeAttribute("data-bewegung"); $("#loesch-frage").hidden = true;
+    S = leer(); document.documentElement.removeAttribute("data-bewegung"); document.documentElement.removeAttribute("data-ansicht"); $("#loesch-frage").hidden = true;
     status.textContent = "Alle Eingaben auf diesem Gerät sind gelöscht."; zeigeKompass();
   });
   var rb = $("#ruhig-start"); rb.setAttribute("aria-pressed", String(document.documentElement.getAttribute("data-bewegung") === "weniger"));

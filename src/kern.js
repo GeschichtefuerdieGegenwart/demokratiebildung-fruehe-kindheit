@@ -353,9 +353,34 @@ function selbst(box, key, aussagen) {
 /* ---------- Drucken: Zusammenfassung, Plakat, Lernspur ---------- */
 function drucke(modus) {
   document.body.setAttribute("data-druck", modus);
+  druckVorbereiten();
   window.print();
 }
-window.addEventListener("afterprint", function () { document.body.removeAttribute("data-druck"); });
+/* Ein Feld druckt sonst nur seinen sichtbaren Ausschnitt: Beim Drucken wird jedes Schreibfeld zu Text auf Linien.
+   Im Schreibblatt (»sb«) bleiben die Linien leer – zum Schreiben von Hand. */
+function druckVorbereiten() {
+  druckAufraeumen();
+  var hand = document.body.getAttribute("data-druck") === "sb";
+  $$("#blatt textarea, #v-start textarea").forEach(function (t) {
+    var text = hand ? "" : t.value, zeilen = hand ? Math.max(6, 2 * (+t.getAttribute("rows") || 3)) : Math.max(2, text.split("\n").length + Math.floor(text.length / 75));
+    var d = h("div", { class: "druckfeld" + (text ? "" : " leer"), text: text });
+    d.style.setProperty("--zeilen", String(zeilen));
+    t.parentNode.insertBefore(d, t.nextSibling); t.classList.add("druck-weg");
+  });
+}
+function druckAufraeumen() {
+  $$(".druckfeld").forEach(function (d) { d.remove(); });
+  $$(".druck-weg").forEach(function (t) { t.classList.remove("druck-weg"); });
+}
+window.__druckVorbereiten = druckVorbereiten;
+window.addEventListener("beforeprint", function () { if (!document.querySelector(".druckfeld")) druckVorbereiten(); });
+window.addEventListener("afterprint", function () { document.body.removeAttribute("data-druck"); druckAufraeumen(); });
+/* Extra: freiwillig, hängt an der eigenen Praxisstelle, verlangt eine Fundstelle aus dem Blatt und endet mit einem Satz zum eigenen Urteil */
+function extraSeite(box, key, c) {
+  box.appendChild(kasten("auftrag", null, p(c.auftrag)));
+  c.felder.forEach(function (f) { box.appendChild(feld(key + "." + f[0], { label: f[1], platz: f[2], rows: 3 })); });
+  box.appendChild(p(c.schluss, "meta lauf"));
+}
 
 /* ======================================================================
    Blatt-Rahmen
@@ -396,7 +421,8 @@ function zeigeBlatt(id, seite) {
   register(def, true);
   var main = $("#blatt"); main.textContent = "";
   main.classList.toggle("deckblatt", seite === "deck");
-  main.appendChild(h("div", { class: "blattzeile" }, h("span", { text: "Wahlfach Demokratiebildung · Etappe " + def.etappe }), h("span", { text: def.art === "einstieg" ? "Einstiegsblatt" : "Arbeitsblatt" }), h("span", { text: "Datum: " + new Date().toLocaleDateString("de-DE") })));
+  main.classList.toggle("weit", !!(a && a.breit && istOffen(a)) || seite === "lk");
+  main.appendChild(h("div", { class: "blattzeile" }, h("span", { text: "Wahlfach Demokratiebildung · Leitfaden" }), h("span", { text: "Etappe " + def.etappe + " von 8 · " + (def.art === "einstieg" ? "Einstiegsblatt" : "Arbeitsblatt") }), h("span", { text: "Datum: " + new Date().toLocaleDateString("de-DE") })));
   if (seite === "deck") deckblatt(def, main);
   else if (seite === "lk") lehrkraft(def, main);
   else auftragSeite(def, a, main);
@@ -414,8 +440,8 @@ function frisch() { if (AKT.blatt && !$("#v-blatt").hidden) { register(AKT.blatt
 function zustand(a) {
   if (AKT.seite === a.id) return ["Sie sind hier", "hier"];
   if (istFertig(a)) return ["fertig", "fertig"];
-  if (istOffen(a)) return ["offen", "offen"];
-  return a.frei === "ansage" ? ["öffnet auf Ansage", "ansage"] : ["öffnet nach Ihrer Antwort", "antwort"];
+  if (istOffen(a)) return a.zusatz ? ["freiwillig", "offen"] : ["offen", "offen"];
+  return a.frei === "ansage" ? ["öffnet auf Ansage", "ansage", "auf Ansage"] : ["öffnet nach Ihrer Antwort", "antwort", "nach Antwort"];
 }
 function register(def, immer) {
   var r = $("#reg");
@@ -430,10 +456,10 @@ function register(def, immer) {
     h("span", { class: "reg__nr reg__nr--deck", "aria-hidden": "true", text: "◇" }), h("span", {}, h("b", { text: "Deckblatt" }), h("span", { class: "reg__unter", text: "Worum es geht" })))));
   def.auftraege.forEach(function (a) {
     var z = zustand(a), fertig = istFertig(a);
-    ol.appendChild(h("li", {}, h("button", { type: "button", class: "reg__knopf " + z[1] + (fertig ? " ist-fertig" : ""), "data-geh": a.id, "aria-current": z[1] === "hier" ? "step" : null,
-      "aria-label": "Auftrag " + a.nr + ": " + a.kurz + ", " + a.form + ", " + a.min + " Minuten, " + z[0] + (fertig && z[1] === "hier" ? ", fertig" : ""), on: { click: function () { geh(def.id, a.id); } } },
+    ol.appendChild(h("li", {}, h("button", { type: "button", class: "reg__knopf " + z[1] + (fertig ? " ist-fertig" : "") + (a.zusatz ? " zusatz" : ""), "data-geh": a.id, "aria-current": z[1] === "hier" ? "step" : null,
+      "aria-label": (a.zusatz ? "Extra, freiwillig: " + a.name + ", " : "Auftrag " + a.nr + ": " + a.kurz + ", " + a.form + ", " + a.min + " Minuten, ") + z[0] + (fertig && z[1] === "hier" ? ", fertig" : ""), on: { click: function () { geh(def.id, a.id); } } },
       h("span", { class: "reg__nr", "aria-hidden": "true", text: fertig && z[1] !== "hier" ? "✓" : a.nr }),
-      h("span", {}, h("b", { text: a.kurz }), h("span", { class: "reg__unter", text: a.form + " · " + a.min + " Min." + (a.zusatz ? " · Zusatz" : "") }), h("span", { class: "reg__stand", text: z[0] + (fertig && z[1] === "hier" ? " · fertig" : "") })))));
+      h("span", {}, h("b", { text: a.kurz }), a.zusatz ? null : h("span", { class: "reg__unter", text: a.min + " Min." }), h("span", { class: "reg__stand", text: (z[2] || z[0]) + (fertig && z[1] === "hier" ? " · fertig" : "") })))));
   });
   r.appendChild(ol);
   r.appendChild(regFuss(def));
@@ -444,12 +470,54 @@ function regFuss(def) {
   var frage = h("div", { class: "frage-box", hidden: true },
     p("<b>Alle Eingaben dieses Blatts löschen?</b> Ihre Antworten und Texte auf diesem Gerät werden entfernt. Andere Etappen bleiben."),
     h("div", { class: "reihe" }, knopf("Ja, löschen", { art: "primaer", klick: function () { loescheBlatt(def); } }), knopf("Nein, behalten", { klick: function () { frage.hidden = true; } })));
+  var status = h("p", { class: "reg__hinweis reg__status", role: "status", "aria-live": "polite" });
+  var datei = h("input", { type: "file", accept: ".json,application/json", class: "sr", tabindex: "-1", "aria-hidden": "true" });
+  var ladeFrage = h("div", { class: "frage-box", hidden: true });
+  datei.addEventListener("change", function () { dateiLaden(datei, status, ladeFrage, function () { zeigeBlatt(def.id, AKT.seite); }); });
   var ruhigKn = knopf("Weniger Bewegung", { art: "schalter", gedrueckt: String(document.documentElement.getAttribute("data-bewegung") === "weniger"), klick: function (e) { schalteBewegung(e.currentTarget); } });
-  return h("div", { class: "reg__fuss" },
-    knopf("Eingaben dieses Blatts löschen", { art: "klein", klick: function () { frage.hidden = false; $("button", frage).focus(); } }), frage,
-    ruhigKn,
-    h("p", { class: "reg__hinweis", text: "Alles bleibt auf diesem Gerät. Nichts wird übertragen." }),
-    h("button", { type: "button", class: "link", "data-geh": "lk", on: { click: function () { geh(def.id, "lk"); } } }, "Hinweise für die Lehrkraft"));
+  var beamerKn = knopf("Ansicht für den Beamer", { art: "schalter", gedrueckt: String(document.documentElement.getAttribute("data-ansicht") === "beamer"), klick: function (e) { schalteAnsicht(e.currentTarget); } });
+  var werk = h("details", { class: "reg__werk" }, h("summary", { text: "Sichern · Laden · Ansicht" }),
+    h("div", { class: "reg__werk-in" },
+      knopf("Stand als Datei sichern", { art: "klein", klick: function () { dateiSichern(status); } }),
+      h("button", { type: "button", class: "btn btn--klein", on: { click: function () { datei.click(); } } }, "Stand aus Datei laden"), datei, ladeFrage,
+      knopf("Eingaben dieses Blatts löschen", { art: "klein", klick: function () { frage.hidden = false; $("button", frage).focus(); } }), frage,
+      beamerKn, ruhigKn, status,
+      h("p", { class: "reg__hinweis", text: "Alles bleibt auf diesem Gerät. Nichts wird übertragen." })));
+  if (WERK_OFFEN) werk.open = true;
+  werk.addEventListener("toggle", function () { WERK_OFFEN = werk.open; });
+  return h("div", { class: "reg__fuss" }, werk,
+    h("button", { type: "button", class: "link", "data-geh": "lk", on: { click: function () { geh(def.id, "lk"); } } }, "Für Lehrkräfte: Hinweise und Freigabe"));
+}
+var WERK_OFFEN = false;
+function schalteAnsicht(b) {
+  var an = document.documentElement.getAttribute("data-ansicht") !== "beamer";
+  if (an) document.documentElement.setAttribute("data-ansicht", "beamer"); else document.documentElement.removeAttribute("data-ansicht");
+  S.ansicht = an ? "beamer" : ""; speichere();
+  $$("[aria-pressed]").forEach(function (x) { if (x.textContent === "Ansicht für den Beamer") x.setAttribute("aria-pressed", String(an)); });
+}
+/* ---------- Stand als Datei: eine Datei für den ganzen Leitfaden (Device-Switch) ---------- */
+function dateiSichern(status) {
+  var datum = new Date().toISOString().slice(0, 10);
+  var inhalt = JSON.stringify({ art: "wpb-demokratie-lernspur", version: 4, gesichert: new Date().toISOString(), stand: S }, null, 1);
+  var blob = new Blob([inhalt], { type: "application/json" });
+  var a = h("a", { href: URL.createObjectURL(blob), download: "demokratiebildung-mein-stand-" + datum + ".json" });
+  document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  if (status) status.textContent = "Gesichert als »demokratiebildung-mein-stand-" + datum + ".json«. Auf dem iPad liegt die Datei in der Dateien-App unter »Downloads«.";
+}
+function dateiLaden(input, status, frageBox, nachher) {
+  var f = input.files && input.files[0]; if (!f) return;
+  var r = new FileReader();
+  r.onload = function () {
+    var x = null; try { x = JSON.parse(r.result); } catch (e) { x = null; }
+    input.value = "";
+    if (!x || x.art !== "wpb-demokratie-lernspur" || !x.stand) { status.textContent = "Diese Datei passt nicht. Laden Sie eine Datei, die Sie hier gesichert haben."; return; }
+    var tag = new Date(x.gesichert).toLocaleDateString("de-DE");
+    var ja = knopf("Ja, laden", { art: "primaer", klick: function () { S = norm(x.stand); speichere(); frageBox.hidden = true; if (nachher) nachher(); } });
+    frageBox.textContent = "";
+    haenge(frageBox, [p("<b>Stand vom " + tag + " laden?</b> Was jetzt auf diesem Gerät steht, wird ersetzt."), h("div", { class: "reihe" }, ja, knopf("Nein, nichts ändern", { klick: function () { frageBox.hidden = true; status.textContent = "Nichts geändert."; } }))]);
+    frageBox.hidden = false; ja.focus();
+  };
+  r.readAsText(f);
 }
 function schalteBewegung(b) {
   var an = document.documentElement.getAttribute("data-bewegung") !== "weniger";
@@ -472,7 +540,7 @@ function geh(id, seite) { var ziel = "#" + id + (seite && seite !== "deck" ? "/"
 
 function deckblatt(def, main) {
   var et = D.etappen[def.etappe - 1];
-  var weiter = def.auftraege.filter(function (a) { return !istFertig(a); })[0];
+  var weiter = def.auftraege.filter(function (a) { return !a.zusatz && !istFertig(a); })[0];
   var start = def.auftraege[0];
   var beg = BS(def.id).durch.deck || def.auftraege.some(istFertig);
   var los = h("button", { type: "button", class: "btn btn--primaer btn--gross", on: { click: function () { BS(def.id).durch.deck = true; geh(def.id, (weiter || start).id); } } },
@@ -488,8 +556,8 @@ function deckblatt(def, main) {
   var links = h("div", {}, h("h2", { class: "abschnitt", text: "Darum geht es" }), p(def.darum));
   if (def.ziele) haenge(links, [h("h2", { class: "abschnitt", text: "Am Ende können Sie" }), liste(def.ziele, "ziele")]);
   var rechts = h("div", {}, h("h2", { class: "abschnitt", text: "So läuft dieses Blatt" }),
-    h("ol", { class: "ablauf" }, def.auftraege.map(function (a) { return h("li", {}, h("b", { text: a.nr }), h("span", {}, a.name, h("small", { text: a.form + " · " + a.min + " Min." + (a.frei === "ansage" ? " · öffnet auf Ansage" : "") + (a.zusatz ? " · Zusatz" : "") }))); })),
-    liste(["Links stehen alle Aufträge. Sie sehen immer, wo Sie sind und was noch kommt.", "Jeder Auftrag ist eine Seite. Sie scrollen von oben nach unten.", "Manche Aufträge öffnen sich erst nach Ihrer Antwort, manche auf Ansage Ihrer Lehrkraft."], "so"));
+    h("ol", { class: "ablauf" }, def.auftraege.map(function (a) { return h("li", {}, h("b", { text: a.nr }), h("span", {}, a.name, h("small", { text: (a.zusatz ? "freiwillig · zählt nicht zur Zeit" : a.form + " · " + a.min + " Min.") + (a.frei === "ansage" ? " · öffnet auf Ansage" : "") }))); })),
+    liste(["Links stehen alle Aufträge. Sie sehen immer, wo Sie sind und was noch kommt.", "Jeder Auftrag ist eine Seite. Sie scrollen von oben nach unten.", "Manche Aufträge öffnen sich erst nach Ihrer Antwort, manche auf Ansage Ihrer Lehrkraft.", "Jedes Blatt lässt sich auf A4 drucken. Was Sie schreiben, steht im Ausdruck auf Linien – Schreibaufträge gibt es auch als leeres Schreibblatt für den Stift."], "so"));
   main.appendChild(h("div", { class: "deck" }, links, rechts));
   if (def.hinweis) main.appendChild(kasten("hinweis", null, p(def.hinweis)));
   if (def.weg) main.appendChild(def.weg());
@@ -516,11 +584,15 @@ function minikompass(i) {
 
 function auftragSeite(def, a, main) {
   var offen = istOffen(a);
-  main.appendChild(h("h1", { class: "ab-h", id: "seitentitel", tabindex: "-1" }, h("span", { class: "reg__nr ab-h__nr", "aria-hidden": "true", text: a.nr }), h("span", { text: a.kopf ? a.name : "Arbeitsauftrag " + a.nr + ": " + a.name })));
-  main.appendChild(h("p", { class: "ab-meta" }, a.form + " · " + a.min + " Minuten", a.marke ? h("span", { class: "ab-marke", text: a.marke }) : null));
+  main.appendChild(h("h1", { class: "ab-h", id: "seitentitel", tabindex: "-1" }, h("span", { class: "reg__nr ab-h__nr" + (a.zusatz ? " ab-h__nr--extra" : ""), "aria-hidden": "true", text: a.nr }),
+    h("span", { class: "ab-h__text" }, a.kopf ? null : h("span", { class: "ab-h__kicker", text: a.zusatz ? "Extra · freiwillig" : "Arbeitsauftrag " + a.nr }), h("span", { class: "ab-h__titel", text: a.name }))));
+  main.appendChild(h("p", { class: "ab-meta" }, a.zusatz ? a.form + " · zählt nicht zur Zeit" : a.form + " · " + a.min + " Minuten", a.marke ? h("span", { class: "ab-marke", text: a.marke }) : null));
   var teil = h("section", { class: "ab-teil" });
   main.appendChild(teil);
-  if (offen) { BS(def.id).gesehen = BS(def.id).gesehen || {}; a.seite(teil); }
+  if (offen) {
+    BS(def.id).gesehen = BS(def.id).gesehen || {}; a.seite(teil);
+    if (a.schreib) teil.appendChild(h("div", { class: "reihe schreib-druck" }, knopf("Als Schreibblatt drucken", { klick: function () { drucke("sb"); } }), h("span", { class: "meta", text: "Ein Blatt A4 mit leeren Linien – zum Schreiben von Hand." })));
+  }
   else zuSeite(def, a, teil);
   main.appendChild(h("div", { class: "ab-fuss", id: "ab-fuss" }));
   fussFrisch();
@@ -556,15 +628,16 @@ function fokusTitel() {
 function lehrkraft(def, main) {
   main.appendChild(h("h1", { class: "ab-h", id: "seitentitel", tabindex: "-1", text: "Hinweise für die Lehrkraft" }));
   main.appendChild(p("Offen und ohne Lösungen. Die Rückmeldetexte erscheinen den Lernenden ohnehin erst nach ihrer Festlegung. Erwartungshorizonte gehören nicht in diese Seite.", "meta lauf"));
+  if (def.papier) main.appendChild(h("p", { class: "lauf" }, h("b", { text: "Papierfrage: " }), def.papier));
   var b = BS(def.id);
   main.appendChild(h("div", { class: "reihe" },
     knopf(b.alle ? "Freigaben auf diesem Gerät zurücksetzen" : "Alle Aufträge auf diesem Gerät freigeben (Smartboard)", { art: b.alle ? "" : "dunkel", klick: function () { b.alle = !b.alle; if (!b.alle) b.frei = {}; speichere(); zeigeBlatt(def.id, "lk"); } }),
     h("span", { class: "meta", text: b.alle ? "Alle Aufträge sind auf diesem Gerät offen." : "Nur für das Gerät vorne – die Lernenden öffnen auf Ansage." })));
-  var tab = h("table", { class: "lk-tab" }, h("thead", {}, h("tr", {}, ["Nr.", "Auftrag", "Sozialform", "Min.", "Freigabe", "Was das Gerät tut", "Im Raum"].map(function (x) { return h("th", { scope: "col", text: x }); }))),
-    h("tbody", {}, def.auftraege.map(function (a) { return h("tr", {}, h("td", { text: a.nr }), h("td", { text: a.name }), h("td", { text: a.form }), h("td", { text: String(a.min) }), h("td", { text: a.frei === "ansage" ? "auf Ansage" : (a.frei === "antwort" ? "nach Antwort in " + AUF(def, a.nach).nr : "offen") }), h("td", { text: a.prinzip || "–" }), h("td", { text: a.raum || "–" })); })));
+  var tab = h("table", { class: "lk-tab" }, h("thead", {}, h("tr", {}, ["Nr.", "Auftrag", "Lehrfunktion", "Sozialform", "Min.", "Freigabe", "Was das Gerät tut", "Im Raum"].map(function (x) { return h("th", { scope: "col", text: x }); }))),
+    h("tbody", {}, def.auftraege.map(function (a) { return h("tr", {}, h("td", { text: a.nr }), h("td", { text: a.name }), h("td", { text: a.phase || "–" }), h("td", { text: a.form }), h("td", { text: a.zusatz ? "frei" : String(a.min) }), h("td", { text: a.frei === "ansage" ? "auf Ansage" : (a.frei === "antwort" ? "nach Antwort in " + AUF(def, a.nach).nr : "offen") }), h("td", { text: a.prinzip || "–" }), h("td", { text: a.raum || "–" })); })));
   var summe = def.auftraege.reduce(function (s, a) { return s + (a.zusatz ? 0 : a.min); }, 0);
   main.appendChild(h("div", { class: "tabelle-rahmen" }, tab));
-  main.appendChild(p("Summe der Zeiten: " + summe + " Minuten (geschätzt, nicht erprobt). »Was das Gerät tut« folgt den sechs Prinzipien aus Kidu: Verdecken · Rückmelden · Messen · Variieren · Stufen · Bündeln.", "meta"));
+  main.appendChild(p("Summe der Zeiten: " + summe + " Minuten (geschätzt, nicht erprobt; ein Extra zählt nicht mit). »Lehrfunktion« nach den Phasen aus Kidu: Einstieg · Erarbeitung · Sichern und üben · Übertragen und Ausblick. »Was das Gerät tut« folgt den sechs Prinzipien aus Kidu: Verdecken · Rückmelden · Messen · Variieren · Stufen · Bündeln.", "meta"));
   (def.lk || []).forEach(function (x) { main.appendChild(h("h2", { class: "abschnitt", text: x[0] })); haenge(main, Array.isArray(x[1]) ? liste(x[1]) : p(x[1])); });
   main.appendChild(h("div", { class: "ab-fuss" }, h("button", { type: "button", class: "btn", on: { click: function () { geh(def.id, "deck"); } } }, "‹ Deckblatt")));
   fokusTitel();

@@ -120,6 +120,8 @@ blatt({
   ziele: ["erklären, warum Kinder ihre Rechte nicht geschenkt bekommen, sondern haben,", "eine Kita-Szene mit den drei Prüfsteinen Schutz, Förderung und Beteiligung prüfen,", "Artikel 12 der UN-Kinderrechtskonvention in einen Satz für den Kita-Alltag übersetzen."],
   hinweis: "Zwei Aufträge fragen nach Ihrer Praxisstelle. Das ist freiwillig – Sie können auch an eine ausgedachte Kita denken. Schreiben Sie keine Namen von Kindern, Familien, Kolleginnen oder Kollegen auf.",
   spur: "e3.spur", spurAnfang: "Kinder haben Rechte. Für meine Arbeit heißt das: …", spurFrage: "Was heißt »Kinder haben Rechte« für Ihre Arbeit? Ein Satz genügt.",
+  kann: ["Ich kann erklären, warum Kinder ihre Rechte nicht geschenkt bekommen, sondern haben.", "Ich kann eine Kita-Szene mit den drei Prüfsteinen prüfen.", "Ich kann Artikel 12 in einen Satz für den Kita-Alltag übersetzen."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken – Position, Korczak, Gesetz – und beim Rundgang mit dem Plakat. Das Extra gibt es als Schreibblatt für den Stift; die Ausstellung kann zusätzlich als Stationen auf Papier im Raum hängen.",
   lk: [
     ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen – dann können Sie frei vor- und zurückgehen.", "Vorschlag: Wer die Plakate aus der Mitmach-Ausstellung zum Tag der Kinderrechte hat, hängt sie im Raum auf. Die Paare gehen herum und legen sich am Gerät fest."]],
     ["Plenumsstellen", ["Nach Auftrag 2: Positionslinie 0–10, zwei bis drei Begründungen.", "Nach Auftrag 4: Was hat am Gesetz überrascht? Zwei Übersetzungen von Artikel 12 vorlesen – Recht oder Erlaubnis?", "Nach Auftrag 5: Rundgang. Jedes Paar stellt ein Plakat vor; Handzeichen je Prüfstein; über die Plakate sprechen, bei denen die Klasse uneins war.", "Nach Auftrag 6: Plakate nebeneinander zeigen (eines am Gerät vorne).", "Auftrag 8: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
@@ -127,7 +129,7 @@ blatt({
     ["Status der Inhalte", ["Szenen der Plakate, Alltagskarten und der Fall in Auftrag 4: ausgedacht.", "Welcher Prüfstein »zentral« ist, ist ein Vorschlag – gute Begründungen für eine andere Wahl zählen.", "Art. 12, 19, 31, Art. 2 und Präambel der UN-Kinderrechtskonvention: am Wortlaut der amtlichen Übersetzung abgeglichen (17.11.2026). § 8 und § 45 SGB VIII: am Gesetzestext geprüft (01.11.2026). § 1631 Abs. 2 BGB: geprüft (11.11.2026).", "Korczak-Zitat, Träger-Leitbild und Kinderzitat: im Impulsvortrag zitiert, am Original noch zu prüfen. Daten zu Korczak: socialnet-Lexikon »Pädagogik der Achtung« und Jüdische Allgemeine (01.08.2022), abgeglichen 17.11.2026.", "Nicht übernommen: § 22a Abs. 1 SGB VIII aus dem Vortrag – der Absatz regelt die Qualitätssicherung. Die Interessen und Bedürfnisse des einzelnen Kindes stehen in § 22 Abs. 3 SGB VIII."]]
   ],
   auftraege: [
-    { id: "a1", nr: "1", kurz: "Erst erinnern", name: "Erst erinnern", form: "allein · ohne Unterlagen", min: 4, frei: "offen", prinzip: "Verdecken", raum: "–",
+    { id: "a1", nr: "1", kurz: "Erst erinnern", phase: "Einstieg", name: "Erst erinnern", form: "allein · ohne Unterlagen", min: 4, frei: "offen", prinzip: "Verdecken", raum: "–",
       fertig: function () { return abrufFertig("e3.abruf", 3); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Beantworten Sie jede Frage zuerst selbst – im Kopf, auf dem Zettel oder im Feld. Decken Sie erst danach auf.")));
@@ -135,7 +137,7 @@ blatt({
         box.appendChild(p("Heute geht es um das, was in der Mitte des Kompasses steht: <b>die Rechte der Kinder</b>.", "lauf"));
       } },
 
-    { id: "a2", nr: "2", kurz: "Ihre Position", name: "Ihre Position", form: "allein, dann Linie im Raum", min: 5, frei: "offen", prinzip: "Verdecken – die Festlegung bleibt stehen", raum: "Positionslinie 0–10",
+    { id: "a2", nr: "2", kurz: "Ihre Position", phase: "Einstieg", name: "Ihre Position", form: "allein, dann Linie im Raum", min: 5, frei: "offen", prinzip: "Verdecken – die Festlegung bleibt stehen", raum: "Positionslinie 0–10",
       fertig: function () { return !!(S.w["e3.vor"] && S.w["e3.vor"].fest); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Lesen Sie den Satz. Legen Sie fest, wie sehr Sie zustimmen, und begründen Sie in einem Satz. Am Ende des Blatts kommen Sie hierher zurück.")));
@@ -143,7 +145,7 @@ blatt({
         box.appendChild(p("Ein zugespitzter Satz zum Nachdenken – kein Zitat.", "meta"));
       } },
 
-    { id: "a3", nr: "3", kurz: "Korczak", name: "Ein Erzieher zeigt sich selbst an", form: "allein, dann zu zweit", min: 10, frei: "antwort", nach: "a2", fehlt: "Legen Sie zuerst Ihre Position in Auftrag 2 fest.", prinzip: "Verdecken · Rückmelden", raum: "Zu zweit: Begründungen vergleichen",
+    { id: "a3", nr: "3", kurz: "Korczak", phase: "Erarbeitung", name: "Ein Erzieher zeigt sich selbst an", form: "allein, dann zu zweit", min: 10, frei: "antwort", nach: "a2", fehlt: "Legen Sie zuerst Ihre Position in Auftrag 2 fest.", prinzip: "Verdecken · Rückmelden", raum: "Zu zweit: Begründungen vergleichen",
       fertig: function () { return !!(S.w["e3.korczak"] && S.w["e3.korczak"].fest); },
       seite: function (box) {
         var e = D.etappen[2];
@@ -164,7 +166,7 @@ blatt({
         } });
       } },
 
-    { id: "a4", nr: "4", kurz: "Das Gesetz", name: "Was das Gesetz verlangt", form: "allein", min: 12, frei: "ansage", gleich: "Sie vermuten, was das Gesetz von einer Kita verlangt – und prüfen es am Wortlaut.", prinzip: "Verdecken · Stufen (zwei Lesestufen)", raum: "Was hat überrascht? Zwei Übersetzungen vorlesen",
+    { id: "a4", nr: "4", kurz: "Das Gesetz", phase: "Erarbeitung", name: "Was das Gesetz verlangt", form: "allein", min: 12, frei: "ansage", gleich: "Sie vermuten, was das Gesetz von einer Kita verlangt – und prüfen es am Wortlaut.", prinzip: "Verdecken · Stufen (zwei Lesestufen)", raum: "Was hat überrascht? Zwei Übersetzungen vorlesen",
       fertig: function () { return !!(S.w["e3.gesetz"] && S.w["e3.gesetz"].fest && S.w["e3.uebersetz"] && S.w["e3.uebersetz"].zu); },
       seite: function (box) {
         box.appendChild(h("h2", { class: "abschnitt", text: "1 · Erst vermuten" }));
@@ -175,19 +177,19 @@ blatt({
         if (!(S.w["e3.gesetz"] && S.w["e3.gesetz"].fest)) weiter.appendChild(p("Teil 2 und 3 öffnen sich nach Ihrer Vermutung.", "meta gesperrt-hinweis"));
       } },
 
-    { id: "a5", nr: "5", kurz: "Rundgang", name: "Rundgang durch die Ausstellung", form: "zu zweit an einem Gerät", min: 25, frei: "ansage", gleich: "Sie gehen durch die Ausstellung »Kinderrechte im Kita-Alltag«: sechs Plakate, sechs Szenen.", prinzip: "Rückmelden – je Prüfstein mit Begründung", raum: "Jedes Paar stellt ein Plakat vor; Handzeichen je Prüfstein",
+    { id: "a5", nr: "5", kurz: "Rundgang", phase: "Erarbeitung", name: "Rundgang durch die Ausstellung", form: "zu zweit an einem Gerät", min: 25, frei: "ansage", gleich: "Sie gehen durch die Ausstellung »Kinderrechte im Kita-Alltag«: sechs Plakate, sechs Szenen.", prinzip: "Rückmelden – je Prüfstein mit Begründung", raum: "Jedes Paar stellt ein Plakat vor; Handzeichen je Prüfstein",
       fertig: function () { return plakateFest() >= 3; },
       seite: rundgang },
 
-    { id: "a6", nr: "6", kurz: "Ihr Plakat", name: "Ihr Plakat für die Kita", form: "allein", min: 12, frei: "antwort", nach: "a5", fehlt: "Ihr Plakat öffnet sich, sobald Sie sich bei drei Plakaten der Ausstellung festgelegt haben (Auftrag 5).", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text und den Ausdruck", raum: "Plakate nebeneinander",
+    { id: "a6", nr: "6", kurz: "Ihr Plakat", phase: "Sichern und üben", name: "Ihr Plakat für die Kita", form: "allein", min: 12, frei: "antwort", nach: "a5", fehlt: "Ihr Plakat öffnet sich, sobald Sie sich bei drei Plakaten der Ausstellung festgelegt haben (Auftrag 5).", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text und den Ausdruck", raum: "Plakate nebeneinander",
       fertig: function () { return !!(S.w["e3.plakat"] && S.w["e3.plakat"].zu); },
       seite: plakatSeite },
 
-    { id: "a7", nr: "7", kurz: "Ihre Kita", name: "Worüber dürfen Kinder bei Ihnen bestimmen?", form: "allein · freiwillig mit Praxisbezug", min: 8, frei: "offen", prinzip: "Ihr Bild auf einen Blick – Legen mit Spalten", raum: "Zu zweit: Wo verlangen die Kinderrechte eine andere Spalte?",
+    { id: "a7", nr: "7", kurz: "Ihre Kita", phase: "Übertragen und Ausblick", name: "Worüber dürfen Kinder bei Ihnen bestimmen?", form: "allein · freiwillig mit Praxisbezug", min: 8, frei: "offen", prinzip: "Ihr Bild auf einen Blick – Legen mit Spalten", raum: "Zu zweit: Wo verlangen die Kinderrechte eine andere Spalte?",
       fertig: function () { var w = S.w["e3.kita"]; return !!(w && w.lage && Object.keys(w.lage).length >= 6); },
       seite: kitaSeite },
 
-    { id: "a8", nr: "8", kurz: "Rückblick", name: "Rückblick und Lernspur", form: "allein, dann Linie im Raum", min: 6, frei: "antwort", nach: "a6", fehlt: "Der Rückblick öffnet sich, wenn Ihr Plakat fertig ist (Auftrag 6).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
+    { id: "a8", nr: "8", kurz: "Rückblick", phase: "Übertragen und Ausblick", name: "Rückblick und Lernspur", form: "allein, dann Linie im Raum", min: 6, frei: "antwort", nach: "a6", fehlt: "Der Rückblick öffnet sich, wenn Ihr Plakat fertig ist (Auftrag 6).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
       fertig: function () { return !!(S.w["e3.nach"] && S.w["e3.nach"].fest) && woerter(txt("e3.spur")) >= 8; },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Zurück zum Satz vom Anfang. Wo stehen Sie jetzt – und warum?")));
@@ -195,16 +197,21 @@ blatt({
         box.appendChild(h("h2", { class: "abschnitt", text: "Ihr Satz für die Lernspur" }));
         spurFeld(box, BLAETTER.e3);
         box.appendChild(h("h2", { class: "abschnitt", text: "Was können Sie jetzt?" }));
-        selbst(box, "e3.selbst", ["Ich kann erklären, warum Kinder ihre Rechte nicht geschenkt bekommen, sondern haben.", "Ich kann eine Kita-Szene mit den drei Prüfsteinen prüfen.", "Ich kann Artikel 12 in einen Satz für den Kita-Alltag übersetzen."]);
+        selbst(box, "e3.selbst", BLAETTER.e3.kann);
         box.appendChild(h("h2", { class: "abschnitt", text: "Ihre Rückmeldung zum Blatt" }));
         stimmkarte(box, "e3.stimme", { frage: "Wie hat Ihnen dieses Arbeitsblatt beim Lernen geholfen?", optionen: [["A", "sehr"], ["B", "teils"], ["C", "kaum"]], unter: "Halten Sie Ihre Karte hoch, wenn Ihre Lehrkraft fragt. Ihre Wahl bleibt auf diesem Gerät." });
         box.appendChild(feld("e3.rueck", { label: "Was würden Sie an diesem Blatt ändern? (freiwillig)", platz: "Mehr …, weniger …", rows: 2 }));
         box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
       } },
 
-    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a8", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 8). So verrät sie vorher nichts.", prinzip: "–", raum: "–",
+    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", phase: "Sichern und üben", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a8", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 8). So verrät sie vorher nichts.", prinzip: "–", raum: "–",
       fertig: function () { return !!BS("e3").durch.aZ || !!(S.w["e3.zf"] && S.w["e3.zf"].gesehen); },
-      seite: function (box) { W("e3.zf").gesehen = true; speichereBald(); zfE3(box); frisch(); } }
+      seite: function (box) { W("e3.zf").gesehen = true; speichereBald(); zfE3(box); frisch(); } },
+    { id: "aX", nr: "＋", kurz: "Extra", name: "Kinderrechte in Ihrer Praxisstelle finden", form: "freiwillig · in Ihrer Praxisstelle", min: 0, frei: "offen", zusatz: true, schreib: true, phase: "Übertragen und Ausblick", prinzip: "–", raum: "im Gespräch zeigen",
+      seite: function (box) { extraSeite(box, "e3.extra", {
+        auftrag: "Freiwillig – nur wenn Sie möchten. Sehen Sie sich in Ihrer Praxisstelle um: Woran können Kinder und Eltern erkennen, welche Rechte Kinder haben und wo sie sich beschweren können – ein Aushang, ein fester Ablauf, ein Ritual? Notieren oder skizzieren Sie, was Sie finden. Keine Fotos von Kindern, keine Namen.",
+        felder: [["fund", "Was ich gefunden habe – oder dass ich nichts gefunden habe", "Im Flur hängt … / Ich habe nichts gefunden."], ["saeule", "Wozu gehört das – Schutz, Förderung oder Beteiligung? Nennen Sie die Stelle auf diesem Blatt (Auftrag 4 oder Ihr Plakat).", "Beteiligung, weil … (Auftrag 4: …)"], ["urteil", "Ein Satz zu Ihrem Urteil: Wissen die Kinder dort, welche Rechte sie haben? Woran machen Sie das fest?", "Ich denke, die Kinder wissen (nicht) …, weil …"]],
+        schluss: "Bringen Sie Ihre Notizen ins Gespräch mit. Das Extra zählt nicht zur Zeit und nicht zum Stand des Blatts." }); } }
   ]
 });
 

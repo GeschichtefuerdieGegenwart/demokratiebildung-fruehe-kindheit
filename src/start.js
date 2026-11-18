@@ -4,6 +4,7 @@
 (function () {
   document.documentElement.classList.add("js");
   if (S.ruhig) document.documentElement.setAttribute("data-bewegung", "weniger");
+  if (S.ansicht === "beamer") document.documentElement.setAttribute("data-ansicht", "beamer");
   function ansicht() {
     var hsh = decodeURIComponent(location.hash.replace(/^#/, ""));
     var alt = { "heute": "e1", "ausstellung": "e3/a5" };

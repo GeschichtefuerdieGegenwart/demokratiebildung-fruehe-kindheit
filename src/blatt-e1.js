@@ -66,6 +66,8 @@ blatt({
   ziele: ["die drei Formen der Demokratie unterscheiden – Herrschaftsform, Gesellschaftsform, Lebensform,", "begründen, warum Demokratie mehr ist als der Wille der Mehrheit,", "eine Kita-Situation daraufhin prüfen, welche Form zu kurz kommt."],
   hinweis: "Der Lesetext in Auftrag 2 liegt auch auf Papier bereit. Der Blick in die eigene Praxisstelle am Ende ist freiwillig und bleibt auf Ihrem Gerät – ohne Namen.",
   spur: "e1.spur", spurAnfang: "Demokratie beginnt in der Kita, wenn …",
+  kann: ["Ich kann die drei Formen der Demokratie unterscheiden.", "Ich kann begründen, warum Demokratie mehr ist als der Wille der Mehrheit.", "Ich kann eine Kita-Situation mit dem Dreibein prüfen."],
+  papier: "Digital ist der Kern dort, wo das Gerät verdeckt, aufdeckt und erklärt: die Szene vor der Festlegung, das Begriffsnetz mit Rückmeldung, das Dreibein. Der Lesetext liegt auch auf Papier; den eigenen Satz schreiben die Lernenden auch von Hand (Schreibblatt).",
   lk: [
     ["Vor der Stunde", ["Lesetext (Arbeitsblatt 1 aus DS 1) als Kopie bereitlegen.", "Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« – für das Smartboard."]],
     ["Plenumsstellen", ["Nach Auftrag 1: Positionslinie 0–10, zwei bis drei Begründungen.", "Nach Auftrag 3: Eine Gruppe zeigt ihr Netz am Smartboard.", "Auftrag 4: Jede Gruppe stellt ihre Karte in höchstens 90 Sekunden vor.", "Auftrag 5: Zwei oder drei Sätze vorlesen.", "Auftrag 6: Positionslinie noch einmal; Stimmkarte zählen."]],
@@ -73,7 +75,7 @@ blatt({
     ["Status der Inhalte", ["Bürgermeister-Szene: nach dem Impulsvortrag, Fundstelle noch zu prüfen.", "Lesetext aus dem Arbeitsblatt der ersten Stunde; die Angaben dort (Schmidt 2010, Schultze 2015) sind noch am Original zu prüfen.", "Rückmeldungen zu den zwölf Begriffen und den Karten A–F, die sechs Prüffragen des Dreibeins: Vorschlag.", "Das Dreibein ist ein Modell – es misst nichts."]]
   ],
   auftraege: [
-    { id: "a1", nr: "1", kurz: "Die Szene", name: "Drei Kinder am Fenster", form: "allein, dann Linie im Raum", min: 10, frei: "offen", prinzip: "Verdecken – erst festlegen, dann deuten", raum: "Positionslinie 0–10",
+    { id: "a1", nr: "1", kurz: "Die Szene", phase: "Einstieg", name: "Drei Kinder am Fenster", form: "allein, dann Linie im Raum", min: 10, frei: "offen", prinzip: "Verdecken – erst festlegen, dann deuten", raum: "Positionslinie 0–10",
       fertig: function () { return !!(S.w["e1.vor"] && S.w["e1.vor"].fest && S.w["e1.max"] && S.w["e1.max"].fest); },
       seite: function (box) {
         var e = D.etappen[0];
@@ -92,19 +94,19 @@ blatt({
         }
       } },
 
-    { id: "a2", nr: "2", kurz: "Lesen", name: "Was ist überhaupt Demokratie?", form: "allein · Text auch auf Papier", min: 15, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "Rückmelden – Vergleich nach dem eigenen Markieren", raum: "–",
+    { id: "a2", nr: "2", kurz: "Lesen", phase: "Erarbeitung", name: "Was ist überhaupt Demokratie?", form: "allein · Text auch auf Papier", min: 15, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "Rückmelden – Vergleich nach dem eigenen Markieren", raum: "–",
       fertig: function () { return !!(S.w["e1.lese"] && S.w["e1.lese"].zu); },
       seite: lesenSeite },
 
-    { id: "a3", nr: "3", kurz: "Legen", name: "Das Begriffsnetz legen", form: "zu zweit an einem Gerät", min: 20, frei: "ansage", gleich: "Sie legen zwölf Begriffe zu den drei Formen und verbinden sie zu einem Netz.", breit: true, prinzip: "Rückmelden – Zwischenstand ab fünf Karten", raum: "Eine Gruppe zeigt ihr Netz am Smartboard",
+    { id: "a3", nr: "3", kurz: "Legen", phase: "Erarbeitung", name: "Das Begriffsnetz legen", form: "zu zweit an einem Gerät", min: 20, frei: "ansage", gleich: "Sie legen zwölf Begriffe zu den drei Formen und verbinden sie zu einem Netz.", breit: true, prinzip: "Rückmelden – Zwischenstand ab fünf Karten", raum: "Eine Gruppe zeigt ihr Netz am Smartboard",
       fertig: function () { var w = S.w["e1.netz"]; return !!(w && w.geprueft && ((w.links || []).length >= 2 || Object.keys(w.lage || {}).length >= 12)); },
       seite: netzSeite },
 
-    { id: "a4", nr: "4", kurz: "Kita-Fall", name: "Trägt die Situation?", form: "in Gruppen · jede Gruppe eine Karte", min: 20, frei: "ansage", gleich: "Sie prüfen einen Kita-Fall mit einem Modell: dem Dreibein der Demokratie.", prinzip: "Variieren – sechs Antworten, ein Brett", raum: "Jede Gruppe stellt ihre Karte in 90 Sekunden vor",
+    { id: "a4", nr: "4", kurz: "Kita-Fall", breit: true, phase: "Sichern und üben", name: "Trägt die Situation?", form: "in Gruppen · jede Gruppe eine Karte", min: 20, frei: "ansage", gleich: "Sie prüfen einen Kita-Fall mit einem Modell: dem Dreibein der Demokratie.", prinzip: "Variieren – sechs Antworten, ein Brett", raum: "Jede Gruppe stellt ihre Karte in 90 Sekunden vor",
       fertig: function () { var w = S.w["e1.fall"]; return !!(w && w.geprueft && Object.keys(w.geprueft).length); },
       seite: fallSeite },
 
-    { id: "a5", nr: "5", kurz: "Ihr Satz", name: "Ihr Satz", form: "allein, dann Plenum", min: 12, frei: "ansage", gleich: "Sie schreiben Ihren eigenen Satz: Demokratie beginnt in der Kita, wenn …", prinzip: "keines der sechs – Kriterien erst nach dem eigenen Text", raum: "Zwei oder drei Sätze vorlesen",
+    { id: "a5", nr: "5", kurz: "Ihr Satz", schreib: true, phase: "Übertragen und Ausblick", name: "Ihr Satz", form: "allein, dann Plenum", min: 12, frei: "ansage", gleich: "Sie schreiben Ihren eigenen Satz: Demokratie beginnt in der Kita, wenn …", prinzip: "keines der sechs – Kriterien erst nach dem eigenen Text", raum: "Zwei oder drei Sätze vorlesen",
       fertig: function () { return !!(S.w["e1.spur"] && S.w["e1.spur"].zu); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Schreiben Sie Ihren eigenen Satz – so, dass er für <b>jedes Kind in der Kita</b> stimmt. Begründen Sie ihn mit einer der drei Formen. Ihr Satz geht in Ihre Lernspur.")));
@@ -113,13 +115,13 @@ blatt({
           danach: function () { return [p("Überarbeiten Sie Ihren Satz, wenn etwas fehlt. Er erscheint im Kompass unter »Ihr roter Faden durch das Jahr«."), kasten("raum", null, p("Zwei oder drei Sätze werden im Plenum vorgelesen."))]; } });
       } },
 
-    { id: "a6", nr: "6", kurz: "Rückblick", name: "Rückblick", form: "allein, dann Linie im Raum", min: 10, frei: "antwort", nach: "a5", fehlt: "Der Rückblick öffnet sich, wenn Sie Ihren Satz verglichen haben (Auftrag 5).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
+    { id: "a6", nr: "6", kurz: "Rückblick", phase: "Übertragen und Ausblick", name: "Rückblick", form: "allein, dann Linie im Raum", min: 10, frei: "antwort", nach: "a5", fehlt: "Der Rückblick öffnet sich, wenn Sie Ihren Satz verglichen haben (Auftrag 5).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
       fertig: function () { return !!(S.w["e1.nach"] && S.w["e1.nach"].fest); },
       seite: function (box) {
         box.appendChild(kasten("auftrag", null, p("Zurück zum Satz vom Anfang. Wo stehen Sie jetzt – und warum?")));
         skala(box, "e1.nach", { satz: D.e1.these, ref: "e1.vor", wertWort: "Ihre Wahl jetzt", warumLabel: "Was denken Sie jetzt – und warum?", platz: "Meine Position hat sich (nicht) verändert, weil …", danach: function (w) { return kasten("raum", null, p(esc(vergleichSatz(S.w["e1.vor"], w)))); } });
         box.appendChild(h("h2", { class: "abschnitt", text: "Was können Sie jetzt?" }));
-        selbst(box, "e1.selbst", ["Ich kann die drei Formen der Demokratie unterscheiden.", "Ich kann begründen, warum Demokratie mehr ist als der Wille der Mehrheit.", "Ich kann eine Kita-Situation mit dem Dreibein prüfen."]);
+        selbst(box, "e1.selbst", BLAETTER.e1.kann);
         box.appendChild(h("details", { class: "mehr praxis" }, h("summary", {}, h("b", { text: "Freiwillig:" }), "Und in Ihrer Praxisstelle?"),
           p("Denken Sie an eine Situation aus dieser Woche – ohne Namen. Stellen Sie die sechs Fragen ein und sehen Sie, worauf die Situation steht. Alles bleibt auf Ihrem Gerät.", "lauf"),
           (function () { var b = h("div"); instrument(b, "praxis", {}); return b; })(),
@@ -131,9 +133,14 @@ blatt({
         box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
       } },
 
-    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a6", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 6).", prinzip: "–", raum: "–",
+    { id: "aZ", nr: "Z", kurz: "Zusammenfassung", phase: "Sichern und üben", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: "a6", fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag 6).", prinzip: "–", raum: "–",
       fertig: function () { return !!BS("e1").durch.aZ || !!(S.w["e1.zf"] && S.w["e1.zf"].gesehen); },
-      seite: function (box) { W("e1.zf").gesehen = true; speichereBald(); zfE1(box); frisch(); } }
+      seite: function (box) { W("e1.zf").gesehen = true; speichereBald(); zfE1(box); frisch(); } },
+    { id: "aX", nr: "＋", kurz: "Extra", name: "Nachgefragt in Ihrer Praxisstelle", form: "freiwillig · in Ihrer Praxisstelle", min: 0, frei: "offen", zusatz: true, schreib: true, phase: "Übertragen und Ausblick", prinzip: "–", raum: "im Gespräch zeigen",
+      seite: function (box) { extraSeite(box, "e1.extra", {
+        auftrag: "Freiwillig – nur wenn Sie möchten. Fragen Sie in Ihrer Praxisstelle eine Fachkraft: »Wo erleben Kinder bei uns, dass sie mitbestimmen?« Notieren Sie die Antwort in Stichworten – ohne Namen von Kindern, Eltern oder Kolleginnen und Kollegen.",
+        felder: [["antwort", "Die Antwort in Stichworten", "Bei uns …"], ["form", "Welche Form nach Himmelmann zeigt sich darin? Nennen Sie die Stelle im Lesetext aus Auftrag 2.", "Lebensform, weil … (Lesetext: …)"], ["urteil", "Ein Satz: Hält Ihr Satz aus Auftrag 5 dieser Antwort stand?", "Mein Satz hält (nicht), weil …"]],
+        schluss: "Bringen Sie Ihre Notizen ins Gespräch mit. Das Extra zählt nicht zur Zeit und nicht zum Stand des Blatts." }); } }
   ]
 });
 
