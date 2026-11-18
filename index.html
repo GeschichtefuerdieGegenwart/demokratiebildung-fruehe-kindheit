@@ -687,6 +687,45 @@ html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-be
 :root[data-ansicht="beamer"]{--papier:#FFFFFF;--flaeche:#FFFFFF;--sand:#EFEFEF;--linie:#A9B3B4;--tinte:#000000;--leise:#273133;--schreiblinie:#8C9A9B}
 :root[data-ansicht="beamer"] .reg{background:#F3F5F5;background-image:none}
 
+/* ---------- Fassung 5.0: Bausteine der Arbeitsblätter 2 und 4 bis 8 ---------- */
+/* Kleine Wahlknöpfe (»ja«) mindestens 44 px breit; Tabellen der Zusammenfassung brechen auf dem Telefon um */
+.btn--klein{min-width:44px}
+.zf,.zf-seite{min-width:0}
+table.zf-pruef{width:100%;table-layout:fixed}
+.zf-pruef th,.zf-pruef td{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto}
+/* Kartenliste: lange Wörter brechen, statt unter die Karte zu laufen; einspaltig nach der Breite des Blatts, nicht des Fensters */
+.wk__liste,.wk__knopf{min-width:0}
+.wk__titel,.wk__unter{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto}
+@container (max-width:40rem){.wk{grid-template-columns:1fr}.wk__liste{display:flex;overflow-x:auto;gap:8px;padding-bottom:6px}.wk__knopf{flex:0 0 auto;width:auto;max-width:15rem;min-height:52px}.wk__unter{display:none}.wk__karte{position:static}}
+.karte__titel{font:600 1.3rem/1.25 var(--serif);color:var(--petrol);margin:0;text-wrap:balance}
+.these--zu{font-size:clamp(1.25rem,1.1rem + .6vw,1.55rem);color:var(--schwach)}
+.these--auf{font-size:clamp(1.2rem,1.05rem + .5vw,1.45rem);color:inherit}
+.kasten--sicherung .these--auf{color:#fff}
+/* Legen in zwei oder drei Spalten */
+.kspalten--n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kspalten--n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@container (max-width:34rem){.kspalten--n3{grid-template-columns:1fr}.kspalten--n2{grid-template-columns:1fr}}
+.kspalte--rot{--c:var(--schwach)}.kspalte--gelb{--c:var(--g-flaeche)}.kspalte--gruen{--c:var(--gut)}.kspalte--grau{--c:var(--leise)}.kspalte--tuerkis{--c:var(--h)}
+.vorschlag{list-style:none;padding:0;display:grid;gap:10px;max-width:52rem}
+.vorschlag li{display:grid;gap:4px;padding:10px 14px;border-left:6px solid var(--mittel);background:var(--papier);border-radius:0 var(--r-klein) var(--r-klein) 0}
+.vorschlag li[data-gleich=true]{border-left-color:var(--gut)}
+.vorschlag__wo{font:600 1rem/1.35 var(--sans);color:var(--leise)}
+/* Ampel: das Ergebnis steht als Wort, die Farbe trägt nie allein */
+.ampel__wort{padding:12px 16px;border-radius:var(--r-klein);border-left:8px solid var(--c);background:var(--papier);max-width:46rem}
+.ampel--rot{--c:var(--schwach)}.ampel--gelb{--c:var(--g-flaeche)}.ampel--gruen{--c:var(--gut)}
+/* Lage: Zahlen mit Datum und Quelle */
+.lage{display:grid;gap:10px;background:var(--papier);border:1.5px solid var(--linie);border-radius:var(--r);padding:16px 18px;max-width:52rem}
+.lage__kopf{font:600 1.1rem/1.3 var(--sans);color:var(--petrol)}
+.lage dl{display:grid;gap:10px;margin:0}
+.lage dt{font:600 1.05rem/1.3 var(--sans)}
+.lage dd{margin:0}
+/* Fünf Schritte */
+.schritte{list-style:none;padding:0;margin:0;display:grid;gap:8px;max-width:52rem}
+.schritte li{display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:4px 12px;align-items:start;padding:10px 12px;background:var(--papier);border-radius:var(--r-klein)}
+.schritte__nr{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--petrol);color:#fff;font:600 1.05rem/1 var(--sans)}
+.schritte b{grid-column:2}
+.schritte span{grid-column:2}
+
 /* ---------- Druck ---------- */
 @media print{
   @page{size:A4;margin:14mm 15mm 15mm}
@@ -761,6 +800,35 @@ html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-be
   .so{display:none!important}
   .deck .kasten{padding:2mm 3mm}
   .wo{margin-block:2mm}
+}
+
+/* Fassung 5.0 · Lernspur mit acht Etappen: kompakt drucken (die kleinere Druckgröße gilt nur im Druck) */
+@media print{
+  body[data-druck=spur] .faden__liste{gap:5pt}
+  body[data-druck=spur] .faden__etappe{grid-template-columns:22pt minmax(0,1fr);gap:8pt;padding:6pt 9pt;margin-bottom:4pt}
+  body[data-druck=spur] .faden__punkt{width:20pt;height:20pt;font-size:10pt}
+  body[data-druck=spur] .faden__inhalt{gap:3pt}
+  body[data-druck=spur] .faden__kopf{font-size:9.5pt;line-height:1.3}
+  body[data-druck=spur] .faden__satz{font-size:11.5pt;line-height:1.35;padding-left:8pt;border-left-width:2.5pt}
+  body[data-druck=spur] .faden .druckfeld{display:none!important}
+  body[data-druck=spur] .faden .mein{font-size:10pt;line-height:1.35}
+  body[data-druck=spur] .kann{gap:2pt;margin-top:2pt}
+  body[data-druck=spur] .kann__kopf{font-size:9pt}
+  body[data-druck=spur] .kann__liste{gap:1pt}
+  body[data-druck=spur] .kann__liste li{font-size:9.5pt;line-height:1.3;gap:6pt}
+  body[data-druck=spur] .kann__stufe{min-width:4.6rem;font-size:9.5pt}
+  body[data-druck=spur] #faden>h2,body[data-druck=spur] #faden>p{margin-block:2pt 4pt}
+}
+/* Fassung 5.0 · Schreibblatt: keine eigene Einschätzung von vorher auf dem leeren Blatt (Silent-Judgement) */
+@media print{
+  body[data-druck=sb] .ampel__ergebnis{display:none!important}
+  body[data-druck=sb] .selbst__wahl .btn[aria-pressed=true]{background:#fff!important;color:#000!important;border-color:#777!important}
+}
+/* Fassung 5.0 · Schreibblatt mit vielen Feldern: enger setzen, damit es auf eine Seite passt */
+@media print{
+  body[data-druck=sb] .ab-teil{gap:7pt}
+  body[data-druck=sb] .feld{gap:2pt}
+  body[data-druck=sb] .feld label{font-size:10.5pt;line-height:1.3}
 }
 </style>
 </head>
@@ -856,7 +924,8 @@ html[data-bewegung=weniger] *,html[data-bewegung=weniger] *::before,html[data-be
 
 <script>/* Leitfaden durch das Jahr: acht Etappen entlang des Impulsvortrags (Fachtag 29.04.2026).
    Status: Zuschnitt der Etappen, Rückmeldetexte und Einstufungen sind Vorschläge – noch nicht geprüft.
-   Jede Etappe hat ein Blatt (#e1 … #e8): Etappe 1 und 3 als Arbeitsblatt einer Doppelstunde, die anderen als kurzes Einstiegsblatt. */
+   Jede Etappe hat ein Arbeitsblatt einer Doppelstunde (#e1 … #e8). Seit Fassung 5.0 gibt es keine Einstiegsblätter mehr:
+   Die Szene des früheren Einstiegs ist jetzt Auftrag 2 des Arbeitsblatts und behält ihren Speicherschlüssel (eN.szene). */
 var DATEN = {
   schluessel: "wpb-demokratie-leitfaden:v4",
   schluesselAlt: "wpb-demokratie-leitfaden:v3",
@@ -916,9 +985,7 @@ DATEN.etappen = [
       ["Aushandlung", "Verschiedene Wünsche werden besprochen, bis eine Lösung steht, die alle mittragen können."]],
     mit: "vier Gründe, mit denen Sie Demokratiebildung im Team und vor Eltern begründen können",
     kita: "Wo haben Sie zuletzt erlebt, dass Kinder einen Streit ohne Erwachsene gelöst haben? Was hatten sie dafür schon gelernt?",
-    weg: [["einstieg", "Einstieg: »Wir brauchen einen Chef«", "e2", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Vier Gründe für die frühe Kindheit", "", "Sie sammeln Argumente, mit denen Sie vor Team und Eltern bestehen.", "45 Minuten"],
-          ["kommt", "Welche Demokratie lernen Kinder bei uns?", "", "Sie prüfen eine Situation aus Ihrer eigenen Einrichtung.", "45 Minuten"]] },
+    weg: [["blatt", "Warum gerade die Kita? – vier Gründe und eine Antwort für den Elternabend", "e2", "Sie prüfen vier Gründe aus der Forschung an einer Kita-Szene und antworten auf Einwände von Eltern und Team.", "90 Minuten"]] },
 
   { kurz: "Kinderrechte", titel: "Kinder haben Rechte", vortrag: "Teil II · Korczak und der gesetzliche Auftrag", blatt: "e3",
     frage: "Geben wir Kindern Rechte – oder haben sie welche?",
@@ -956,8 +1023,7 @@ DATEN.etappen = [
       ["Vorurteilsbewusste Bildung", "Ansatz mit vier Zielen (Anti-Bias): Identitäten stärken, Vielfalt erfahrbar machen, kritisch über Vorurteile nachdenken, gegen Diskriminierung aktiv werden."]],
     mit: "eine persönliche Handlungsleitlinie für Essen, Schlafen, Anziehen und Wickeln",
     kita: "Bei welcher Alltagsfrage entscheiden Sie allein, obwohl das Kind mitentscheiden könnte?",
-    weg: [["einstieg", "Einstieg: »Wollt ihr heute rausgehen?«", "e4", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Einladende und verschließende Sätze", "", "Sie formulieren Alltagssätze so um, dass Kinder mitentscheiden können.", "45 Minuten"],
+    weg: [["blatt", "Macht und Haltung – einladende und verschließende Sätze", "e4", "Sie erkennen das Machtgefälle in Alltagssätzen, formulieren sie einladend um und schreiben Ihre Handlungsleitlinie.", "90 Minuten"],
           ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung", "", "Sie prüfen Bücher, Bilder und Routinen: Wer kommt vor, wer nicht?", "90 Minuten"],
           ["kommt", "Stereotype Aussagen unter Kindern aufgreifen", "", "Sie üben, wie Sie reagieren, wenn ein Kind ein anderes abwertet.", "90 Minuten"]] },
 
@@ -980,8 +1046,7 @@ DATEN.etappen = [
       ["Ambiguitätstoleranz", "Die Fähigkeit, Uneindeutiges und Widersprüche auszuhalten, statt nach einfachen Antworten zu greifen."]],
     mit: "den Ablauf einer Kinderkonferenz und ein kleines Beschwerdekonzept",
     kita: "Welche festen Verfahren gibt es in Ihrer Einrichtung – und wissen die Kinder davon?",
-    weg: [["einstieg", "Einstieg: Das Mopslied", "e5", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose", "", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein.", "90 Minuten"],
+    weg: [["blatt", "Kinder beteiligen – aber wie? Das Mopslied und der Fall Matschhose", "e5", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein, lernen Kinderkonferenz, Beschwerdeweg und Kita-Verfassung kennen und entwerfen ein Beteiligungsformat.", "90 Minuten"],
           ["kommt", "Eine Kinderkonferenz gestalten", "", "Sie planen den Ablauf einer Kinderkonferenz und erproben die Moderation.", "90 Minuten"],
           ["kommt", "Beschwerdewege für Kinder", "", "Sie entwerfen einen Weg, auf dem auch kleine Kinder sich beschweren können.", "90 Minuten"]] },
 
@@ -1002,10 +1067,8 @@ DATEN.etappen = [
       ["Willkür", "Eine Fachkraft nimmt Kinder ernst. Am Nachbartisch gilt das Gegenteil, weil nichts vereinbart ist."]],
     mit: "einen Beteiligungscheck für Essen, Pflege, Schlafen und Morgenkreis",
     kita: "Beobachten Sie eine Mahlzeit: Wer entscheidet, was und wie viel auf den Teller kommt?",
-    weg: [["einstieg", "Einstieg: »Erbsen esse ich nicht!«", "e6", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Mahlzeiten: der wichtigste Übungsort", "", "Sie untersuchen, wer beim Essen was entscheidet.", "45 Minuten"],
-          ["kommt", "Wickeln, Schlafen, Eingewöhnung", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"],
-          ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen", "", "Sie prüfen, wo Ihrer Einrichtung eher das Verfahren fehlt und wo die Haltung.", "90 Minuten"]] },
+    weg: [["blatt", "Demokratie im Alltag – vier Orte, Fassade oder Willkür", "e6", "Sie untersuchen Mahlzeiten, Wickeln, Schlafen und Morgenkreis, unterscheiden Fassade und Willkür und prüfen eine Situation mit dem Beteiligungscheck.", "90 Minuten"],
+          ["kommt", "Wickeln, Schlafen, Eingewöhnung – vertieft", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"]] },
 
   { kurz: "Position", titel: "Haltung zeigen", vortrag: "Teil I · Was steht auf dem Spiel? – weitergedacht", blatt: "e7",
     frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
@@ -1024,7 +1087,7 @@ DATEN.etappen = [
       ["Beutelsbacher Konsens", "Drei Grundsätze politischer Bildung: niemanden überwältigen, Kontroverses kontrovers darstellen, zum eigenen Urteil befähigen."]],
     mit: "einen Gesprächsleitfaden und eine Intervention in fünf Sätzen",
     kita: "Welche Aussage haben Sie schon gehört, bei der Sie gern etwas gesagt hätten?",
-    weg: [["einstieg", "Einstieg: Beim Abholen", "e7", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+    weg: [["blatt", "Haltung zeigen – die Grenze, die Fakten, fünf Schritte", "e7", "Sie klären, wo die Kontroverse endet, prüfen eine Behauptung an Zahlen und antworten auf abwertende Aussagen in fünf Schritten.", "90 Minuten"],
           ["kommt", "Diskriminierung erkennen und benennen", "", "Sie lernen Formen der Abwertung kennen und ordnen Aussagen ein.", "mehrere Stunden"],
           ["kommt", "Populismus verstehen – die aktuelle Lage", "", "Sie prüfen politische Aussagen an Quellen und an den Grundrechten.", "mehrere Stunden"],
           ["kommt", "Zuhören, nachfragen, klar widersprechen", "", "Sie üben Gespräche mit Erwachsenen, die abwertend sprechen.", "mehrere Stunden"]] },
@@ -1045,8 +1108,7 @@ DATEN.etappen = [
       ["Zukunftswerkstatt", "Methode in drei Schritten: Kritik sammeln, Wünsche entwickeln, Umsetzung planen."]],
     mit: "Ihr eigenes Demokratieprojekt – geplant, erprobt und vorgestellt",
     kita: "Welche kleine Veränderung in Ihrer Einrichtung würden die Kinder sofort bemerken?",
-    weg: [["einstieg", "Einstieg: Der Mülleimer", "e8", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Projektwerkstatt", "", "Sie planen Ihr eigenes Vorhaben für die Praxisstelle.", "mehrere Stunden"],
+    weg: [["blatt", "Projektwerkstatt – der Steckbrief Ihres Praxisprojekts", "e8", "Sie zeigen an Szenen, was Kinder in Demokratie können, prüfen Projektideen und planen Ihr eigenes Vorhaben.", "90 Minuten"],
           ["kommt", "Erprobung und kollegiale Beratung", "", "Sie probieren Ihr Vorhaben aus und holen Rückmeldung ein.", "mehrere Stunden"],
           ["kommt", "Präsentation und Ausblick", "", "Sie stellen Ihr Projekt vor und halten fest, was Sie mitnehmen.", "mehrere Stunden"]] }
 ];
@@ -1414,8 +1476,10 @@ function drucke(modus) {
 function druckVorbereiten() {
   druckAufraeumen();
   var hand = document.body.getAttribute("data-druck") === "sb";
+  /* Schreibblatt: genau eine Seite – bei vier und mehr Feldern teilen sich die Felder die Linien (Fassung 5.0) */
+  var viele = $$("#blatt textarea").length;
   $$("#blatt textarea, #v-start textarea").forEach(function (t) {
-    var text = hand ? "" : t.value, zeilen = hand ? Math.max(6, 2 * (+t.getAttribute("rows") || 3)) : Math.max(2, text.split("\n").length + Math.floor(text.length / 75));
+    var text = hand ? "" : t.value, zeilen = hand ? (viele >= 4 ? Math.max(2, Math.floor(14 / viele)) : Math.max(6, 2 * (+t.getAttribute("rows") || 3))) : Math.max(2, text.split("\n").length + Math.floor(text.length / 75));
     var d = h("div", { class: "druckfeld" + (text ? "" : " leer"), text: text });
     d.style.setProperty("--zeilen", String(zeilen));
     t.parentNode.insertBefore(d, t.nextSibling); t.classList.add("druck-weg");
@@ -2755,46 +2819,1132 @@ function zfE3(box) {
     } });
 }
 
-/* ===== Einstiegsblätter für die Etappen 2, 4, 5, 6, 7 und 8 =====
-   Je drei kurze Aufträge aus den Daten der Etappe: Szene mit Festlegung · Das steckt dahinter · In Ihrer Kita.
-   Die Stunden dieser Etappen kommen im Lauf des Jahres; ihr Einstieg wird dann Auftrag 1 ihres Arbeitsblatts. */
-[1, 3, 4, 5, 6, 7].forEach(function (i) {
-  var e = D.etappen[i], id = e.blatt;
-  blatt({
-    id: id, etappe: i + 1, art: "einstieg", dauer: 15, titel: e.titel, frage: e.frage,
-    darum: "Diese Etappe beginnt mit einer Szene aus einer Kita: " + esc(/^»/.test(e.szene.titel) ? e.szene.titel : "»" + e.szene.titel + "«") + ". Sie legen sich fest, sehen, was dahintersteckt, und schauen in Ihre eigene Praxisstelle. Die Stunden dieser Etappe kommen im Lauf des Jahres dazu.",
-    ziele: ["eine Kita-Szene deuten und Ihre Deutung begründen,", "die wichtigsten Begriffe dieser Etappe in eigenen Worten erklären."],
-    weg: function () {
-      return h("div", {}, h("h2", { class: "abschnitt", text: "Die Stunden dieser Etappe" }), h("ol", { class: "stunden" }, e.weg.map(function (x) {
-        return h("li", { "data-art": x[0] }, h("span", { class: "stunden__marke", "aria-hidden": "true", text: x[0] === "einstieg" ? "◇" : "·" }), h("div", {}, h("b", { text: x[1] }), h("span", { class: "stunden__wozu", text: x[3] }), h("span", { class: "stunden__stand", text: x[4] + " · " + (x[0] === "einstieg" ? "dieses Blatt" : "kommt im Lauf des Jahres") })));
-      })), p("Das nehmen Sie aus dieser Etappe mit: " + esc(e.mit) + ".", "meta"));
-    },
-    lk: [["Einsatz", ["Etwa 15 Minuten am Anfang der ersten Stunde dieser Etappe, gemeinsam geführt am Smartboard.", "Die Stunden der Etappe sind noch nicht als Arbeitsblatt gebaut. Ihr Einstieg wird später Auftrag 1."]],
-         ["Status der Inhalte", [esc(e.szene.status) + ".", "Rückmeldetexte und Einstufungen: Vorschlag, noch nicht geprüft."]]],
-    auftraege: [
-      { id: "a1", nr: "1", kurz: "Die Szene", phase: "Einstieg", name: e.szene.titel, form: "allein", min: 5, frei: "offen", prinzip: "Verdecken · Rückmelden", raum: "Begründungen vergleichen",
-        fertig: function () { return !!(S.w[id + ".szene"] && S.w[id + ".szene"].fest); },
-        seite: function (box) {
-          box.appendChild(h("div", { class: "falltext" }, etikett(e.szene.status), e.szene.text.map(function (t) { return p(esc(t), "falltext__text"); })));
-          box.appendChild(kasten("auftrag", null, p("Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung.")));
-          wahl(box, id + ".szene", { frage: e.wahl.frage, optionen: e.wahl.optionen });
-        } },
-      { id: "a2", nr: "2", kurz: "Dahinter", phase: "Erarbeitung", name: "Das steckt dahinter", form: "allein, dann zu zweit", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "Zu zweit: einen Begriff erklären",
-        seite: function (box) {
-          box.appendChild(kasten("sicherung", null, p(esc(e.kern))));
-          box.appendChild(h("h2", { class: "abschnitt", text: "Begriffe dieser Etappe" }));
-          box.appendChild(h("dl", { class: "begriffe" }, e.begriffe.map(function (b) { return h("div", {}, h("dt", { text: b[0] }), h("dd", { text: b[1] })); })));
-          box.appendChild(kasten("raum", null, p("Zu zweit: Erklären Sie einander einen Begriff mit einem Beispiel aus der Kita – ohne auf den Bildschirm zu schauen.")));
-        } },
-      { id: "a3", nr: "3", kurz: "Ihre Kita", phase: "Übertragen und Ausblick", name: "In Ihrer Kita", form: "allein · freiwillig · ohne Namen", min: 5, frei: "antwort", nach: "a1", fehlt: "Legen Sie sich zuerst in Auftrag 1 fest.", prinzip: "–", raum: "–",
-        seite: function (box) {
-          box.appendChild(h("p", { class: "leitfrage leitfrage--klein", text: e.kita }));
-          box.appendChild(feld(id + ".kita", { label: "Das habe ich beobachtet:", platz: "In meiner Einrichtung …", rows: 3 }));
-          box.appendChild(p("Ihre Notiz bleibt auf diesem Gerät. Schreiben Sie keine Namen auf. Wenn Sie lieber nichts aus Ihrer Praxisstelle notieren: Denken Sie an eine ausgedachte Kita.", "meta"));
-          box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
-        } }
-    ]
+/* ===== Bausteine für die Arbeitsblätter der Etappen 2 und 4 bis 8 (Fassung 5.0) =====
+   Dieselbe Dramaturgie wie in Etappe 1 und 3: erinnern · Szene · eigene Position · erarbeiten · üben ·
+   eigenes Produkt · Rückblick · Zusammenfassung · Extra. Die Szene behält den Schlüssel des früheren
+   Einstiegsblatts (eN.szene) – wer sich dort schon festgelegt hat, findet seine Festlegung wieder. */
+
+function etappeVon(id) { return D.etappen.filter(function (e) { return e.blatt === id; })[0]; }
+
+/* ---------- Aufträge aus Daten ---------- */
+function aufAbruf(id, fragen, satz) {
+  return { id: "a1", nr: "1", kurz: "Erst erinnern", phase: "Einstieg", name: "Erst erinnern", form: "allein · ohne Unterlagen", min: 4, frei: "offen", prinzip: "Verdecken", raum: "–",
+    fertig: function () { return abrufFertig(id + ".abruf", fragen.length); },
+    seite: function (box) {
+      box.appendChild(kasten("auftrag", null, p("Beantworten Sie jede Frage zuerst selbst – im Kopf, auf dem Zettel oder im Feld. Decken Sie erst danach auf.")));
+      abruf(box, id + ".abruf", fragen);
+      if (satz) box.appendChild(p(satz, "lauf"));
+    } };
+}
+function aufSzene(id, nr, c) {
+  var e = etappeVon(id);
+  return { id: "a" + nr, nr: String(nr), kurz: "Die Szene", phase: "Einstieg", name: e.szene.titel, form: c.form || "allein, dann zu zweit", min: c.min || 8, frei: "offen", prinzip: "Verdecken · Rückmelden", raum: c.raum || "Zu zweit: Begründungen vergleichen",
+    fertig: function () { return !!(S.w[id + ".szene"] && S.w[id + ".szene"].fest); },
+    seite: function (box) {
+      box.appendChild(h("div", { class: "falltext" }, etikett(e.szene.status), h("h2", { class: "falltext__titel", text: e.szene.titel }), e.szene.text.map(function (t) { return p(esc(t), "falltext__text"); })));
+      box.appendChild(kasten("auftrag", null, p("Legen Sie sich fest und begründen Sie Ihre Wahl in einem Satz. Erst dann sehen Sie die Rückmeldung.")));
+      wahl(box, id + ".szene", { frage: e.wahl.frage, optionen: e.wahl.optionen, danach: function () { return c.danach ? c.danach() : null; } });
+    } };
+}
+function aufPosition(id, nr, these, c) {
+  c = c || {};
+  return { id: "a" + nr, nr: String(nr), kurz: "Ihre Position", phase: "Einstieg", name: "Ihre Position", form: "allein, dann Linie im Raum", min: c.min || 4, frei: "antwort", nach: "a" + (nr - 1), fehlt: "Legen Sie sich zuerst in Auftrag " + (nr - 1) + " fest.", prinzip: "Verdecken – die Festlegung bleibt stehen", raum: "Positionslinie 0–10",
+    fertig: function () { return !!(S.w[id + ".vor"] && S.w[id + ".vor"].fest); },
+    seite: function (box) {
+      box.appendChild(kasten("auftrag", null, p("Lesen Sie den Satz. Legen Sie fest, wie sehr Sie zustimmen, und begründen Sie in einem Satz. Am Ende des Blatts kommen Sie hierher zurück.")));
+      skala(box, id + ".vor", { satz: these, danach: function () { return kasten("raum", null, p("Stellen Sie sich auf die Linie im Raum: links 0, rechts 10. Zwei oder drei Personen sagen, warum sie dort stehen.")); } });
+      box.appendChild(p("Ein zugespitzter Satz zum Nachdenken – kein Zitat.", "meta"));
+    } };
+}
+function aufRueckblick(id, nr, these, nach, c) {
+  c = c || {};
+  return { id: "a" + nr, nr: String(nr), kurz: "Rückblick", phase: "Übertragen und Ausblick", name: "Rückblick und Lernspur", form: "allein, dann Linie im Raum", min: c.min || 6, frei: "antwort", nach: nach, fehlt: c.fehlt || "Der Rückblick öffnet sich, wenn Ihr Produkt fertig ist.", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Positionslinie; Stimmkarte zählen",
+    fertig: function () { return !!(S.w[id + ".nach"] && S.w[id + ".nach"].fest) && woerter(txt(id + ".spur")) >= 8; },
+    seite: function (box) {
+      var def = BLAETTER[id];
+      box.appendChild(kasten("auftrag", null, p("Zurück zum Satz vom Anfang. Wo stehen Sie jetzt – und warum?")));
+      skala(box, id + ".nach", { satz: these, ref: id + ".vor", wertWort: "Ihre Wahl jetzt", warumLabel: "Was denken Sie jetzt – und warum?", platz: "Meine Position hat sich (nicht) verändert, weil …", danach: function (w) { return kasten("raum", null, p(esc(vergleichSatz(S.w[id + ".vor"], w)))); } });
+      if (c.vorSpur) haenge(box, c.vorSpur());
+      box.appendChild(h("h2", { class: "abschnitt", text: "Ihr Satz für die Lernspur" }));
+      spurFeld(box, def);
+      box.appendChild(h("h2", { class: "abschnitt", text: "Was können Sie jetzt?" }));
+      selbst(box, id + ".selbst", def.kann);
+      box.appendChild(h("h2", { class: "abschnitt", text: "Ihre Rückmeldung zum Blatt" }));
+      stimmkarte(box, id + ".stimme", { frage: "Wie hat Ihnen dieses Arbeitsblatt beim Lernen geholfen?", optionen: [["A", "sehr"], ["B", "teils"], ["C", "kaum"]], unter: "Halten Sie Ihre Karte hoch, wenn Ihre Lehrkraft fragt. Ihre Wahl bleibt auf diesem Gerät." });
+      box.appendChild(feld(id + ".rueck", { label: "Was würden Sie an diesem Blatt ändern? (freiwillig)", platz: "Mehr …, weniger …", rows: 2 }));
+      box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
+    } };
+}
+function aufZf(id, nach, bau) {
+  return { id: "aZ", nr: "Z", kurz: "Zusammenfassung", phase: "Sichern und üben", name: "Zusammenfassung zum Abheften", kopf: "Zusammenfassung", form: "zum Abheften", min: 3, frei: "antwort", nach: nach, fehlt: "Die Zusammenfassung öffnet sich nach Ihrem Rückblick (Auftrag " + nach.slice(1) + "). So verrät sie vorher nichts.", prinzip: "–", raum: "–",
+    fertig: function () { return !!(S.w[id + ".zf"] && S.w[id + ".zf"].gesehen); },
+    seite: function (box) { W(id + ".zf").gesehen = true; speichereBald(); bau(box); frisch(); } };
+}
+function aufExtra(id, name, c) {
+  return { id: "aX", nr: "＋", kurz: "Extra", name: name, form: "freiwillig · in Ihrer Praxisstelle", min: 0, frei: "offen", zusatz: true, schreib: true, phase: "Übertragen und Ausblick", prinzip: "–", raum: "im Gespräch zeigen",
+    seite: function (box) {
+      extraSeite(box, id + ".extra", { auftrag: c.auftrag, felder: c.felder, schluss: "Bringen Sie Ihre Notizen ins Gespräch mit. Das Extra zählt nicht zur Zeit und nicht zum Stand des Blatts." });
+      /* Bis Fassung 4.0 hatte diese Etappe ein Einstiegsblatt mit der Notiz »In Ihrer Kita« – sie geht nicht verloren. */
+      if (txt(id + ".kita")) box.appendChild(feld(id + ".kita", { label: "Ihre Notiz aus dem früheren Einstiegsblatt dieser Etappe", rows: 2 }));
+    } };
+}
+
+/* ---------- Kartenrunde: links wählen, rechts lesen und festlegen (Gruppenpuzzle, Fälle, Einwände) ---------- */
+function kartenFest(key, karten) { return karten.filter(function (k) { var w = S.w[key + "." + k.id]; return w && w.fest; }).length; }
+function kartenRunde(box, key, karten, c) {
+  c = c || {};
+  var ziel = c.ziel || karten.length;
+  var stand = h("p", { class: "meta rund-stand", "aria-live": "polite" });
+  function standText() { var n = kartenFest(key, karten); stand.textContent = (n >= ziel ? "✓ " : "") + n + " von " + karten.length + " Karten festgelegt" + (ziel < karten.length ? " – fertig sind Sie mit " + ziel + "." : "."); }
+  box.appendChild(stand);
+  wahlKarte(box, key + ".runde", karten.map(function (k, i) {
+    return { id: k.id, nr: k.nr || String(i + 1), titel: k.titel, unter: k.unter,
+      stand: function () { var w = S.w[key + "." + k.id]; return w && w.fest ? "festgelegt" : ""; },
+      bau: function (karte, frischListe) {
+        if (k.etikett) karte.appendChild(etikett(k.etikett));
+        karte.appendChild(h("h3", { class: "karte__titel", text: k.titel }));
+        if (k.satz) karte.appendChild(h("p", { class: "these", text: k.satz }));
+        (k.text || []).forEach(function (t) { karte.appendChild(p(t)); });
+        if (k.mehr) karte.appendChild(h("details", { class: "mehr" }, h("summary", { text: k.mehr[0] }), p(k.mehr[1])));
+        if (k.quelle) karte.appendChild(p(k.quelle, "quelle"));
+        var teil = h("div", { class: "teil" }); karte.appendChild(teil);
+        wahl(teil, key + "." + k.id, { frage: k.frage || c.frage, optionen: k.optionen, warumLabel: c.warumLabel, platz: c.platz,
+          danach: function (neu) {
+            if (neu) setTimeout(function () { frischListe(); standText(); frisch(); }, 0);
+            var r = [];
+            if (k.merke) r.push(kasten("sicherung", null, p(k.merke)));
+            if (c.feld) r.push(feld(key + "." + k.id + ".satz", { label: c.feld[0], platz: c.feld[1], rows: 2 }));
+            return r;
+          } });
+      } };
+  }), { titel: c.titel || "Karten", klasse: c.klasse });
+  standText();
+}
+
+/* ---------- Legen in Spalten: erst alle Karten legen, dann der Vorschlag mit Begründung ---------- */
+function legenFertig(key) { var w = S.w[key]; return !!(w && w.zu); }
+function legen(box, key, karten, spalten, c) {
+  c = c || {};
+  var w = W(key, { lage: {} }); w.lage = w.lage || {};
+  var gewaehlt = null;
+  var ansage = h("p", { class: "meta", "aria-live": "polite", text: "Tippen Sie eine Karte an." });
+  var stapel = h("div", { class: "kstapel", role: "group", "aria-label": "Noch nicht gelegte Karten" });
+  var zone = h("div", { class: "kspalten kspalten--n" + spalten.length });
+  var zonen = {}, knoepfe = {};
+  spalten.forEach(function (sp) {
+    var kopf = h("button", { type: "button", class: "kspalte__kopf", text: sp[1], "aria-label": "Gewählte Karte hier ablegen: " + sp[1], on: { click: function () { lege(sp[0]); } } });
+    zonen[sp[0]] = h("div", { class: "kspalte__karten" });
+    zone.appendChild(h("div", { class: "kspalte kspalte--" + (sp[2] || sp[0]) }, kopf, zonen[sp[0]]));
   });
+  karten.forEach(function (k) {
+    knoepfe[k.id] = h("button", { type: "button", class: "kkarte", "aria-pressed": "false", text: k.text, on: { click: function (ev) { ev.stopPropagation(); if (w.zu) return; waehle(gewaehlt === k.id ? null : k.id); } } });
+  });
+  function karte(id) { return karten.filter(function (k) { return k.id === id; })[0]; }
+  function spalte(id) { return spalten.filter(function (s) { return s[0] === id; })[0]; }
+  function waehle(id) {
+    gewaehlt = id;
+    Object.keys(knoepfe).forEach(function (k) { knoepfe[k].setAttribute("aria-pressed", String(k === id)); });
+    zone.classList.toggle("ziel", !!id);
+    ansage.textContent = id ? "»" + karte(id).text + "« gewählt. Tippen Sie jetzt eine Spalte an." : (w.zu ? "Alle Karten liegen." : "Tippen Sie eine Karte an.");
+  }
+  function lege(z) {
+    if (w.zu) return;
+    if (!gewaehlt) { ansage.textContent = "Wählen Sie zuerst eine Karte."; return; }
+    w.lage[gewaehlt] = z; speichere();
+    var name = karte(gewaehlt).text; waehle(null);
+    ansage.textContent = "»" + name + "« liegt bei: " + spalte(z)[1] + ".";
+    verteile(); frisch();
+  }
+  stapel.addEventListener("click", function () { if (!w.zu && gewaehlt && w.lage[gewaehlt]) { delete w.lage[gewaehlt]; speichere(); waehle(null); verteile(); frisch(); } });
+  box.appendChild(h("div", { class: "klege" }, h("div", { class: "klege__stapel" }, h("p", { class: "h4", text: "Karten" }), stapel, ansage), zone));
+  var nach = h("div", { class: "nach", "aria-live": "polite" }); box.appendChild(nach);
+  var kn = knopf(c.knopf || "Mit dem Vorschlag vergleichen", { art: "primaer", aus: true, klick: function () { w.zu = true; speichere(); zeige(true); } });
+  var reihe = h("div", { class: "reihe" }, kn, h("span", { class: "meta", text: "Erst wenn alle Karten liegen." }));
+  box.appendChild(reihe);
+  function verteile() {
+    stapel.textContent = ""; Object.keys(zonen).forEach(function (z) { zonen[z].textContent = ""; });
+    karten.forEach(function (k) { (w.lage[k.id] ? zonen[w.lage[k.id]] : stapel).appendChild(knoepfe[k.id]); });
+    if (!stapel.children.length) stapel.appendChild(h("p", { class: "meta", text: w.zu ? "Alle Karten liegen." : "Alle Karten liegen. Tippen Sie eine gelegte Karte und dann hier, um sie zurückzulegen." }));
+    kn.disabled = Object.keys(w.lage).length < karten.length;
+  }
+  function zeige(neu) {
+    reihe.hidden = true; waehle(null);
+    nach.textContent = "";
+    var gleich = karten.filter(function (k) { return w.lage[k.id] === k.zu; }).length;
+    nach.appendChild(h("h3", { class: "abschnitt", text: c.kopf || "Der Vorschlag – mit Begründung" }));
+    nach.appendChild(p(gleich + " von " + karten.length + " Karten liegen bei Ihnen dort, wo der Vorschlag sie sieht. " + (c.offen || "Gute Gründe für eine andere Spalte zählen – besprechen Sie sie zu zweit."), "meta"));
+    nach.appendChild(h("ul", { class: "vorschlag" }, karten.map(function (k) {
+      var eig = w.lage[k.id], ok = eig === k.zu;
+      return h("li", { "data-gleich": String(ok) }, h("b", { text: "»" + k.text + "«" }), h("span", { class: "vorschlag__wo", text: "Ihre Spalte: " + spalte(eig)[1] + (ok ? " · wie im Vorschlag" : " · Vorschlag: " + spalte(k.zu)[1]) }), h("span", { text: k.warum }));
+    })));
+    if (c.danach) haenge(nach, c.danach());
+    if (neu) einblenden(nach, 240);
+    frisch();
+  }
+  verteile();
+  if (w.zu) zeige(false);
+}
+
+/* ---------- Umformen: erst der eigene Satz, dann der Vergleich (Muster »Satzanfänge → Kriterien«) ---------- */
+function umformenZahl(key, karten) { return karten.filter(function (k) { var w = S.w[key + "." + k.id]; return w && w.zu; }).length; }
+function umformen(box, key, karten, c) {
+  c = c || {};
+  var ziel = c.ziel || karten.length;
+  var stand = h("p", { class: "meta rund-stand", "aria-live": "polite" });
+  function standText() { var n = umformenZahl(key, karten); stand.textContent = (n >= ziel ? "✓ " : "") + n + " von " + karten.length + " Sätzen verglichen" + (ziel < karten.length ? " – fertig sind Sie mit " + ziel + "." : "."); }
+  box.appendChild(stand);
+  wahlKarte(box, key + ".runde", karten.map(function (k, i) {
+    return { id: k.id, nr: String(i + 1), titel: k.titel, unter: k.unter,
+      stand: function () { var w = S.w[key + "." + k.id]; return w && w.zu ? "verglichen" : ""; },
+      bau: function (karte, frischListe) {
+        var w = W(key + "." + k.id), tk = key + "." + k.id + ".satz";
+        karte.appendChild(h("h3", { class: "karte__titel", text: k.titel }));
+        if (k.lage) karte.appendChild(p(esc(k.lage), "meta"));
+        karte.appendChild(h("p", { class: "these these--zu", text: k.satz }));
+        var f = feld(tk, { label: c.label || "So würde ich es sagen:", platz: c.platz || "»…«", rows: 2, bei: pruefe, nurLesen: w.zu });
+        karte.appendChild(f);
+        var kn = knopf("Vergleichen", { art: "primaer", aus: true, klick: function () { w.zu = true; speichere(); oeffne(true); } });
+        var reihe = h("div", { class: "reihe" }, kn, h("span", { class: "meta", text: "Erst Ihr eigener Satz." }));
+        karte.appendChild(reihe);
+        var nach = h("div", { class: "nach", "aria-live": "polite" }); karte.appendChild(nach);
+        function pruefe() { kn.disabled = woerter(txt(tk)) < (c.min || 4); }
+        function oeffne(neu) {
+          reihe.hidden = true; $("textarea", f).readOnly = true; nach.textContent = "";
+          nach.appendChild(kasten("sicherung", c.kopf || "Ein Vorschlag", h("p", { class: "these these--auf", text: k.anders }), k.warum ? p(esc(k.warum)) : null));
+          var g = h("div", { class: "selbst__wahl", role: "group", "aria-label": c.frage || "Gibt Ihr Satz dem Kind eine echte Wahl?" });
+          ["ja", "teils", "nein"].forEach(function (s, j) {
+            g.appendChild(knopf(s, { art: "klein", gedrueckt: String(w.check === j), klick: function () { w.check = j; speichereBald(); $$("button", g).forEach(function (b, m) { b.setAttribute("aria-pressed", String(m === j)); }); } }));
+          });
+          nach.appendChild(h("div", { class: "selbst__zeile" }, h("span", { text: c.frage || "Gibt Ihr Satz dem Kind eine echte Wahl?" }), g));
+          if (neu) { einblenden(nach, 240); setTimeout(function () { frischListe(); standText(); frisch(); }, 0); }
+        }
+        pruefe(); if (w.zu) oeffne(false);
+      } };
+  }), { titel: c.titel || "Sätze", klasse: c.klasse });
+  standText();
+}
+
+/* ---------- Ampel: Prüffragen mit ja · teils · nein, das Ergebnis steht als Wort ---------- */
+function ampelFertig(key, n) { var w = S.w[key]; return !!(w && w.a && Object.keys(w.a).length >= n); }
+function ampel(box, key, fragen, c) {
+  c = c || {};
+  var w = W(key, { a: {} }); w.a = w.a || {};
+  var wrap = h("div", { class: "selbst ampel" });
+  var ergebnis = h("div", { class: "ampel__ergebnis", "aria-live": "polite" });
+  fragen.forEach(function (f, i) {
+    var g = h("div", { class: "selbst__wahl", role: "group", "aria-label": f });
+    ["ja", "teils", "nein"].forEach(function (s, j) {
+      g.appendChild(knopf(s, { art: "klein", gedrueckt: String(w.a[i] === j), klick: function () { w.a[i] = j; speichereBald(); $$("button", g).forEach(function (b, m) { b.setAttribute("aria-pressed", String(m === j)); }); zeige(); frisch(); } }));
+    });
+    wrap.appendChild(h("div", { class: "selbst__zeile" }, h("span", { text: f }), g));
+  });
+  box.appendChild(wrap); box.appendChild(ergebnis);
+  function zeige() {
+    ergebnis.textContent = "";
+    if (Object.keys(w.a).length < fragen.length) { ergebnis.appendChild(p("Ihre Ampel erscheint, wenn alle " + fragen.length + " Fragen beantwortet sind.", "meta")); return; }
+    var nein = 0, teils = 0; Object.keys(w.a).forEach(function (k) { if (w.a[k] === 2) nein++; if (w.a[k] === 1) teils++; });
+    var stufe = (w.a[0] === 2 || nein >= 2) ? ["rot", "Rot", c.rot || "Hier entscheiden noch die Erwachsenen allein. Fangen Sie bei der ersten Frage mit »nein« an."] : ((nein || teils) ? ["gelb", "Gelb", c.gelb || "Ein guter Anfang. Bei den Fragen mit »teils« oder »nein« liegt Ihr nächster Schritt."] : ["gruen", "Grün", c.gruen || "Die Kinder entscheiden hier wirklich mit. Prüfen Sie, ob das auch an anderen Tagen und bei anderen Fachkräften gilt."]);
+    ergebnis.appendChild(h("p", { class: "ampel__wort ampel--" + stufe[0] }, h("b", { text: "Ihre Ampel: " + stufe[1] + ". " }), document.createTextNode(stufe[2])));
+    ergebnis.appendChild(p("Eine Einschätzung aus Ihrer Sicht – keine Messung.", "meta"));
+  }
+  zeige();
+}
+
+/* ---------- Mehrere Felder, dann Kriterien (Produkt in Teilen) ---------- */
+function mehrfeldFertig(key) { var w = S.w[key]; return !!(w && w.zu); }
+function mehrfeld(box, key, felder, c) {
+  var w = W(key);
+  var min = c.min || 3;
+  felder.forEach(function (f) { box.appendChild(feld(key + "." + f[0], { label: f[1], platz: f[2], rows: f[3] || 2, bei: pruefe })); });
+  var hin = h("p", { class: "meta", "aria-live": "polite" });
+  var kn = knopf(c.knopf || "Mit den Kriterien vergleichen", { art: "primaer", aus: true, klick: function () { w.zu = true; speichere(); oeffne(true); } });
+  box.appendChild(h("div", { class: "reihe" }, kn, hin));
+  var raster = h("div", { class: "raster", hidden: true }); box.appendChild(raster);
+  function offen() { return felder.filter(function (f) { return !f[4] && woerter(txt(key + "." + f[0])) < min; }).length; }
+  function pruefe() { var n = offen(); kn.disabled = n > 0; hin.textContent = w.zu ? "" : (n ? "Noch " + n + (n === 1 ? " Feld" : " Felder") + " mit mindestens " + min + " Wörtern." : "Jetzt können Sie vergleichen."); }
+  function oeffne(neu) {
+    kn.hidden = true; hin.textContent = ""; raster.hidden = false; raster.textContent = "";
+    raster.appendChild(h("p", { class: "raster__kopf", text: c.kopf || "Vergleichen Sie Ihren Text mit diesen Kriterien" }));
+    var sw = W(key + ".selbst", {});
+    c.kriterien.forEach(function (k, i) {
+      var zeile = h("div", { class: "raster__zeile" }, h("b", { text: k[0] }), h("span", { text: k[1] }));
+      var g = h("div", { class: "raster__selbst", role: "group", "aria-label": "Trifft das auf Ihren Text zu? " + k[0] });
+      ["trifft zu", "teils", "noch nicht"].forEach(function (s, j) {
+        g.appendChild(knopf(s, { art: "klein", gedrueckt: String(sw[i] === j), klick: function () { sw[i] = j; speichereBald(); $$("button", g).forEach(function (b, m) { b.setAttribute("aria-pressed", String(m === j)); }); } }));
+      });
+      zeile.appendChild(g); raster.appendChild(zeile);
+    });
+    if (c.danach) haenge(raster, c.danach());
+    if (neu) einblenden(raster, 240);
+    frisch();
+  }
+  pruefe(); if (w.zu) oeffne(false);
+}
+
+/* ---------- Noch einmal festlegen: dieselbe Wahl wie am Anfang, mit Vergleich ---------- */
+function wahlZurueck(box, key, ref, c) {
+  wahl(box, key, { frage: c.frage, optionen: c.optionen, warumLabel: "Was denken Sie jetzt – und warum?", platz: "Ich wähle jetzt …, weil …",
+    danach: function () {
+      var a = S.w[ref], b = S.w[key];
+      var satz = a && typeof a.i === "number" ? "Am Anfang: »" + c.optionen[a.i][0] + "« Jetzt: »" + c.optionen[b.i][0] + "« " + (a.i === b.i ? "Gleich geblieben – mit neuen Gründen?" : "Sie haben Ihre Wahl geändert. Was hat Sie bewegt?") : "Eine Wahl vom Anfang ist auf diesem Gerät nicht gespeichert.";
+      return kasten("raum", null, p(esc(satz)), p("Gehen Sie noch einmal in eine Ecke und sagen Sie, was Sie bewegt hat."));
+    } });
+}
+
+/* ---------- Zusammenfassung aus Daten: genau zwei Seiten A4 ---------- */
+function zfDaten(box, c) {
+  zusammenfassung(box, { kopf: c.kopf, frage: c.frage, kern: c.kern,
+    wissen: function () {
+      var r = [h("h3", { text: "Begriffe" }), h("dl", { class: "zf-begriffe" }, c.begriffe.map(function (b) { return h("div", {}, h("dt", { text: b[0] }), h("dd", { text: b[1] })); }))];
+      if (c.tabelle) r.push(h("table", { class: "zf-pruef" }, h("thead", {}, h("tr", {}, c.tabelle.kopf.map(function (t) { return h("th", { scope: "col", text: t }); }))),
+        h("tbody", {}, c.tabelle.zeilen.map(function (z) { return h("tr", {}, h("th", { scope: "row", text: z[0] }), z.slice(1).map(function (t) { return h("td", { text: t }); })); }))));
+      if (c.wissenExtra) r = r.concat(c.wissenExtra());
+      return r;
+    },
+    koennen: function () {
+      var r = [h("div", { class: "werk" }, h("b", { text: c.werk[0] }), h("ol", {}, c.werk[1].map(function (t) { return h("li", { text: t }); })))];
+      (c.mein || []).forEach(function (m) { r.push(h("h3", { text: m[0] })); r.push(typeof m[1] === "function" ? m[1]() : mein(txt(m[1]), m[2])); });
+      if (c.aufgabe) r.push(h("h3", { text: "So kann gefragt werden" }), h("blockquote", { class: "aufgabe" }, c.aufgabe), p("Beispielaufgabe zum Üben – nicht aus einer Prüfung.", "meta"));
+      return r;
+    } });
+}
+
+/* ===== Arbeitsblatt Etappe 2 · Warum gerade die Kita? (Doppelstunde, Fassung 5.0) =====
+   Tiefgang aus dem Impulsvortrag, Teil II, Kapitel 3: vier Schichten – entwicklungspsychologisch, sozialpsychologisch,
+   lernpsychologisch, praktisch – an der Szene »Wir brauchen einen Chef«. Produkt: eine Antwort für den Elternabend. */
+
+D.e2 = {
+  these: "Demokratie lernen Kinder in der Schule. In der Kita sollen sie erst einmal spielen.",
+  abruf: [
+    ["Welche drei Formen der Demokratie unterscheidet Gerhard Himmelmann?", "Herrschaftsform, Gesellschaftsform und Lebensform."],
+    ["Warum ist Demokratie mehr als der Wille der Mehrheit?", "Die Mehrheit entscheidet nicht über alles: Grundrechte und Menschenwürde schützen auch die, die überstimmt werden."],
+    ["Welche Form der Demokratie erleben Kinder in der Kita vor allem?", "Die Lebensform: wie im Alltag miteinander umgegangen, gestritten und entschieden wird."]
+  ],
+  gruende: [
+    { id: "g1", titel: "Was ein Kind über sich glaubt", unter: "entwicklungspsychologisch",
+      text: ["In den ersten sechs Lebensjahren entstehen Grundüberzeugungen über sich selbst und die Welt: <b>Bin ich es wert, gehört zu werden? Kann ich etwas bewirken? Sind Erwachsene verlässlich? Ist Streit lösbar oder gefährlich?</b>", "Diese Antworten lernt ein Kind nicht aus Worten, sondern aus Erfahrungen. Wer erlebt »Meine Stimme zählt hier«, nimmt diese Gewissheit mit. Wer erlebt »Entschieden wird eh über mich hinweg«, nimmt auch das mit."],
+      frage: "Wo zeigt sich dieser Grund in der Szene am deutlichsten?",
+      optionen: [
+        ["Finn, der Jüngste, erlebt: Der Stärkste kann sich durchsetzen – muss es aber nicht.", "zentral", "Für Finn ist das ein Schlüsselmoment. Er erlebt, dass eine Gruppe auch ohne den Stärksten funktioniert – eine Erfahrung, die Teil seiner inneren Landkarte wird."],
+        ["Ida erinnert an den Kinderrat.", "begruendbar", "Idas Satz zeigt, was die Kinder schon gelernt haben. Das passt besser zu den Karten »Lernen durch Teilhabe« und »Kinder sind längst politisch«."],
+        ["Jannis will der Chef sein.", "kaum", "Jannis zeigt das Problem, um das es geht – nicht den Grund, warum die frühe Kindheit wichtig ist."]],
+      merke: "Grundüberzeugungen entstehen früh – aus Erfahrung, nicht aus Belehrung." },
+    { id: "g2", titel: "Verschiedene treffen sich als Gleiche", unter: "sozialpsychologisch",
+      text: ["Der Psychologe Gordon Allport beschrieb 1954 die <b>Kontakthypothese</b>: Vorurteile nehmen ab, wenn Menschen sich mit gleichem Status begegnen, gemeinsame Ziele verfolgen, zusammenarbeiten statt zu konkurrieren – und dabei von der Einrichtung unterstützt werden.", "Für viele Kinder ist die Kita der erste Ort, an dem diese vier Bedingungen zusammenkommen: Kinder aus verschiedenen Familien, Sprachen und Lebenslagen spielen als Gleiche, mit gemeinsamen Zielen – eine Höhle bauen, ein Fest feiern."],
+      frage: "Welche Bedingung der Kontakthypothese zeigt die Szene am deutlichsten?",
+      optionen: [
+        ["Ein gemeinsames Ziel: Alle fünf wollen die Höhle bauen.", "zentral", "Das gemeinsame Ziel hält die Gruppe zusammen, als es Streit gibt. Am Ende steht eine Höhle, die alle gebaut haben."],
+        ["Gleicher Status: Alle Kinder sind gleich alt.", "begruendbar", "Gleicher Status heißt gleiche Rechte in der Gruppe, nicht gleiches Alter. Finn ist jünger – und gehört trotzdem dazu."],
+        ["Unterstützung: Die Fachkraft greift ein.", "kaum", "Sie greift gerade nicht ein. Ihre Unterstützung lag in den Wochen davor: im Kinderrat."]],
+      merke: "In der Kita wird Zusammenleben in Vielfalt zur Normalität – bevor Vorurteile sich festsetzen." },
+    { id: "g3", titel: "Lernen durch Teilhabe", unter: "lernpsychologisch",
+      text: ["Der Philosoph und Pädagoge John Dewey schrieb schon 1916: Demokratie lernt man, indem man an ihr teilnimmt – nicht durch Belehrung.", "Im Vortrag wird das zugespitzt: Kein Unterricht über Demokratie gleicht aus, was Kinder im Alltag an Nicht-Demokratie erleben."],
+      quelle: "Dewey 1916, im Vortrag zitiert nach der deutschen Ausgabe (Dewey 2011, S. 121) · zugespitzt nach Selk und Jörke (2012) · beides am Original noch zu prüfen",
+      frage: "Woran sehen Sie, dass diese Kinder durch Teilhabe gelernt haben?",
+      optionen: [
+        ["Sie berufen sich auf ihre eigene Praxis: »Wir machen das wie im Kinderrat.«", "zentral", "Niemand hat den Kindern erklärt, was Demokratie ist. Sie greifen auf das zurück, was sie selbst erlebt haben – learning by doing."],
+        ["Die Fachkraft hat ihnen vorher erklärt, wie Demokratie geht.", "kaum", "Davon steht nichts in der Szene. Gerade das ist der Punkt: Die Kinder handeln aus Erfahrung, nicht aus einer Erklärung."],
+        ["Sie kennen das Wort »Chef«.", "kaum", "Ein Wort zu kennen, ist noch keine Erfahrung mit Aushandlung."]],
+      merke: "Demokratie lernt man durch Teilnahme. Erklärungen kommen später – und tragen nur, was erlebt wurde." },
+    { id: "g4", titel: "Kinder sind längst politisch", unter: "praktisch",
+      text: ["Kinder im Kita-Alter handeln aus, protestieren, schließen Bündnisse, erfinden Spielregeln, schließen aus und schließen ein.", "Die Frage ist darum nicht, <b>ob</b> sie Demokratie lernen, sondern <b>welche</b>: die des Stärkeren oder die der Aushandlung."],
+      frage: "Welche Demokratie hätten die Kinder ohne den Kinderrat vermutlich gelernt?",
+      optionen: [
+        ["Die des Stärkeren: Jannis wäre der Chef geworden.", "zentral", "So sieht es der Vortrag: Jannis ist der Größte und Lauteste. Ohne die Arbeit der Wochen davor hätte er sich wahrscheinlich durchgesetzt."],
+        ["Gar keine – ohne Erwachsene lernen Kinder nichts über Entscheidungen.", "kaum", "Kinder lernen immer, wie Entscheidungen fallen – auch ohne Erwachsene. Offen ist nur, welche Art von Entscheiden sie lernen."],
+        ["Die der Aushandlung – Kinder einigen sich von selbst.", "kaum", "Manchmal gelingt das. Der Vortrag geht aber davon aus, dass sich ohne den Kinderrat der Stärkste durchgesetzt hätte."]],
+      merke: "Kinder lernen immer, wie entschieden wird. Fachkräfte bestimmen mit, welche Demokratie das ist." }
+  ],
+  einwaende: [
+    { id: "e1", titel: "»Die sind doch noch viel zu klein dafür.«", unter: "ein Vater beim Elternabend",
+      frage: "Welche Antwort überzeugt am ehesten?",
+      optionen: [
+        ["»Gerade jetzt lernen Kinder, ob ihre Stimme zählt. Diese Erfahrung nehmen sie mit.«", "zentral", "Die Antwort nimmt den Einwand ernst und dreht ihn um: Weil Kinder klein sind, prägen diese Erfahrungen besonders – Karte 1."],
+        ["»Kinder sind heute viel reifer als früher.«", "kaum", "Das lässt sich so nicht belegen und lenkt ab. Es geht nicht um Reife, sondern um Erfahrungen, die Kinder ohnehin machen."],
+        ["»Wir lassen sie nur über Kleinigkeiten abstimmen.«", "begruendbar", "Ehrlich, aber unter Wert verkauft: Essen, Spiel und Streit sind für Kinder große Fragen – und echte Entscheidungen."]] },
+    { id: "e2", titel: "»Politik hat in der Kita nichts zu suchen.«", unter: "eine Kollegin im Team",
+      frage: "Welche Antwort überzeugt am ehesten?",
+      optionen: [
+        ["»Wir machen keine Parteipolitik. Demokratie heißt hier: wie wir zusammen entscheiden und Streit lösen.«", "zentral", "Die Antwort klärt das Missverständnis: In der Kita geht es um Demokratie als Lebensform, nicht um Parteien – Etappe 1."],
+        ["»Doch, Kinder sollen früh wissen, welche Partei was will.«", "kaum", "Das ist nicht der Auftrag der Kita – und es bestätigt die Sorge, statt sie zu klären."],
+        ["»Das schreibt das Gesetz vor.«", "begruendbar", "Stimmt zum Teil: Beteiligung ist Pflicht (§ 8 und § 45 SGB VIII, Etappe 3). Überzeugen wird aber eher, was die Kinder davon haben."]] },
+    { id: "e3", titel: "»Dafür haben wir im Alltag keine Zeit.«", unter: "eine Fachkraft beim Teamtreffen",
+      frage: "Welche Antwort überzeugt am ehesten?",
+      optionen: [
+        ["»Demokratie ist kein Extra-Programm. Sie passiert beim Essen, Anziehen und Spielen – da sind wir sowieso.«", "zentral", "Die Antwort zeigt: Demokratiebildung braucht keine zusätzliche Stunde, sondern einen anderen Blick auf die Stunden, die es schon gibt – Etappe 6."],
+        ["»Dann machen wir einmal im Monat eine Demokratie-Woche.«", "kaum", "Das wäre Fassade: einmal im Monat Demokratie, im Alltag weiter Bestimmen."],
+        ["»Mit festen Verfahren sparen wir am Ende sogar Zeit.«", "begruendbar", "Fachkräfte berichten das, etwa über weniger Streit beim Anziehen (nach dem Vortrag). Das gilt für einzelne Einrichtungen – ein Versprechen für alle ist es nicht."]] }
+  ]
+};
+
+blatt({
+  id: "e2", etappe: 2, art: "doppelstunde", dauer: 90, titel: "Warum gerade die Kita?",
+  frage: "Warum beginnt Demokratiebildung nicht erst in der Schule?",
+  karte: "Sieben Aufträge · 90 Minuten · am Ende steht Ihre Antwort für einen Elternabend.",
+  darum: "»Demokratie mit Vierjährigen? Die sollen doch spielen.« Diesen Satz hören Fachkräfte von Eltern, im Team – manchmal sagen sie ihn sich selbst. Heute sammeln Sie vier Gründe aus der Forschung, prüfen sie an einer Szene aus einer Kita und schreiben eine Antwort, mit der Sie beim Elternabend bestehen.",
+  ziele: ["vier Gründe nennen, warum Demokratiebildung in der Kita beginnt,", "an einer Kita-Szene zeigen, welche Demokratie Kinder gerade lernen,", "einem Einwand von Eltern oder Team mit einem Grund und einem Beispiel antworten."],
+  hinweis: "Das Extra fragt nach Ihrer Praxisstelle. Das ist freiwillig – Sie können auch an eine ausgedachte Kita denken. Schreiben Sie keine Namen von Kindern, Familien, Kolleginnen oder Kollegen auf.",
+  spur: "e2.spur", spurAnfang: "Demokratie beginnt in der Kita, weil …", spurFrage: "Warum beginnt Demokratie in der Kita? Ein Satz genügt.",
+  kann: ["Ich kann vier Gründe für Demokratiebildung in der Kita nennen.", "Ich kann an einer Szene zeigen, welche Demokratie Kinder gerade lernen.", "Ich kann einem Einwand mit einem Grund und einem Beispiel antworten."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken: die Szene vor der Festlegung, die vier Gründe mit Rückmeldung zur Szene, die Einwände. Die Antwort für den Elternabend gibt es als Schreibblatt für den Stift; das Gruppenpuzzle kann auch mit vier Papierkarten laufen.",
+  lk: [
+    ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen – dann können Sie frei vor- und zurückgehen.", "Gruppen zu viert bilden (Stammgruppen). In Auftrag 4 übernimmt jede Person zuerst eine Karte als Expertin oder Experte."]],
+    ["Plenumsstellen", ["Nach Auftrag 2: zwei oder drei Begründungen – was hat die Fachkraft in den Wochen davor getan?", "Nach Auftrag 3: Positionslinie 0–10.", "Auftrag 4: Jede Person erklärt ihrer Stammgruppe ihre Karte in höchstens 90 Sekunden; danach legen alle sich bei den übrigen Karten fest.", "Nach Auftrag 6: Zwei Antworten werden vorgelesen; die Klasse spielt den Vater: Überzeugt mich das?", "Auftrag 7: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
+    ["Wenn die Zeit knapp wird", ["K1 · Auftrag 5 mit zwei statt drei Einwänden (– 4 Min.).", "K2 · Auftrag 1 mündlich im Plenum (– 2 Min.).", "K3 · Im Puzzle legt sich jede Person nur bei ihrer eigenen Karte fest; die anderen drei hört sie in der Stammgruppe (– 6 Min.)."]],
+    ["Status der Inhalte", ["Szene »Wir brauchen einen Chef«: im Impulsvortrag als szenisches Beispiel ausgedacht, angelehnt an Beobachtungen aus »Die Kinderstube der Demokratie« (Hansen, Knauer, Sturzenhecker 2011) und Doll, Herrmann u. a. (2020, S. 26 f.) – Fundstellen noch zu prüfen.", "Allport (1954), Bedingungen der Kontakthypothese: nach dem Impulsvortrag. Dewey 1916 (im Vortrag nach Dewey 2011, S. 121) und Selk/Jörke (2012): im Vortrag zitiert, am Original noch zu prüfen.", "Die drei Einwände und alle Antwortvorschläge: ausgedacht. Welche Antwort »zentral« ist, ist ein Vorschlag – gute Begründungen für eine andere Wahl zählen."]]
+  ],
+  auftraege: [
+    aufAbruf("e2", D.e2.abruf, "Heute geht es um die Frage, warum die <b>Lebensform</b> der Demokratie gerade in der Kita gelernt wird."),
+    aufSzene("e2", 2, { danach: function () { return [kasten("sicherung", null, p("Die Frage ist nie, <b>ob</b> Kinder Demokratie lernen. Die Frage ist, <b>welche</b>: die des Stärkeren oder die der Aushandlung.")), kasten("raum", null, p("Zu zweit: Was hat die Fachkraft in den Wochen vor dieser Szene getan, damit die fünf Minuten unter dem Busch so ausgehen konnten?"))]; } }),
+    aufPosition("e2", 3, D.e2.these),
+    { id: "a4", nr: "4", kurz: "Vier Gründe", phase: "Erarbeitung", name: "Vier Gründe für die frühe Kindheit", form: "Gruppenpuzzle zu viert", min: 22, frei: "ansage", gleich: "Vier Karten, vier Gründe aus der Forschung – jede Person übernimmt zuerst eine Karte.", prinzip: "Verdecken · Rückmelden – je Grund an der Szene geprüft", raum: "Stammgruppe: jede Karte in höchstens 90 Sekunden erklären",
+      fertig: function () { return kartenFest("e2.grund", D.e2.gruende) >= 4; },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Ihre Stammgruppe teilt die vier Karten auf. Lesen Sie Ihre Karte, legen Sie sich bei der Frage fest und begründen Sie in einem Satz. Erklären Sie Ihre Karte dann der Stammgruppe – in höchstens 90 Sekunden. Danach legen sich alle auch bei den anderen drei Karten fest."), p("<b>Fertig sind Sie mit allen vier Karten.</b>")));
+        kartenRunde(box, "e2.grund", D.e2.gruende, { titel: "Vier Gründe", feld: ["Ihr Satz für die Stammgruppe (freiwillig):", "Dieser Grund heißt: …"] });
+        box.appendChild(kasten("raum", null, p("In der Stammgruppe: Welcher Grund würde Eltern am ehesten überzeugen – und welcher das Team?")));
+      } },
+    { id: "a5", nr: "5", kurz: "Einwände", phase: "Sichern und üben", name: "Einwände beantworten", form: "zu zweit", min: 12, frei: "antwort", nach: "a4", fehlt: "Die Einwände öffnen sich, wenn Sie bei allen vier Gründen festgelegt sind (Auftrag 4).", prinzip: "Rückmelden – je Antwort mit Erklärung", raum: "Zu zweit: die überzeugendste Antwort laut sprechen",
+      fertig: function () { return kartenFest("e2.einwand", D.e2.einwaende) >= 3; },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Drei Einwände, wie Fachkräfte sie hören. Wählen Sie zu zweit die Antwort, die am ehesten überzeugt, und begründen Sie Ihre Wahl in einem Satz.")));
+        kartenRunde(box, "e2.einwand", D.e2.einwaende, { titel: "Drei Einwände", platz: "Diese Antwort überzeugt, weil …" });
+        box.appendChild(p("Die Einwände und die Antworten sind ausgedacht. Welche Antwort »zentral« ist, ist ein Vorschlag.", "meta"));
+      } },
+    { id: "a6", nr: "6", kurz: "Ihre Antwort", phase: "Übertragen und Ausblick", name: "Ihre Antwort beim Elternabend", form: "allein", min: 14, frei: "antwort", nach: "a5", schreib: true, fehlt: "Ihre Antwort öffnet sich nach den Einwänden (Auftrag 5).", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text", raum: "Zwei Antworten vorlesen; die Klasse spielt den Vater",
+      fertig: function () { return !!(S.w["e2.antwort"] && S.w["e2.antwort"].zu); },
+      seite: function (box) {
+        box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachte Situation"), p("Elternabend im Herbst. Sie stellen vor, wie die Kinder in Ihrer Gruppe mitentscheiden. Ein Vater meldet sich: »Warum machen Sie mit Vierjährigen Demokratie? Die sollen spielen.«", "falltext__text")));
+        box.appendChild(kasten("auftrag", null, p("Schreiben Sie Ihre Antwort so, wie Sie sie sagen würden – etwa eine Minute lang, also 60 bis 120 Wörter. Nutzen Sie mindestens einen der vier Gründe und ein Beispiel aus dem Kita-Alltag.")));
+        produkt(box, "e2.antwort", { label: "Ihre Antwort an den Vater:", platz: "Ich verstehe Ihre Frage. Bei uns …", rows: 6, min: 40,
+          kriterien: [["Grundlegend", "Die Antwort nimmt die Sorge ernst und nennt einen Grund in Alltagssprache."], ["Sicher", "Sie verbindet einen Grund mit einem Beispiel aus dem Kita-Alltag – Essen, Spiel oder Streit."], ["Souverän", "Sie zeigt, dass Kinder ohnehin lernen, wie Entscheidungen fallen – und sagt, was die Fachkräfte dafür tun."]],
+          danach: function () { return kasten("raum", null, p("Zwei Antworten werden vorgelesen. Die Klasse spielt den Vater: Was überzeugt? Wo würde er nachfragen?")); } });
+      } },
+    aufRueckblick("e2", 7, D.e2.these, "a6", { fehlt: "Der Rückblick öffnet sich, wenn Ihre Antwort fertig ist (Auftrag 6)." }),
+    aufZf("e2", "a7", function (box) {
+      zfDaten(box, { kopf: "Etappe 2 · Warum gerade die Kita?", frage: "Warum beginnt Demokratiebildung nicht erst in der Schule?",
+        kern: "Kinder lernen immer, wie Entscheidungen fallen. Offen ist nur, welche Demokratie sie lernen: die des Stärkeren oder die der Aushandlung. Vier Gründe sprechen dafür, in der Kita damit zu beginnen.",
+        begriffe: [
+          ["Grundüberzeugungen", "Frühe Antworten auf Fragen wie: Werde ich gehört? Kann ich etwas bewirken? Ist Streit lösbar? Sie entstehen aus Erfahrungen."],
+          ["Kontakthypothese", "Gordon Allport (1954): Vorurteile nehmen ab, wenn Menschen sich mit gleichem Status begegnen, gemeinsame Ziele verfolgen, zusammenarbeiten und dabei unterstützt werden."],
+          ["Lernen durch Teilhabe", "John Dewey (1916): Demokratie lernt man, indem man an ihr teilnimmt – nicht durch Belehrung."],
+          ["Aushandlung", "Verschiedene Wünsche werden besprochen, bis eine Lösung steht, die alle mittragen können."],
+          ["Kinderrat", "Ein festes Treffen, in dem Kinder Themen einbringen, beraten und entscheiden. Mehr dazu in Etappe 5."]],
+        tabelle: { kopf: ["Grund", "Kern", "In der Szene"], zeilen: [
+          ["entwicklungspsychologisch", "Grundüberzeugungen entstehen in den ersten Jahren.", "Finn erlebt: Der Stärkste muss nicht gewinnen."],
+          ["sozialpsychologisch", "In der Kita treffen sich Verschiedene als Gleiche.", "Fünf Kinder, ein gemeinsames Ziel: die Höhle."],
+          ["lernpsychologisch", "Demokratie lernt man durch Teilnahme.", "»Wir machen das wie im Kinderrat.«"],
+          ["praktisch", "Kinder sind längst politisch – offen ist nur, welche Demokratie sie lernen.", "Ohne Kinderrat wäre Jannis wohl Chef geworden."]] },
+        werk: ["Denkwerkzeug: Welche Demokratie lernen Kinder hier?", ["Wer setzt sich durch – der Stärkste oder eine Absprache?", "Woran erinnern sich die Kinder – an welche Regeln und Verfahren?", "Was haben Erwachsene vorher dafür getan – und was tun sie jetzt?"]],
+        mein: [["Meine Antwort für den Elternabend", "e2.antwort", "noch offen – Auftrag 6"], ["Mein Satz für die Lernspur", "e2.spur", "noch offen – Auftrag 7"]],
+        aufgabe: "Begründen Sie mit zwei der vier Gründe, warum Demokratiebildung in der Kita beginnt. Beziehen Sie ein Beispiel aus dem Kita-Alltag ein." });
+    }),
+    aufExtra("e2", "Welche Demokratie lernen Kinder bei uns?", {
+      auftrag: "Freiwillig – nur wenn Sie möchten. Beobachten Sie in Ihrer Praxisstelle einen Streit unter Kindern, der ohne Erwachsene gelöst wird. Notieren Sie in Stichworten, worum es ging und wie es ausging – ohne Namen von Kindern, Eltern oder Kolleginnen und Kollegen.",
+      felder: [["beob", "Was ich beobachtet habe", "Es ging um … Am Ende …"], ["grund", "Welcher der vier Gründe zeigt sich darin? Nennen Sie die Karte aus Auftrag 4.", "Karte …, weil …"], ["urteil", "Ein Satz zu Ihrem Urteil: Haben die Kinder die Demokratie des Stärkeren oder die der Aushandlung erlebt?", "Ich denke, …, weil …"]] })
+  ]
+});
+
+/* ===== Arbeitsblatt Etappe 4 · Macht und Haltung (Doppelstunde, Fassung 5.0) =====
+   Erste Stunde der Etappe (Curriculum, Einheit 6: Macht und Verantwortung). Tiefgang aus dem Impulsvortrag,
+   Kapitel 13: vier Merkmale demokratischer Haltung, Sätze »einladend – verschließend«. Vielfalt und Anti-Bias
+   (Workshop »Stell dich nicht so an«) kommen als Ausblick; sie bekommen eigene Stunden. */
+
+D.e4 = {
+  these: "Gute Fachkräfte haben keine Macht über Kinder – sie haben Beziehung.",
+  abruf: [
+    ["Was unterscheidet ein Recht von einer Erlaubnis?", "Ein Recht hat das Kind. Eine Erlaubnis hängt von Erwachsenen ab – sie können sie geben oder nehmen."],
+    ["Wovor wollte Janusz Korczak die Kinder schützen?", "Vor der Willkür der Erwachsenen: »Diesem Despotismus müssen Grenzen gesetzt werden.«"],
+    ["Welcher Prüfstein ist berührt, wenn ein Kind beschämt wird?", "Schutz – auch vor Beschämung und Abwertung."]
+  ],
+  saetze: [
+    { id: "s1", titel: "Essen", satz: "»Iss auf.«", anders: "»Wie viel möchtest du haben?«", warum: "Das Kind bestimmt über seinen Hunger. Die Fachkraft bleibt dafür verantwortlich, dass es satt werden kann." },
+    { id: "s2", titel: "Probieren", satz: "»Probieren musst du.«", anders: "»Magst du probieren – oder heute nicht?«", warum: "Probieren wird eine Einladung, kein Befehl. Ein Nein ist erlaubt." },
+    { id: "s3", titel: "Kleidung", satz: "»Zieh das an.«", anders: "»Reicht die Jacke, oder brauchst du etwas Dickeres?«", warum: "Das Kind prüft selbst. Das geht dort, wo keine Gesundheit auf dem Spiel steht." },
+    { id: "s4", titel: "Kleidung bei Regen", lage: "Hier steht etwas fest: Bei Regen und Kälte gehört die Matschhose dazu.", satz: "»Zieh jetzt sofort die Matschhose an!«", anders: "»Bei Regen gehört die Matschhose dazu, sonst wirst du nass und kalt. Du entscheidest: erst die Hose oder erst die Stiefel?«", warum: "Was feststeht, wird ehrlich gesagt und begründet. Innerhalb des Rahmens bleibt eine echte Wahl." },
+    { id: "s5", titel: "Schlafen", satz: "»Jetzt legen sich alle hin.«", anders: "»Möchtest du dich ausruhen oder lieber leise spielen?«", warum: "Ruhe ja – aber nicht für jedes Kind auf dieselbe Weise." },
+    { id: "s6", titel: "Morgenkreis", satz: "»Alle kommen in den Kreis.«", anders: "»Heute keine Lust? Dann setz dich dazu oder geh in die Bauecke.«", warum: "Das Nein des Kindes wird gehört. Es gibt einen Platz in der Nähe." },
+    { id: "s7", titel: "Konflikt", satz: "»Jetzt ist Schluss, Dennis kriegt das Rad.«", anders: "»Wie können wir das lösen, dass es für beide passt?«", warum: "Die Fachkraft öffnet einen Raum zum Aushandeln, statt zu urteilen." },
+    { id: "s8", titel: "Das Nein eines Kindes", satz: "»Jetzt sei nicht so bockig.«", anders: "»Okay, ich höre dein Nein. Erzähl mir, was du brauchst.«", warum: "Widerspruch wird nicht bestraft, sondern als Botschaft gehört." },
+    { id: "s9", titel: "Eine Regel", satz: "»Die Regel gilt, Punkt.«", anders: "»Passt die Regel noch für uns? Sollen wir sie ändern?«", warum: "Regeln werden gemeinsam überprüft – schon Kinder können das." }
+  ],
+  merkmale: [["m1", "Macht offenlegen", "tuerkis"], ["m2", "Beteiligung ermöglichen", "gruen"], ["m3", "Widerspruch aushalten", "gelb"], ["m4", "Vielfalt als Normalität", "rot"]],
+  momente: [
+    { id: "c1", text: "»Das haben wir doch alle zusammen beschlossen«, sagt die Fachkraft. Entschieden hatte sie allein.", zu: "m1", warum: "Die Macht ist da, wird aber verschleiert. Ehrlich wäre: »Das habe ich entschieden, und zwar weil …«" },
+    { id: "c2", text: "Die Kinder schlagen Namen für das neue Kuscheltier der Gruppe vor. Am Ende nimmt die Leitung ihren eigenen Vorschlag.", zu: "m2", warum: "Beteiligung wird nur gespielt. Wer fragt, muss die Antwort auch gelten lassen – oder vorher sagen, was offen ist." },
+    { id: "c3", text: "Ein Kind sagt: »Nein, ich will nicht in den Kreis.« Die Fachkraft antwortet: »Jetzt sei nicht so bockig.«", zu: "m3", warum: "Das Nein eines Kindes ist ein Kernelement der Demokratie, kein Erziehungsproblem." },
+    { id: "c4", text: "Einmal im Jahr gibt es eine »Woche der Kulturen«. Sonst zeigen alle Bilderbücher Familien mit Vater, Mutter und Kind.", zu: "m4", warum: "Vielfalt wird zum Extra. Normalität hieße: Verschiedene Familien, Sprachen und Lebensweisen kommen jeden Tag vor." },
+    { id: "c5", text: "Ein Kind beschwert sich laut über eine neue Regel. Es muss sich dafür auf die »Nachdenkbank« setzen.", zu: "m3", warum: "Widerspruch wird bestraft. Die Kinder lernen: Wer sich beschwert, hat ein Problem." },
+    { id: "c6", text: "Ein Kind fragt, warum ein anderes Kind anders spricht. Die Fachkraft sagt: »Bei uns sind alle gleich, das spielt keine Rolle.«", zu: "m4", warum: "Wer Unterschiede übergeht, lässt die Frage des Kindes unbeantwortet. Vielfalt als Normalität heißt: Unterschiede benennen, ohne sie zu bewerten." }
+  ]
+};
+
+blatt({
+  id: "e4", etappe: 4, art: "doppelstunde", dauer: 90, titel: "Macht und Haltung",
+  frage: "Was mache ich mit der Macht, die ich als Erwachsene oder Erwachsener habe?",
+  karte: "Acht Aufträge · 90 Minuten · am Ende steht Ihre persönliche Handlungsleitlinie für eine Alltagssituation.",
+  darum: "Erwachsene sind in der Kita mächtiger als Kinder: größer, sprachlich überlegen, durch die Einrichtung abgesichert. Diese Macht verschwindet nicht, wenn man sie leugnet. Heute untersuchen Sie, wie sie sich in ganz alltäglichen Sätzen zeigt – beim Essen, Anziehen, Schlafen und im Streit. Am Ende schreiben Sie Ihre persönliche Handlungsleitlinie.",
+  ziele: ["an Alltagssätzen zeigen, wo Erwachsene Macht über Kinder haben,", "verschließende Sätze einladend umformulieren, ohne die Verantwortung abzugeben,", "die vier Merkmale demokratischer Haltung auf eine eigene Situation anwenden."],
+  hinweis: "Bewertet wird nur Ihr eigenes Handeln, nicht das von Kolleginnen und Kollegen. Das Extra fragt nach Ihrer Praxisstelle – freiwillig und ohne Namen.",
+  spur: "e4.spur", spurAnfang: "Mit meiner Macht als Fachkraft will ich …", spurFrage: "Was machen Sie mit Ihrer Macht als Fachkraft? Ein Satz genügt.",
+  kann: ["Ich kann an Alltagssätzen zeigen, wo Erwachsene Macht über Kinder haben.", "Ich kann einen verschließenden Satz einladend umformulieren, ohne die Verantwortung abzugeben.", "Ich kann die vier Merkmale demokratischer Haltung nennen und auf eine Situation anwenden."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken: erst der eigene Satz, dann der Vorschlag; erst legen, dann vergleichen. Die Handlungsleitlinie gibt es als Schreibblatt für den Stift; die Satzpaare lassen sich auch als Karten im Raum auslegen.",
+  lk: [
+    ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen.", "Hinweis an die Klasse: Es geht um eigene Routinen, nicht um Kritik an Kolleginnen und Kollegen der Praxisstellen."]],
+    ["Plenumsstellen", ["Nach Auftrag 2: Was ist an der Frage das Problem? Zwei oder drei Begründungen.", "Nach Auftrag 3: Positionslinie 0–10.", "Nach Auftrag 4: Woher kommt die Macht der Erwachsenen? An der Tafel sammeln.", "Auftrag 5: Zwei Paare spielen einen Satz vor – einmal verschließend, einmal einladend. Wie fühlt sich das an?", "Nach Auftrag 6: Bei welcher Karte war die Klasse uneins?", "Auftrag 8: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
+    ["Wenn die Zeit knapp wird", ["K1 · In Auftrag 5 genügen drei statt vier Sätze (– 4 Min.).", "K2 · Auftrag 1 mündlich im Plenum (– 2 Min.).", "K3 · Auftrag 6 gemeinsam am Gerät vorne legen (– 5 Min.)."]],
+    ["Status der Inhalte", ["Szene »Wollt ihr heute rausgehen?«: ausgedacht nach einem Beispiel aus dem Impulsvortrag.", "Satzpaare in Auftrag 5: aus dem Impulsvortrag, Kapitel 13 (Tabelle »einladend – verschließend«); das Paar »Kleidung bei Regen« und der Satz in Auftrag 4 sind ausgedacht.", "Vier Merkmale demokratischer Haltung: Impulsvortrag, Kapitel 13. Die Momente in Auftrag 6: ausgedacht.", "Vier Ziele vorurteilsbewusster Bildung: nach Louise Derman-Sparks, in der Fassung aus dem Workshop »Stell dich nicht so an« (Fachtag 2026). Adultismus: Arbeitsdefinition.", "Welche Antwort »zentral« ist und wohin eine Karte gehört, ist ein Vorschlag – gute Begründungen für eine andere Wahl zählen."]]
+  ],
+  auftraege: [
+    aufAbruf("e4", D.e4.abruf, "Heute geht es um die Seite der Erwachsenen: <b>Was machen wir mit unserer Macht?</b>"),
+    aufSzene("e4", 2, { min: 6, danach: function () { return [kasten("sicherung", "Beteiligung zum Schein", p("Kinder werden gefragt, aber ihre Antwort kann nichts ändern. Ehrlicher wäre: »Wir gehen jetzt raus. Ihr entscheidet, was wir draußen spielen.«")), kasten("raum", null, p("Zu zweit: Kennen Sie solche Fragen aus Ihrem Alltag – auch aus Ihrem eigenen Mund?"))]; } }),
+    aufPosition("e4", 3, D.e4.these),
+    { id: "a4", nr: "4", kurz: "Wo die Macht steckt", phase: "Erarbeitung", name: "Wo steckt die Macht?", form: "allein, dann zu zweit", min: 12, frei: "ansage", gleich: "Sie lesen, woher die Macht der Erwachsenen kommt, und prüfen einen Satz von der Garderobe.", prinzip: "Verdecken · Rückmelden", raum: "An der Tafel: Woher kommt die Macht?",
+      fertig: function () { return !!(S.w["e4.muetze"] && S.w["e4.muetze"].fest); },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Das Machtgefälle",
+          p("Erwachsene sind in der Kita mächtiger als Kinder – auf drei Wegen: Sie sind <b>größer und stärker</b>, sie sind <b>sprachlich überlegen</b>, und sie sind <b>durch die Einrichtung abgesichert</b>: Sie machen die Regeln, die Pläne und die Dokumentation."),
+          p("Diese Macht abzustreiten, macht sie nur unsichtbar, nicht weg. Demokratie heißt deshalb auch: Macht abgeben – und den eigenen Wissensvorsprung nicht zur Bevormundung machen."),
+          p("Wenn Erwachsene Kinder allein wegen ihres Alters als weniger wichtig oder weniger fähig behandeln, nennt man das <b>Adultismus</b>."),
+          p("Nach dem Impulsvortrag, Kapitel 13 · Adultismus: Arbeitsdefinition", "quelle")));
+        box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachte Szene"), p("An der Garderobe. Draußen ist es kalt. Ein Kind zieht sich die Mütze vom Kopf: »Ich will die nicht!« Die Fachkraft setzt sie ihm wieder auf: »Stell dich nicht so an. Die Mütze bleibt auf.«", "falltext__text")));
+        box.appendChild(kasten("auftrag", null, p("Legen Sie sich fest und begründen Sie in einem Satz.")));
+        wahl(box, "e4.muetze", { frage: "Was zeigt der Satz »Stell dich nicht so an«?", optionen: [
+          ["Er erklärt nichts und macht das Gefühl des Kindes klein – Macht ohne Begründung.", "zentral", "Die Fachkraft entscheidet, ohne zu sagen, warum, und wertet dabei das Gefühl des Kindes ab. Das Kind lernt: Was ich fühle, zählt nicht."],
+          ["Er ist in Ordnung, denn draußen ist es kalt.", "begruendbar", "Die Mütze kann richtig sein. Der Satz dazu ist es nicht: Er macht das Gefühl klein, statt den Grund zu nennen."],
+          ["Er zeigt vor allem, dass die Fachkraft keine Zeit hat.", "kaum", "Zeitdruck erklärt den Satz vielleicht. Er ändert nicht, was das Kind dabei lernt."]],
+          danach: function () { return [kasten("sicherung", "Die Verantwortung bleibt – der Ton ändert sich", p("»Ich sehe, du willst die Mütze nicht. Draußen ist es kalt, deshalb bleibt sie heute auf. Magst du sie selbst aufsetzen?«"), p("Ein Vorschlag – es gibt viele gute Sätze.", "quelle")), kasten("raum", null, p("Zu zweit: Woher kommt die Macht der Fachkraft in dieser Szene? Nennen Sie alle drei Wege."))]; } });
+      } },
+    { id: "a5", nr: "5", kurz: "Sätze", phase: "Sichern und üben", name: "Einladend oder verschließend?", form: "zu zweit", min: 18, frei: "antwort", nach: "a4", fehlt: "Die Sätze öffnen sich nach Auftrag 4.", prinzip: "Verdecken – erst der eigene Satz, dann der Vorschlag", raum: "Zwei Paare spielen einen Satz vor – verschließend und einladend",
+      fertig: function () { return umformenZahl("e4.satz", D.e4.saetze) >= 4; },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Neun Alltagssätze, die Kinder zu oft hören. Formulieren Sie zu zweit einen Satz so um, dass das Kind mitentscheiden kann – wo etwas feststeht, sagen Sie ehrlich, was und warum. Erst dann sehen Sie einen Vorschlag."), p("<b>Fertig sind Sie mit vier Sätzen.</b> Schnelle nehmen mehr.")));
+        umformen(box, "e4.satz", D.e4.saetze, { ziel: 4, titel: "Neun Sätze", label: "So würde ich es sagen:", platz: "»…«", frage: "Gibt Ihr Satz dem Kind eine echte Wahl?" });
+        box.appendChild(p("Die Satzpaare stammen aus dem Impulsvortrag (Kapitel 13); das Paar »Kleidung bei Regen« ist ausgedacht.", "meta"));
+      } },
+    { id: "a6", nr: "6", kurz: "Vier Merkmale", phase: "Erarbeitung", name: "Vier Merkmale demokratischer Haltung", form: "allein, dann zu zweit", min: 12, frei: "antwort", nach: "a5", fehlt: "Die vier Merkmale öffnen sich, wenn Sie vier Sätze umformuliert haben (Auftrag 5).", prinzip: "Verdecken – erst legen, dann der Vorschlag", raum: "Bei welcher Karte war die Klasse uneins?",
+      fertig: function () { return legenFertig("e4.merkmal"); },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Vier Merkmale", h("ol", {}, [
+          ["Macht offenlegen, statt sie zu verschleiern.", "Ja, wir sind mächtiger. Das sagen wir – und wir begründen, was wir entscheiden."],
+          ["Beteiligung ermöglichen, statt sie zu spielen.", "Gefragt wird nur, wo die Antwort etwas ändern kann."],
+          ["Widerspruch aushalten, statt ihn zu bestrafen.", "Das Nein eines Kindes ist eine Botschaft, kein Erziehungsproblem."],
+          ["Vielfalt als Normalität anerkennen, nicht als Extra.", "Verschiedene Familien, Sprachen, Körper und Geschwindigkeiten sind der Alltag."]].map(function (m) { return h("li", {}, h("b", { text: m[0] + " " }), document.createTextNode(m[1])); })),
+          p("Nach dem Impulsvortrag, Kapitel 13", "quelle")));
+        box.appendChild(kasten("auftrag", null, p("Sechs Momente aus Kitas. Welches Merkmal fehlt jeweils? Tippen Sie eine Karte an und dann das Merkmal. Wenn alle liegen, vergleichen Sie mit dem Vorschlag.")));
+        legen(box, "e4.merkmal", D.e4.momente, D.e4.merkmale, { kopf: "Der Vorschlag – welches Merkmal fehlt?", danach: function () {
+          return kasten("erklaerung", "Ausblick: vorurteilsbewusste Bildung",
+            p("Das vierte Merkmal führt weiter. Der Anti-Bias-Ansatz, entwickelt von Louise Derman-Sparks, hat vier Ziele: Kinder in ihrer Ich- und Gruppenidentität stärken · Erfahrungen mit Vielfalt ermöglichen · kritisches Denken über Gerechtigkeit und Fairness anregen · Kinder ermutigen, gegen Unrecht und Diskriminierung aktiv zu werden."),
+            p("Die nächsten Stunden dieser Etappe vertiefen das – mit Büchern, Bildern und Routinen und mit stereotypen Aussagen unter Kindern."),
+            p("Ziele in der Fassung aus dem Workshop »Stell dich nicht so an« (Fachtag 2026)", "quelle"));
+        } });
+      } },
+    { id: "a7", nr: "7", kurz: "Ihre Leitlinie", phase: "Übertragen und Ausblick", name: "Ihre Handlungsleitlinie", form: "allein", min: 14, frei: "antwort", nach: "a6", schreib: true, fehlt: "Ihre Leitlinie öffnet sich nach Auftrag 6.", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text", raum: "Zu zweit vorlesen: Würde ein Kind den Unterschied merken?",
+      fertig: function () { return !!(S.w["e4.leit"] && S.w["e4.leit"].zu); },
+      seite: function (box) {
+        var w = W("e4.leit");
+        box.appendChild(kasten("auftrag", null, p("Wählen Sie eine Alltagssituation. Schreiben Sie Ihre persönliche Leitlinie: Was entscheidet das Kind? Was entscheiden Sie – und wie sagen Sie es? Nehmen Sie mindestens einen einladenden Satz wörtlich auf.")));
+        var chips = h("div", { class: "chips", role: "group", "aria-label": "Situation wählen" });
+        ["Essen", "Schlafen und Ruhe", "Anziehen", "Wickeln und Pflege"].forEach(function (s) {
+          chips.appendChild(knopf(s, { art: "chip", gedrueckt: String(w.sit === s), klick: function () { w.sit = s; speichere(); $$("button", chips).forEach(function (b) { b.setAttribute("aria-pressed", String(b.textContent === s)); }); } }));
+        });
+        box.appendChild(h("fieldset", { class: "gruppe" }, h("legend", { text: "Meine Situation:" }), chips));
+        produkt(box, "e4.leit", { label: "Meine Leitlinie:", platz: "Beim … entscheidet das Kind … Ich entscheide …, weil … Ich sage: »…«", rows: 6, min: 30,
+          kriterien: [["Grundlegend", "Die Leitlinie nennt die Situation und sagt, was das Kind entscheiden darf."], ["Sicher", "Sie benennt, wo die Fachkraft entscheidet – zum Beispiel bei Gesundheit und Schutz – und wie sie es erklärt."], ["Souverän", "Sie enthält einen einladenden Satz wörtlich und sagt, wie ein Nein des Kindes gehört wird."]] });
+      } },
+    aufRueckblick("e4", 8, D.e4.these, "a7", { fehlt: "Der Rückblick öffnet sich, wenn Ihre Leitlinie fertig ist (Auftrag 7)." }),
+    aufZf("e4", "a8", function (box) {
+      var verglichen = D.e4.saetze.filter(function (s) { var w = S.w["e4.satz." + s.id]; return w && w.zu; });
+      zfDaten(box, { kopf: "Etappe 4 · Macht und Haltung", frage: "Was mache ich mit der Macht, die ich als Erwachsene oder Erwachsener habe?",
+        kern: "Erwachsene sind mächtiger als Kinder. Das lässt sich nicht abschaffen, aber offenlegen und teilen. Demokratische Haltung zeigt sich in alltäglichen Sätzen: Sie lädt zur Entscheidung ein, wo das Kind entscheiden kann – und sagt ehrlich, wo die Erwachsenen entscheiden und warum.",
+        begriffe: [
+          ["Machtgefälle", "Erwachsene sind größer, sprachlich überlegen und durch die Einrichtung abgesichert."],
+          ["Adultismus", "Erwachsene behandeln Kinder allein wegen ihres Alters als weniger wichtig oder weniger fähig."],
+          ["Beteiligung zum Schein", "Kinder werden gefragt, aber ihre Antwort kann nichts ändern."],
+          ["Vier Merkmale", "Macht offenlegen · Beteiligung ermöglichen · Widerspruch aushalten · Vielfalt als Normalität anerkennen."],
+          ["Vorurteilsbewusste Bildung", "Anti-Bias-Ansatz mit vier Zielen: Identität stärken, Vielfalt erfahren, kritisch über Fairness nachdenken, gegen Unrecht aktiv werden."]],
+        tabelle: { kopf: ["Situation", "Verschließend", "Einladend"], zeilen: D.e4.saetze.filter(function (s) { return ["s1", "s4", "s6", "s7", "s8"].indexOf(s.id) >= 0; }).map(function (s) { return [s.titel, s.satz, s.anders]; }) },
+        werk: ["Denkwerkzeug: Drei Fragen an meinen Satz", ["Ist die Frage wirklich offen?", "Wenn nicht: Sage ich ehrlich, was feststeht – und warum?", "Was darf das Kind trotzdem entscheiden?"]],
+        mein: [["Meine Handlungsleitlinie" + (S.w["e4.leit"] && S.w["e4.leit"].sit ? " · " + S.w["e4.leit"].sit : ""), "e4.leit", "noch offen – Auftrag 7"],
+          ["Meine Sätze", function () { return verglichen.length ? h("ul", { class: "mein-liste" }, verglichen.slice(0, 3).map(function (s) { return h("li", {}, h("b", { text: s.titel + ": " }), document.createTextNode(txt("e4.satz." + s.id + ".satz"))); })) : mein("", "noch offen – Auftrag 5"); }],
+          ["Mein Satz für die Lernspur", "e4.spur", "noch offen – Auftrag 8"]],
+        aufgabe: "Erläutern Sie an einer Alltagssituation, wie eine Fachkraft ihre Macht offenlegen und zugleich Beteiligung ermöglichen kann. Formulieren Sie dazu einen einladenden Satz." });
+    }),
+    aufExtra("e4", "Ein Satz aus Ihrer Praxisstelle", {
+      auftrag: "Freiwillig – nur wenn Sie möchten. Hören Sie einen Tag lang genau hin: Welchen verschließenden Satz hören Sie – oder sagen Sie selbst? Notieren Sie ihn ohne Namen. Es geht nicht darum, jemanden vorzuführen.",
+      felder: [["satz", "Der Satz", "»…«"], ["anders", "So könnte er einladend klingen (Fundstelle: Auftrag 5):", "»…«"], ["urteil", "Ein Satz zu Ihrem Urteil: Welches Merkmal demokratischer Haltung berührt der Satz? Nennen Sie es aus Auftrag 6.", "Der Satz berührt …, weil …"]] })
+  ]
+});
+
+/* ===== Arbeitsblatt Etappe 5 · Kinder beteiligen – aber wie? (Doppelstunde, Fassung 5.0) =====
+   Aus DS 4 (28.10.2026): Fall Matschhose, vier Ecken, Beteiligung oder Schein, Gruppenpuzzle Kinderkonferenz ·
+   Beschwerdeweg · Kita-Verfassung, Fall neu lösen, Beteiligungsformat mit Ampel, Rückkehr in die Ecken.
+   Tiefgang aus dem Impulsvortrag, Kapitel 6 (Minderheitenschutz) und 10 (formelle Demokratiebildung). */
+
+D.e5 = {
+  abruf: [
+    ["Was verlangt Artikel 12 der UN-Kinderrechtskonvention?", "Jedes Kind darf seine Meinung in allen Angelegenheiten sagen, die es betreffen. Sie wird nach Alter und Reife berücksichtigt."],
+    ["Was gehört nach § 45 SGB VIII zur Betriebserlaubnis einer Kita?", "In der Regel Verfahren für Beteiligung und Beschwerde – und ein Konzept zum Schutz vor Gewalt."],
+    ["Nennen Sie die drei Prüfsteine.", "Schutz · Förderung · Beteiligung."]
+  ],
+  fall: "Es regnet seit dem Morgen. Im Morgenkreis fragt die Fachkraft: »Wer will heute ohne Matschhose rausgehen?« Neun Kinder melden sich, vier nicht. An der Tür sagt die Fachkraft: »Bei dem Wetter ziehen alle die Matschhose an.« Ein Kind ruft: »Aber wir haben doch abgestimmt!«",
+  ecken: { frage: "Was ist hier schiefgelaufen – und was sollte die Fachkraft jetzt tun?", optionen: [
+    ["A · Abgestimmt ist abgestimmt. Die Kinder gehen ohne Matschhose.", "kaum", "Naheliegend, denn die Abstimmung war fair. Ecke A übersieht aber den Schutzauftrag: Schutz und Beteiligung gehören zusammen – über Gesundheit stimmt keine Mehrheit ab."],
+    ["B · Die Fachkraft hebt die Abstimmung auf. Gesundheit geht vor.", "begruendbar", "In der Sache vertretbar. Ohne Begründung und ohne ein Wort zum eigenen Fehler beschädigt sie aber das Vertrauen der Kinder in Beteiligung."],
+    ["C · Über die Matschhose hätte gar nicht abgestimmt werden dürfen.", "zentral", "Der Fehler lag vor der Abstimmung: Abgestimmt wurde über etwas, das die Fachkraft gar nicht abgeben wollte. Das war Beteiligung zum Schein – die Kinder lernen: Unsere Stimme zählt nicht."],
+    ["D · Es gibt einen anderen Weg – ich beschreibe ihn in meiner Begründung.", "zentral", "Wenn Ihr Weg den Rahmen offenlegt und innerhalb davon echt wählen lässt, zeigt er die Lösung. Etwa: »Bei Regen gehört die Matschhose dazu, sonst werdet ihr nass und kalt. Ihr entscheidet: Wann gehen wir raus, wie lange – und was spielen wir draußen?«"]] },
+  stufenKarten: [
+    { id: "k1", text: "»Wollt ihr heute rausgehen?« – und dann gehen doch alle raus.", zu: "nicht", warum: "Gefragt wird zum Schein: Die Antwort kann nichts ändern." },
+    { id: "k2", text: "Die Kinder malen Bilder für das Festplakat. Das Motto hat das Team längst gewählt.", zu: "nicht", warum: "Die Kinder schmücken eine Entscheidung, an der sie nicht beteiligt waren. Im Stufenmodell heißt das Dekoration." },
+    { id: "k3", text: "Die Fachkraft erklärt, warum am Freitag die Feuerwehr kommt und was dann passiert.", zu: "vor", warum: "Die Kinder werden informiert. Das ist wichtig – aber noch keine Mitbestimmung." },
+    { id: "k4", text: "Die Kinder dürfen Wünsche für neue Spielgeräte sagen. Was daraus wird, erfahren sie nie.", zu: "vor", warum: "Mitsprache ohne Rückmeldung. Erfahren die Kinder nie, was aus ihren Wünschen wurde, kippt sie in Beteiligung zum Schein." },
+    { id: "k5", text: "Die Kinderkonferenz entscheidet, wie der Bauraum umgeräumt wird. Das Team setzt es um.", zu: "bet", warum: "Die Kinder entscheiden, die Erwachsenen setzen um – echte Mitbestimmung." },
+    { id: "k6", text: "Es regnet. Die Fachkraft sagt, warum alle die Matschhose anziehen – und die Kinder wählen, was draußen gespielt wird.", zu: "bet", warum: "Der Rahmen ist offengelegt, und innerhalb davon entscheiden die Kinder wirklich." }
+  ],
+  stufen: [["nicht", "Nicht-Beteiligung", "rot"], ["vor", "Vorstufen", "gelb"], ["bet", "Beteiligung", "gruen"]],
+  verfahren: [
+    { id: "a", nr: "A", titel: "Die Kinderkonferenz", unter: "beraten und entscheiden",
+      text: ["Ein regelmäßiges Treffen, in dem Kinder Themen einbringen, beraten und entscheiden – etwa: Welches Projekt machen wir? Welche Regeln brauchen wir im Bauraum?", "Es spricht, wer den Redestein hat. Abgestimmt wird mit Handzeichen oder mit Muggelsteinen: Auch Kinder, die noch nicht zählen können, sehen, wo der Haufen größer ist.", "So kann sie ablaufen: <b>1</b> Themen sammeln, auch mit Bildkarten · <b>2</b> vorher klären: Worüber dürfen wir entscheiden? · <b>3</b> beraten · <b>4</b> entscheiden · <b>5</b> umsetzen und berichten, was aus dem Beschluss wurde."],
+      quelle: "Formen nach dem Impulsvortrag, Kapitel 10 · Ablauf in fünf Schritten: Vorschlag aus DS 4",
+      frage: "Hätte die Kinderkonferenz über die Matschhose abstimmen dürfen?",
+      optionen: [
+        ["Nein – nicht ohne vorher geklärten Rahmen. Abgestimmt wird über das, was wirklich offen ist.", "zentral", "Schritt 2 fehlte. Vorher hätte die Fachkraft sagen müssen, was bei Regen feststeht. Offen sind dann: wann, wie lange, was draußen gespielt wird."],
+        ["Ja – Kinder dürfen über alles abstimmen, was sie betrifft.", "kaum", "Artikel 12 gibt Kindern das Recht, gehört zu werden. Schutz und Gesundheit bleiben trotzdem Aufgabe der Erwachsenen (Etappe 3)."],
+        ["Nur, wenn alle Kinder einer Meinung sind.", "kaum", "Einstimmigkeit ist selten. Die Frage ist nicht, wie viele zustimmen, sondern ob überhaupt abgestimmt werden darf."]],
+      merke: "Vor der Abstimmung klären, worüber Kinder entscheiden dürfen. Danach umsetzen und berichten, was aus dem Beschluss wurde." },
+    { id: "b", nr: "B", titel: "Der Beschwerdeweg", unter: "auch ohne Worte",
+      text: ["Kinder haben ein Recht, sich zu beschweren. Für Kitas ist das Gesetz: Zur Betriebserlaubnis gehören in der Regel geeignete Verfahren der Beteiligung und der Beschwerde in persönlichen Angelegenheiten – innerhalb und außerhalb der Einrichtung.", "Mögliche Wege: ein Briefkasten mit niedrigem Schlitz, ein Beschwerdebuch mit Zeichnungen, feste Zeiten (»Was hat dich heute geärgert?«), eine Ansprechperson im Team.", "Kleine Kinder beschweren sich oft ohne Worte: Sie weinen, ziehen sich zurück, werden wütend. Vier Schritte helfen: <b>wahrnehmen</b> – <b>nachfragen</b> – <b>gemeinsam eine Lösung suchen</b> – <b>zurückmelden</b>."],
+      quelle: "§ 45 Abs. 2 Satz 2 Nr. 4 SGB VIII, am Gesetzestext geprüft (01.11.2026) · Formen nach dem Impulsvortrag, Kapitel 10 · vier Schritte nach DS 4",
+      frage: "Ein Kind weint, als es die Matschhose anziehen soll. Ist das eine Beschwerde?",
+      optionen: [
+        ["Ja – Weinen kann eine Beschwerde ohne Worte sein.", "zentral", "Wahrnehmen (»Ich sehe, du willst die nicht anziehen«), nachfragen (Kratzt sie? Ist sie zu eng?), eine Lösung suchen (eine andere Hose, Hilfe beim Anziehen, kürzer raus) und zurückmelden."],
+        ["Nein – eine Beschwerde muss das Kind aussprechen.", "kaum", "Dann hätten gerade die Jüngsten keinen Beschwerdeweg. Das Gesetz verlangt Verfahren, die für die Kinder der Einrichtung geeignet sind."],
+        ["Erst, wenn es öfter vorkommt.", "kaum", "Auch eine einzelne Unzufriedenheit verdient eine Antwort. Entscheidend ist nicht, wie oft etwas vorkommt, sondern die Rückmeldung."]],
+      merke: "Jede Unzufriedenheit ernst nehmen – auch ohne Worte –, gemeinsam eine Lösung suchen und dem Kind zurückmelden." },
+    { id: "c", nr: "C", titel: "Die Kita-Verfassung", unter: "allein · mit · informiert",
+      text: ["Das Herzstück der »Kinderstube der Demokratie«: Das Team legt schriftlich fest, worüber die Kinder <b>allein</b> entscheiden (zum Beispiel, mit wem sie spielen), worüber sie <b>mit</b>entscheiden (zum Beispiel Ausflugsziele, Feste) und was die Erwachsenen entscheiden – und die Kinder darüber <b>informieren</b> (zum Beispiel Sicherheitsfragen).", "Eine Kita-Verfassung wird nicht einmal geschrieben und abgeheftet. Das Team überprüft sie regelmäßig – eine gelebte Praxis, kein Aktenordner. So hängt nicht von der Tagesform einzelner Erwachsener ab, was Kinder dürfen."],
+      quelle: "Konzept nach Hansen, Knauer und Sturzenhecker (2011) · Beispiele nach dem Impulsvortrag, Kapitel 10",
+      frage: "Wohin gehört »Matschhose bei Regen« in der Kita-Verfassung?",
+      optionen: [
+        ["Die Erwachsenen entscheiden – und erklären es den Kindern.", "zentral", "Bei Kälte und Nässe geht es um Gesundheit. Entscheidend ist, dass das Team es festlegt und den Kindern erklärt – dann wird nicht mehr zum Schein abgestimmt."],
+        ["Die Kinder entscheiden allein.", "begruendbar", "Bei mildem Wetter und mit Wechselkleidung ist das denkbar; Kinder lernen auch aus Folgen. Das muss aber das Team festlegen, nicht die einzelne Fachkraft spontan."],
+        ["Das muss niemand festlegen. Das entscheidet jede Fachkraft selbst.", "kaum", "Genau das wäre Willkür: heute so, morgen anders – je nach Fachkraft."]],
+      merke: "Das Team legt verbindlich fest, was Kinder allein, mit oder informiert entscheiden – unabhängig von Launen." }
+  ],
+  ampel: ["Ist die Entscheidung wirklich offen?", "Ist der Rahmen benannt – wissen die Kinder, was feststeht und warum?", "Gibt es Wege ohne Worte – Bildkarten, Steine, Zeigen?", "Sind die Leisen und die Jüngsten bedacht?", "Ist geplant, wie die Kinder erfahren, was aus ihrer Entscheidung wurde?"]
+};
+
+function rueckblickE5(box) {
+  var def = BLAETTER.e5;
+  box.appendChild(kasten("auftrag", null, p("Zurück zum Fall vom Anfang. In welche Ecke gehen Sie jetzt – und warum?")));
+  box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachter Fall"), p(esc(D.e5.fall), "falltext__text")));
+  wahlZurueck(box, "e5.ecke2", "e5.ecke", D.e5.ecken);
+  box.appendChild(h("h2", { class: "abschnitt", text: "Ihr Satz für die Lernspur" }));
+  spurFeld(box, def);
+  box.appendChild(h("h2", { class: "abschnitt", text: "Was können Sie jetzt?" }));
+  selbst(box, "e5.selbst", def.kann);
+  box.appendChild(h("h2", { class: "abschnitt", text: "Ihre Rückmeldung zum Blatt" }));
+  stimmkarte(box, "e5.stimme", { frage: "Wie hat Ihnen dieses Arbeitsblatt beim Lernen geholfen?", optionen: [["A", "sehr"], ["B", "teils"], ["C", "kaum"]], unter: "Halten Sie Ihre Karte hoch, wenn Ihre Lehrkraft fragt. Ihre Wahl bleibt auf diesem Gerät." });
+  box.appendChild(feld("e5.rueck", { label: "Was würden Sie an diesem Blatt ändern? (freiwillig)", platz: "Mehr …, weniger …", rows: 2 }));
+  box.appendChild(p("Fertig? Dann drehen Sie Ihr Tablet um.", "ende"));
+}
+function ampelWort(key, n) {
+  var w = S.w[key]; if (!w || !w.a || Object.keys(w.a).length < n) return null;
+  var nein = 0, teils = 0; Object.keys(w.a).forEach(function (k) { if (w.a[k] === 2) nein++; if (w.a[k] === 1) teils++; });
+  return (w.a[0] === 2 || nein >= 2) ? "Rot" : ((nein || teils) ? "Gelb" : "Grün");
+}
+
+blatt({
+  id: "e5", etappe: 5, art: "doppelstunde", dauer: 90, titel: "Kinder beteiligen – aber wie?",
+  frage: "Welche festen Verfahren sichern die Rechte der Kinder – und was gilt, wenn die Mehrheit jemanden überstimmt?",
+  karte: "Acht Aufträge · 90 Minuten · am Ende steht Ihr Beteiligungsformat für eine Situation aus der Praxis.",
+  darum: "Eine Abstimmung ist schnell gemacht. Schwierig wird es, wenn das Ergebnis nicht gelten soll – oder wenn es jemanden verletzt. Heute untersuchen Sie zwei Fälle aus der Kita, unterscheiden echte Beteiligung von Beteiligung zum Schein und lernen drei feste Verfahren kennen: Kinderkonferenz, Beschwerdeweg und Kita-Verfassung. Am Ende entwerfen Sie ein Beteiligungsformat für eine Situation aus Ihrer Praxis.",
+  ziele: ["echte Beteiligung von Beteiligung zum Schein unterscheiden,", "mit den drei Fragen der Kita-Verfassung einen Rahmen offenlegen: allein – mit – informiert,", "beschreiben, wie eine Kinderkonferenz und ein Beschwerdeweg ablaufen."],
+  hinweis: "Auftrag 7 und das Extra fragen nach Ihrer Praxisstelle. Das ist freiwillig – Sie können auch an eine ausgedachte Kita denken. Schreiben Sie keine Namen von Kindern, Familien, Kolleginnen oder Kollegen auf.",
+  spur: "e5.spur", spurAnfang: "Bevor Kinder abstimmen, kläre ich …", spurFrage: "Was klären Sie, bevor Kinder abstimmen? Ein Satz genügt.",
+  kann: ["Ich kann echte Beteiligung von Beteiligung zum Schein unterscheiden.", "Ich kann mit den drei Fragen der Kita-Verfassung einen Rahmen offenlegen.", "Ich kann beschreiben, wie eine Kinderkonferenz und ein Beschwerdeweg ablaufen."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken: die eigene Ecke vor dem Input, das Legen mit Vorschlag, die Prüffragen der Expertengruppen. Die Infokarten gibt es auch auf Papier (DS 4, M2); das Beteiligungsformat kann auf dem Werkstatt-Canvas (M3) entstehen.",
+  lk: [
+    ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen.", "Vier Ecken im Raum beschriften: A, B, C, D.", "Stammgruppen zu dritt bilden. In Auftrag 5 übernimmt jede Person zuerst eine Karte (A, B oder C)."]],
+    ["Plenumsstellen", ["Nach Auftrag 2: Was wäre hier demokratisch? Zwei oder drei Begründungen.", "Nach Auftrag 3: In die Ecken gehen; je Ecke zwei Begründungen hören, nicht bewerten.", "Nach Auftrag 4: Kernsatz »Mitreden ist nicht Mitbestimmen«.", "Auftrag 5: Jede Person erklärt ihrer Stammgruppe ihre Karte in höchstens 90 Sekunden.", "Nach Auftrag 6: Zwei Antworten an das Kind vorlesen.", "Nach Auftrag 7: Zwei Beteiligungsformate kurz vorstellen.", "Auftrag 8: Noch einmal in die Ecken; Stimmkarte A · B · C zählen."]],
+    ["Wenn die Zeit knapp wird", ["K1 · Auftrag 7 als Praxisauftrag bis zur nächsten Stunde (– 12 Min.).", "K2 · Auftrag 1 mündlich im Plenum (– 2 Min.).", "K3 · Auftrag 4 gemeinsam am Gerät vorne legen (– 4 Min.)."]],
+    ["Status der Inhalte", ["Mopslied: im Impulsvortrag nach Benedikt Sturzenhecker erzählt – Fundstelle noch zu prüfen.", "Fall Matschhose: konstruiert (DS 4), angelehnt an eine Frage aus dem Workshop des Fachtags 2026. Die Karten in Auftrag 4: ausgedacht.", "Stufen vereinfacht nach Roger Hart (1992) und Richard Schröder (1995). Kita-Verfassung nach Hansen, Knauer und Sturzenhecker (2011).", "§ 45 SGB VIII: am Gesetzestext geprüft (01.11.2026). Art. 79 Abs. 3 GG: am Gesetzestext geprüft (18.11.2026).", "Ablauf der Kinderkonferenz in fünf Schritten und Beschwerde in vier Schritten: Vorschlag aus DS 4. Welche Antwort »zentral« ist, ist ein Vorschlag."]]
+  ],
+  auftraege: [
+    aufAbruf("e5", D.e5.abruf, "Heute geht es darum, wie aus diesen Rechten <b>feste Verfahren</b> werden."),
+    aufSzene("e5", 2, { danach: function () {
+      return [kasten("erklaerung", "Die Mehrheit entscheidet – aber nicht über alles",
+        p("Die Abstimmung war fair. Trotzdem wurde ein Kind nicht gehört, das noch gar nicht dabei war. Demokratie ist mehr als der Wille der Mehrheit: Sie schützt auch die, die überstimmt werden."),
+        p("Das Grundgesetz macht das sehr deutlich. Die Menschenwürde (Art. 1) und die Grundsätze der Demokratie (Art. 20) kann keine Mehrheit abschaffen: »Eine Änderung dieses Grundgesetzes, durch welche […] die in den Artikeln 1 und 20 niedergelegten Grundsätze berührt werden, ist unzulässig.«"),
+        p("Art. 79 Abs. 3 GG, am Gesetzestext geprüft (18.11.2026)", "quelle"),
+        p("Widersprüche aushalten und trotzdem gemeinsam handeln: Das nennt man <b>Ambiguitätstoleranz</b>.")),
+        kasten("raum", null, p("Zu zweit: Was hat die Gruppe vom Mopslied gelernt, das eine Fachkraft ihr nicht hätte erklären können?"))];
+    } }),
+    { id: "a3", nr: "3", kurz: "Ihre Ecke", phase: "Einstieg", name: "»Aber wir haben doch abgestimmt!«", form: "allein, dann Ecken im Raum", min: 8, frei: "antwort", nach: "a2", fehlt: "Legen Sie sich zuerst in Auftrag 2 fest.", prinzip: "Verdecken – die Festlegung bleibt stehen", raum: "Vier Ecken A–D; je Ecke zwei Begründungen",
+      fertig: function () { return !!(S.w["e5.ecke"] && S.w["e5.ecke"].fest); },
+      seite: function (box) {
+        box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachter Fall"), h("h2", { class: "falltext__titel", text: "Der Fall Matschhose" }), p(esc(D.e5.fall), "falltext__text")));
+        box.appendChild(kasten("auftrag", null, p("Wählen Sie eine Ecke und begründen Sie in einem Satz. Am Ende des Blatts kommen Sie zu diesem Fall zurück.")));
+        wahl(box, "e5.ecke", { frage: D.e5.ecken.frage, optionen: D.e5.ecken.optionen, sicherheit: true, platz: "Ich gehe in Ecke …, weil …",
+          danach: function () { return kasten("raum", null, p("Gehen Sie in Ihre Ecke. Je Ecke sagen zwei Personen, warum sie dort stehen. Noch nicht bewerten.")); } });
+      } },
+    { id: "a4", nr: "4", kurz: "Echt oder Schein?", phase: "Erarbeitung", name: "Beteiligung oder Schein?", form: "allein, dann zu zweit", min: 10, frei: "ansage", gleich: "Sie legen sechs Kita-Momente auf drei Stufen der Beteiligung.", prinzip: "Verdecken – erst legen, dann der Vorschlag", raum: "Kernsatz: Mitreden ist nicht Mitbestimmen",
+      fertig: function () { return legenFertig("e5.stufen"); },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Drei Stufen", liste(["<b>Nicht-Beteiligung:</b> Kinder werden gefragt, ohne dass ihre Antwort etwas ändern kann – oder sie schmücken Entscheidungen anderer.", "<b>Vorstufen:</b> Kinder werden informiert oder dürfen ihre Meinung sagen. Wer entscheidet, bleibt bei den Erwachsenen.", "<b>Beteiligung:</b> Kinder entscheiden mit oder allein – in einem Rahmen, den sie kennen."]), p("Vereinfacht nach Roger Hart (1992) und Richard Schröder (1995)", "quelle")));
+        box.appendChild(kasten("auftrag", null, p("Tippen Sie eine Karte an und dann die Stufe, auf die sie gehört. Wenn alle Karten liegen, vergleichen Sie mit dem Vorschlag.")));
+        legen(box, "e5.stufen", D.e5.stufenKarten, D.e5.stufen, { danach: function () {
+          return [kasten("sicherung", "Mitreden ist nicht Mitbestimmen", p("Vor jeder Beteiligung steht die Frage: Was ist wirklich offen? Die Kita-Verfassung beantwortet sie mit drei Fragen: <b>Was entscheiden die Kinder allein? Wobei entscheiden sie mit? Was entscheiden die Erwachsenen – und informieren die Kinder?</b>")),
+            kasten("raum", null, p("Zu zweit: Auf welcher Stufe stand die Abstimmung über die Matschhose?"))];
+        } });
+      } },
+    { id: "a5", nr: "5", kurz: "Drei Verfahren", phase: "Erarbeitung", name: "Drei feste Verfahren", form: "Gruppenpuzzle zu dritt", min: 20, frei: "ansage", gleich: "Kinderkonferenz, Beschwerdeweg, Kita-Verfassung – jede Person übernimmt zuerst eine Karte.", prinzip: "Verdecken · Rückmelden – je Verfahren am Fall geprüft", raum: "Stammgruppe: jede Karte in höchstens 90 Sekunden erklären",
+      fertig: function () { return kartenFest("e5.verf", D.e5.verfahren) >= 3; },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Ihre Stammgruppe teilt die drei Karten auf. Lesen Sie Ihre Karte, beantworten Sie die Prüffrage zum Fall Matschhose und schreiben Sie einen Merksatz mit höchstens 20 Wörtern. Erklären Sie Ihre Karte dann der Stammgruppe – in höchstens 90 Sekunden. Danach legen sich alle auch bei den anderen Karten fest."), p("<b>Fertig sind Sie mit allen drei Karten.</b>")));
+        kartenRunde(box, "e5.verf", D.e5.verfahren, { titel: "Drei Verfahren", feld: ["Ihr Merksatz (höchstens 20 Wörter):", "Vor der Abstimmung …"] });
+      } },
+    { id: "a6", nr: "6", kurz: "Fall neu lösen", phase: "Sichern und üben", name: "Den Fall neu lösen", form: "in der Stammgruppe", min: 10, frei: "antwort", nach: "a5", fehlt: "Der Fall öffnet sich, wenn Sie bei allen drei Verfahren festgelegt sind (Auftrag 5).", prinzip: "keines der sechs – die Seite bringt die Kriterien nach dem Text", raum: "Zwei Antworten an das Kind vorlesen",
+      fertig: function () { return mehrfeldFertig("e5.fall"); },
+      seite: function (box) {
+        box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachter Fall"), p(esc(D.e5.fall), "falltext__text")));
+        box.appendChild(kasten("auftrag", null, p("Lösen Sie den Fall in der Stammgruppe neu – mit allem, was Sie aus den drei Karten wissen.")));
+        mehrfeld(box, "e5.fall", [["vorher", "Was hätte vor der Abstimmung geklärt werden müssen?", "Vorher hätte die Fachkraft sagen müssen, …"], ["kind", "Was sagt die Fachkraft jetzt zu dem Kind? Zwei Sätze, wörtlich:", "»…«", 3], ["team", "Was legt das Team dauerhaft fest?", "In unserer Kita-Verfassung steht: …"]],
+          { kriterien: [["Grundlegend", "Das Kind wird ernst genommen – die Abstimmung wird nicht kleingeredet."], ["Sicher", "Die Fachkraft übernimmt Verantwortung für den Fehler und nennt den Grund: Gesundheit."], ["Souverän", "Sie bietet eine echte Wahl im Rahmen an, und das Team hält in der Kita-Verfassung fest, was bei Regen gilt."]],
+            danach: function () { return kasten("sicherung", "Ein Beispiel – eines von vielen", p("»Ihr habt recht, ihr habt abgestimmt – das war mein Fehler. Ich hätte euch vorher sagen müssen, dass das bei Regen nicht geht. Lasst uns jetzt abstimmen, was wir draußen machen.«"), p("Aus dem Erwartungshorizont zu DS 4", "quelle")); } });
+      } },
+    { id: "a7", nr: "7", kurz: "Ihr Format", phase: "Übertragen und Ausblick", name: "Ihr Beteiligungsformat", form: "allein oder zu zweit · freiwillig mit Praxisbezug", min: 12, frei: "antwort", nach: "a6", schreib: true, fehlt: "Ihr Format öffnet sich, wenn der Fall neu gelöst ist (Auftrag 6).", prinzip: "Ihr Bild auf einen Blick – Ampel mit Wort", raum: "Zwei Formate kurz vorstellen",
+      fertig: function () { return ["situation", "offen", "wie"].every(function (k) { return woerter(txt("e5.format." + k)) >= 3; }) && ampelFertig("e5.ampel", D.e5.ampel.length); },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Wählen Sie eine Situation aus Ihrer Praxisstelle oder eine ausgedachte, in der Kinder bisher nicht mitentscheiden. Entwerfen Sie ein Beteiligungsformat und prüfen Sie es mit der Ampel.")));
+        [["situation", "Die Situation", "Beim Frühstück … / Im Garten …"], ["offen", "Was ist wirklich offen – und was steht fest? Warum?", "Offen ist … Fest steht …, weil …"], ["wie", "Wie entscheiden die Kinder? (Kinderkonferenz, Muggelsteine, Zeigen …)", "Die Kinder …"], ["leise", "Wie kommen die Leisen und die Jüngsten zu Wort – auch ohne Worte?", "Wer nicht spricht, kann …"], ["rueck", "Wie erfahren die Kinder, was aus ihrer Entscheidung wurde?", "Am nächsten Tag …"]].forEach(function (f) {
+          box.appendChild(feld("e5.format." + f[0], { label: f[1], platz: f[2], rows: 2, bei: function () { frisch(); } }));
+        });
+        box.appendChild(h("h2", { class: "abschnitt", text: "Die Demokratie-Ampel" }));
+        ampel(box, "e5.ampel", D.e5.ampel);
+        box.appendChild(p("Ihre Notizen bleiben auf diesem Gerät. Schreiben Sie keine Namen auf.", "meta"));
+      } },
+    { id: "a8", nr: "8", kurz: "Rückblick", phase: "Übertragen und Ausblick", name: "Rückblick und Lernspur", form: "allein, dann Ecken im Raum", min: 6, frei: "antwort", nach: "a7", fehlt: "Der Rückblick öffnet sich, wenn Ihr Format fertig ist (Auftrag 7).", prinzip: "Verdecken – Rückkehr zur ersten Festlegung", raum: "Noch einmal in die Ecken; Stimmkarte zählen",
+      fertig: function () { return !!(S.w["e5.ecke2"] && S.w["e5.ecke2"].fest) && woerter(txt("e5.spur")) >= 8; },
+      seite: rueckblickE5 },
+    aufZf("e5", "a8", function (box) {
+      zfDaten(box, { kopf: "Etappe 5 · Kinder beteiligen – aber wie?", frage: "Welche festen Verfahren sichern die Rechte der Kinder – und was gilt, wenn die Mehrheit jemanden überstimmt?",
+        kern: "Feste Verfahren machen Kinder unabhängig von der Tagesform einzelner Erwachsener. Vor jeder Abstimmung steht die Frage, worüber Kinder entscheiden dürfen: allein, mit oder nur informiert. Die Mehrheit entscheidet – aber nicht über alles.",
+        begriffe: [
+          ["Beteiligung zum Schein", "Kinder werden gefragt, aber ihre Antwort kann nichts ändern."],
+          ["Kita-Verfassung", "Das Team legt schriftlich fest, was Kinder allein, mit oder informiert entscheiden – und überprüft es regelmäßig."],
+          ["Kinderkonferenz", "Festes Treffen, in dem Kinder Themen einbringen, beraten und entscheiden – mit Redestein, Handzeichen oder Muggelsteinen."],
+          ["Beschwerdeverfahren", "Fester Weg für Beschwerden, auch ohne Worte. Entscheidend ist die Rückmeldung. Pflicht nach § 45 Abs. 2 Satz 2 Nr. 4 SGB VIII."],
+          ["Minderheitenschutz", "Rechte, die keine Mehrheit wegstimmen kann. Im Grundgesetz: Art. 79 Abs. 3."],
+          ["Ambiguitätstoleranz", "Widersprüche und Uneindeutiges aushalten, statt nach einfachen Antworten zu greifen."]],
+        tabelle: { kopf: ["Stufe", "Woran man sie erkennt", "Beispiel"], zeilen: [
+          ["Nicht-Beteiligung", "Die Antwort der Kinder ändert nichts.", "»Wollt ihr rausgehen?« – und alle gehen raus."],
+          ["Vorstufen", "Kinder werden informiert oder gehört; entschieden wird ohne sie.", "Wünsche für Spielgeräte – ohne Rückmeldung."],
+          ["Beteiligung", "Kinder entscheiden mit oder allein, in einem Rahmen, den sie kennen.", "Die Kinderkonferenz räumt den Bauraum um."]] },
+        werk: ["Denkwerkzeug: Vor jeder Abstimmung", ["Ist die Frage wirklich offen?", "Kennen die Kinder den Rahmen – was steht fest und warum?", "Wie erfahren die Kinder, was aus ihrer Entscheidung wurde?"]],
+        mein: [["Meine Sätze an das Kind (Fall Matschhose)", "e5.fall.kind", "noch offen – Auftrag 6"],
+          ["Mein Beteiligungsformat", function () { var s = txt("e5.format.situation"), a = ampelWort("e5.ampel", D.e5.ampel.length); return h("div", {}, mein(s, "noch offen – Auftrag 7"), a ? p("Meine Ampel: " + a, "meta") : null); }],
+          ["Mein Satz für die Lernspur", "e5.spur", "noch offen – Auftrag 8"]],
+        aufgabe: "Erläutern Sie am Fall Matschhose den Unterschied zwischen echter Beteiligung und Beteiligung zum Schein. Beziehen Sie die drei Fragen der Kita-Verfassung und § 45 SGB VIII ein." });
+    }),
+    aufExtra("e5", "Ein Beschwerdeweg in Ihrer Praxisstelle", {
+      auftrag: "Freiwillig – nur wenn Sie möchten. Sehen Sie sich in Ihrer Praxisstelle um oder fragen Sie nach: Wie können sich Kinder dort beschweren – auch ohne Worte? Notieren Sie, was Sie finden, ohne Namen und ohne Fotos von Kindern.",
+      felder: [["fund", "Was ich gefunden habe – oder dass ich nichts gefunden habe", "Es gibt … / Ich habe nichts gefunden."], ["schritte", "Welche der vier Schritte – wahrnehmen, nachfragen, Lösung suchen, zurückmelden – finden Sie dort? Fundstelle: Auftrag 5, Karte B.", "Wahrnehmen: … Zurückmelden: …"], ["urteil", "Ein Satz zu Ihrem Urteil: Erreicht dieser Weg auch die Jüngsten?", "Ich denke, …, weil …"]] })
+  ]
+});
+
+/* ===== Arbeitsblatt Etappe 6 · Demokratie im Alltag (Doppelstunde, Fassung 5.0) =====
+   Tiefgang aus dem Impulsvortrag, Kapitel 11 (informelle Demokratiebildung: Mahlzeiten, Pflege, Schlafen, Morgenkreis)
+   und 12 (Fassade und Willkür). Die Zahlen aus der BilDe-Studie stehen nicht auf dem Blatt, solange sie nicht
+   am Original geprüft sind. Produkt: ein Beteiligungscheck mit Ampel und eine Veränderung. */
+
+D.e6 = {
+  these: "Demokratie in der Kita – das ist vor allem die Kinderkonferenz.",
+  abruf: [
+    ["Welche drei Fragen beantwortet eine Kita-Verfassung?", "Was entscheiden die Kinder allein? Wobei entscheiden sie mit? Was entscheiden die Erwachsenen – und informieren die Kinder?"],
+    ["Was ist Beteiligung zum Schein?", "Kinder werden gefragt, aber ihre Antwort kann nichts ändern."],
+    ["Was ist bei einem Beschwerdeweg entscheidend?", "Die Rückmeldung: Jede Beschwerde bekommt eine Antwort – auch eine Beschwerde ohne Worte."]
+  ],
+  orte: [
+    { id: "m", titel: "Mahlzeiten", unter: "der wichtigste Übungsort",
+      text: ["Mahlzeiten sind der wichtigste Übungsort für Demokratie – oder für ihr Gegenteil. Jeden Tag stellt sich dieselbe Frage: Wer entscheidet, was und wie viel auf den Teller kommt, wann man anfängt und ob man probieren muss?", "Am Tisch zeigt sich, ob Kinder erleben: Meine Stimme zählt."],
+      quelle: "Nach dem Impulsvortrag, Kapitel 11",
+      frage: "Die Teller werden gefüllt, bevor die Kinder am Tisch sitzen. Was lernen die Kinder dabei?",
+      optionen: [
+        ["Was auf meinen Teller kommt, entscheiden andere.", "zentral", "Jeden Tag und ohne ein Wort: Über das Essen des Kindes wird entschieden, ohne es zu fragen. Das ist Macht im Kleinen."],
+        ["Dass es gerecht zugeht: Alle bekommen gleich viel.", "begruendbar", "Gleich viel ist nicht automatisch gerecht, wenn Hunger und Geschmack verschieden sind – das berührt den Prüfstein Förderung."],
+        ["Nichts – es geht ja nur ums Essen.", "kaum", "Gerade weil es jeden Tag passiert, prägt es. Kleine Routinen lehren mehr als jedes Gespräch über Demokratie."]],
+      merke: "Am Tisch lernen Kinder jeden Tag, ob ihre Stimme zählt." },
+    { id: "w", titel: "Wickeln und Pflege", unter: "»Wer wickelt mich?«",
+      text: ["In einer Krippe, die partizipativ arbeitet, dürfen die Kinder entscheiden, wer sie wickelt. Das klingt klein. Für ein zweijähriges Kind ist es eine grundlegende Erfahrung: Ich bestimme über meinen Körper mit.", "Das gilt auch beim Anziehen, Naseputzen und Eincremen: erst ankündigen, dann fragen, dann handeln."],
+      quelle: "Beispiel nach dem Impulsvortrag, Kapitel 11",
+      frage: "Warum ist die Wahl, wer wickelt, mehr als eine Kleinigkeit?",
+      optionen: [
+        ["Das Kind bestimmt über seinen eigenen Körper mit.", "zentral", "Über den eigenen Körper mitzubestimmen, ist eine Grunderfahrung – und ein Stück Schutz: Kinder lernen, dass ihr Nein zählt."],
+        ["Es spart dem Team Zeit.", "kaum", "Darum geht es nicht – oft kostet es sogar etwas Zeit. Es geht um das Kind."],
+        ["Es macht den Eltern weniger Sorgen.", "kaum", "Eltern einzubeziehen ist gut. Der Grund liegt aber beim Kind und seinem Körper."]],
+      merke: "Pflege ist Beziehung: ankündigen, fragen, das Nein hören." },
+    { id: "s", titel: "Schlafen und Eingewöhnung", unter: "»Will ich heute schlafen?«",
+      text: ["Muss ein Kind, das nicht müde ist, trotzdem liegen – oder gibt es einen Ruheraum mit leisen Alternativen?", "Auch bei der Eingewöhnung kann das Kind mitbestimmen. Bei der partizipatorischen Eingewöhnung gibt nicht das Modell das Tempo vor, sondern das Kind: Sie ist abgeschlossen, wenn das Kind zeigt, dass sie abgeschlossen ist."],
+      quelle: "Nach dem Impulsvortrag, Kapitel 11 · partizipatorische Eingewöhnung nach Alemzadeh (2023), im Vortrag zitiert – am Original noch zu prüfen",
+      frage: "Ein Kind ist mittags nicht müde. Was ist die demokratische Lösung?",
+      optionen: [
+        ["Es ruht sich aus, darf aber leise spielen oder in einen Ruheraum gehen.", "zentral", "Ruhe für alle – aber nicht für jedes Kind auf dieselbe Weise. Das Kind entscheidet mit, wie es sich ausruht."],
+        ["Es muss liegen bleiben, denn Regeln gelten für alle gleich.", "kaum", "Gleiche Regeln sind nicht automatisch gerecht. Ein Kind liegen zu lassen, das nicht müde ist, überhört sein Bedürfnis."],
+        ["Das entscheiden allein die Eltern.", "begruendbar", "Absprachen mit den Eltern gehören dazu. Das Kind selbst gehört trotzdem gefragt."]],
+      merke: "Ruhe ja – aber das Kind entscheidet mit, wie." },
+    { id: "k", titel: "Morgenkreis", unter: "mitmachen, nicht mitmüssen",
+      text: ["Ein Kind will im Morgenkreis nicht mitsingen. Darf es gehen – oder muss es still dabeisitzen?", "Der Morgenkreis ist auch ein Ort für Abstimmungen, die Kinder sehen und spüren können: Wer das eine Buch hören will, setzt sich auf einen Stuhl; wer das andere will, bleibt stehen. Für Krippenkinder ist das greifbarer als jeder Stimmzettel."],
+      quelle: "Beispiele nach dem Impulsvortrag, Kapitel 11",
+      frage: "Das Kind will nicht mitsingen. Was tun Sie?",
+      optionen: [
+        ["Es darf in der Nähe etwas anderes tun – sein Nein ist eine Botschaft.", "zentral", "Das Kind erlebt: Mein Nein wird gehört. Und es bleibt trotzdem Teil der Gruppe."],
+        ["Es muss still dabeisitzen.", "kaum", "Dabeisitzen ohne Wahl ist kein Mitmachen. Das Kind lernt: Mein Nein zählt hier nicht."],
+        ["Die Gruppe stimmt ab, ob es gehen darf.", "kaum", "Über das Nein eines einzelnen Kindes stimmt keine Mehrheit ab. Das wäre gerade kein Minderheitenschutz (Etappe 5)."]],
+      merke: "Mitmachen heißt nicht mitmüssen. Abstimmen geht auch mit dem Körper." }
+  ],
+  arten: [["fassade", "Fassade", "rot"], ["willkuer", "Willkür", "gelb"], ["gelebt", "Gelebte Demokratie", "gruen"]],
+  momente: [
+    { id: "c1", text: "Ein Kita-Rat tagt einmal im Monat. Beim Mittagessen wird weiter aufgefüllt, ohne zu fragen.", zu: "fassade", warum: "Das Gremium gibt es, im Alltag entscheiden aber weiter die Erwachsenen." },
+    { id: "c2", text: "Eine Fachkraft fragt die Kinder bei allem. Am Nachbartisch gilt: »Iss auf.« Vereinbart ist nichts.", zu: "willkuer", warum: "Ob Kinder mitbestimmen, hängt davon ab, an welchem Tisch sie sitzen." },
+    { id: "c3", text: "In der Kita-Verfassung steht: »Die Kinder entscheiden, was und wie viel auf ihren Teller kommt.« Am Tisch fragen alle Fachkräfte jeden Tag nach.", zu: "gelebt", warum: "Vereinbarung und Alltag passen zusammen." },
+    { id: "c4", text: "Der Beschwerdebriefkasten hängt so hoch, dass kein Kind ihn erreicht.", zu: "fassade", warum: "Das Verfahren steht auf dem Papier, für die Kinder ist es nicht erreichbar." },
+    { id: "c5", text: "Heute dürfen die Kinder selbst entscheiden, ob sie schlafen – morgen nicht, je nach Dienstplan.", zu: "willkuer", warum: "Ohne feste Absprache entscheidet die Tagesform der Erwachsenen." },
+    { id: "c6", text: "Die Kinder haben die Stopp-Regel selbst beschlossen. Alle Fachkräfte achten im Alltag darauf.", zu: "gelebt", warum: "Eine feste Regel mit Wirkung im Alltag: Sie gehört jedem Kind, ohne dass jedes Mal neu entschieden werden muss." }
+  ],
+  check: ["Wird das Kind gefragt, bevor entschieden wird?", "Kann seine Antwort etwas verändern?", "Gilt das bei allen Fachkräften und an jedem Tag?", "Kann das Kind auch ohne Worte zeigen, was es will?", "Erfährt das Kind, warum etwas feststeht?"]
+};
+
+blatt({
+  id: "e6", etappe: 6, art: "doppelstunde", dauer: 90, titel: "Demokratie im Alltag",
+  frage: "Was erleben Kinder in den vielen Stunden zwischen den Gremien?",
+  karte: "Sieben Aufträge · 90 Minuten · am Ende steht Ihr Beteiligungscheck für eine Alltagssituation.",
+  darum: "Ein Kita-Rat tagt vielleicht einmal im Monat. Gegessen, gewickelt und geschlafen wird jeden Tag. Heute untersuchen Sie die Situationen, in denen Kinder am häufigsten erleben, ob ihre Stimme zählt – und Sie prüfen, wo einer Einrichtung eher die Verfahren fehlen und wo eher die Haltung. Am Ende steht Ihr Beteiligungscheck für eine dieser Situationen.",
+  ziele: ["an Alltagssituationen erklären, was informelle Demokratiebildung ist,", "Fassade und Willkür unterscheiden und erklären, warum es Verfahren und Haltung braucht,", "eine Alltagssituation mit einem Beteiligungscheck prüfen."],
+  hinweis: "Auftrag 6 und das Extra fragen nach Ihrer Praxisstelle. Das ist freiwillig – Sie können auch an eine ausgedachte Kita denken. Bewertet wird nur Ihr eigenes Handeln. Schreiben Sie keine Namen auf.",
+  spur: "e6.spur", spurAnfang: "Demokratie im Alltag heißt für mich: …", spurFrage: "Was heißt Demokratie im Alltag der Kita? Ein Satz genügt.",
+  kann: ["Ich kann an Alltagssituationen erklären, was informelle Demokratiebildung ist.", "Ich kann Fassade und Willkür unterscheiden.", "Ich kann eine Alltagssituation mit einem Beteiligungscheck prüfen."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken: die Festlegung je Alltagsort mit Rückmeldung, das Legen mit Vorschlag und die Ampel mit Wort. Die Veränderung gibt es als Schreibblatt für den Stift; die vier Orte können auch als Stationen im Raum liegen.",
+  lk: [
+    ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen.", "Stammgruppen zu viert bilden. In Auftrag 4 übernimmt jede Person zuerst einen Ort."]],
+    ["Plenumsstellen", ["Nach Auftrag 2: Bei welcher Antwort lernt Anna, dass ihre Stimme zählt? Zwei oder drei Begründungen.", "Nach Auftrag 3: Positionslinie 0–10.", "Auftrag 4: Jede Person erklärt ihrer Stammgruppe ihren Ort in höchstens 90 Sekunden.", "Nach Auftrag 5: Stille Reflexion aus dem Vortrag – wo fehlt eher die Struktur, wo eher die Haltung? Freiwillig teilen.", "Nach Auftrag 6: Zwei Veränderungen vorlesen; die Klasse prüft: Fassade, Willkür – oder trägt es?", "Auftrag 7: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
+    ["Wenn die Zeit knapp wird", ["K1 · Im Puzzle legt sich jede Person nur bei ihrem eigenen Ort fest; die anderen hört sie in der Stammgruppe (– 6 Min.).", "K2 · Auftrag 1 mündlich im Plenum (– 2 Min.).", "K3 · Auftrag 5 gemeinsam am Gerät vorne legen (– 5 Min.)."]],
+    ["Status der Inhalte", ["Szene »Erbsen esse ich nicht!«: nach Doll, Herrmann u. a. (2020, S. 25 f.), im Impulsvortrag erzählt – Fundstelle noch zu prüfen; die drei Reaktionen sind zugespitzt.", "Beispiele zu Wickeln, Schlafen und Morgenkreis: nach dem Impulsvortrag, Kapitel 11. Alemzadeh (2023): im Vortrag zitiert, am Original noch zu prüfen.", "Fassade und Willkür: nach Hansen, Knauer und Sturzenhecker, im Impulsvortrag, Kapitel 12. Zitat Bartosch u. a. (2014, S. 14): im Vortrag zitiert, am Original noch zu prüfen. Die Momente in Auftrag 5: ausgedacht.", "Die Zahlen der BilDe-Studie zu Mahlzeiten aus dem Vortrag stehen bewusst nicht auf dem Blatt, solange sie nicht am Original geprüft sind.", "Welche Antwort »zentral« ist und wohin eine Karte gehört, ist ein Vorschlag."]]
+  ],
+  auftraege: [
+    aufAbruf("e6", D.e6.abruf, "Heute geht es um die Stunden <b>zwischen</b> den festen Verfahren."),
+    aufSzene("e6", 2, { min: 6, danach: function () { return [kasten("sicherung", null, p("Drei Fachkräfte, derselbe Tisch, dasselbe Kind – drei ganz verschiedene Lernerfahrungen. Das ist keine Frage der Methode, sondern der Haltung. Die Verantwortung für das Essen bleibt trotzdem bei der Fachkraft.")), kasten("raum", null, p("Zu zweit: Welche der drei Antworten haben Sie selbst als Kind gehört?"))]; } }),
+    aufPosition("e6", 3, D.e6.these),
+    { id: "a4", nr: "4", kurz: "Vier Orte", phase: "Erarbeitung", name: "Vier Orte im Alltag", form: "Gruppenpuzzle zu viert", min: 22, frei: "ansage", gleich: "Mahlzeiten, Wickeln, Schlafen, Morgenkreis – jede Person übernimmt zuerst einen Ort.", prinzip: "Verdecken · Rückmelden – je Ort eine Festlegung", raum: "Stammgruppe: jeden Ort in höchstens 90 Sekunden erklären",
+      fertig: function () { return kartenFest("e6.ort", D.e6.orte) >= 4; },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Ihre Stammgruppe teilt die vier Orte auf. Lesen Sie Ihre Karte, legen Sie sich fest und begründen Sie in einem Satz. Erklären Sie Ihren Ort dann der Stammgruppe – in höchstens 90 Sekunden. Danach legen sich alle auch bei den anderen drei Orten fest."), p("<b>Fertig sind Sie mit allen vier Orten.</b>")));
+        kartenRunde(box, "e6.ort", D.e6.orte, { titel: "Vier Orte", feld: ["Ihr Satz für die Stammgruppe (freiwillig):", "An diesem Ort lernen Kinder …"] });
+      } },
+    { id: "a5", nr: "5", kurz: "Fassade oder Willkür", phase: "Sichern und üben", name: "Fassade oder Willkür?", form: "allein, dann zu zweit", min: 14, frei: "antwort", nach: "a4", fehlt: "Dieser Auftrag öffnet sich, wenn Sie bei allen vier Orten festgelegt sind (Auftrag 4).", prinzip: "Verdecken – erst legen, dann der Vorschlag", raum: "Stille Reflexion: Wo fehlt eher die Struktur, wo eher die Haltung?",
+      fertig: function () { return legenFertig("e6.art"); },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Verfahren und Haltung brauchen einander",
+          p("Feste Verfahren ohne gelebten Alltag sind <b>Fassade</b>: Ein Kinderrat tagt einmal im Monat, während im Alltag weiter nur die Erwachsenen entscheiden."),
+          p("Ein freundlicher Alltag ohne feste Verfahren wird zu <b>Willkür</b>: Heute darf ich, morgen nicht – je nach Fachkraft."),
+          p("Erst beides zusammen ist <b>gelebte Demokratie</b>: eine Kita-Verfassung und die tägliche Aushandlung am Tisch."),
+          p("Nach Hansen, Knauer und Sturzenhecker, im Impulsvortrag, Kapitel 12", "quelle")));
+        box.appendChild(kasten("auftrag", null, p("Sechs Momente aus Kitas. Tippen Sie eine Karte an und dann die Spalte. Wenn alle liegen, vergleichen Sie mit dem Vorschlag.")));
+        legen(box, "e6.art", D.e6.momente, D.e6.arten, { danach: function () {
+          return [kasten("sicherung", null, p("»Demokratiebildung ist aktive Herstellung von Chancen zur Partizipation.«"), p("Bartosch u. a. (2014, S. 14), im Impulsvortrag zitiert – am Original noch zu prüfen", "quelle")),
+            kasten("raum", "Stille Reflexion", p("Wo fehlt in Ihrer Praxisstelle eher das Verfahren – und wo eher die Haltung? Denken Sie still nach. Teilen ist freiwillig."))];
+        } });
+      } },
+    { id: "a6", nr: "6", kurz: "Ihr Check", phase: "Übertragen und Ausblick", name: "Ihr Beteiligungscheck", form: "allein · freiwillig mit Praxisbezug", min: 18, frei: "antwort", nach: "a5", schreib: true, fehlt: "Ihr Check öffnet sich nach Auftrag 5.", prinzip: "Ihr Bild auf einen Blick – Ampel mit Wort", raum: "Zwei Veränderungen vorlesen: Fassade, Willkür – oder trägt es?",
+      fertig: function () { return ampelFertig("e6.check", D.e6.check.length) && !!(S.w["e6.veraend"] && S.w["e6.veraend"].zu); },
+      seite: function (box) {
+        var w = W("e6.sit");
+        box.appendChild(kasten("auftrag", null, p("Wählen Sie eine Alltagssituation aus Ihrer Praxisstelle – oder aus einer ausgedachten Kita. Prüfen Sie sie mit den fünf Fragen. Schreiben Sie danach eine Veränderung in zwei oder drei Sätzen.")));
+        var chips = h("div", { class: "chips", role: "group", "aria-label": "Situation wählen" });
+        ["Mittagessen", "Wickeln und Pflege", "Schlafen und Ruhe", "Morgenkreis", "Anziehen"].forEach(function (s) {
+          chips.appendChild(knopf(s, { art: "chip", gedrueckt: String(w.sit === s), klick: function () { w.sit = s; speichere(); $$("button", chips).forEach(function (b) { b.setAttribute("aria-pressed", String(b.textContent === s)); }); } }));
+        });
+        box.appendChild(h("fieldset", { class: "gruppe" }, h("legend", { text: "Meine Situation:" }), chips));
+        box.appendChild(h("h2", { class: "abschnitt", text: "Fünf Fragen" }));
+        ampel(box, "e6.check", D.e6.check, { rot: "In dieser Situation entscheiden noch die Erwachsenen allein. Ihr nächster Schritt liegt bei der ersten Frage.", gelb: "Ein guter Anfang. Bei den Fragen mit »teils« oder »nein« liegt Ihre Veränderung.", gruen: "Die Kinder entscheiden hier wirklich mit. Prüfen Sie, ob das auch an anderen Tagen und bei anderen Fachkräften gilt." });
+        box.appendChild(h("h2", { class: "abschnitt", text: "Ihre Veränderung" }));
+        produkt(box, "e6.veraend", { label: "Was ändern Sie – und was sagen Sie den Kindern?", platz: "Ab morgen … Ich sage den Kindern: »…«", rows: 4, min: 20,
+          kriterien: [["Grundlegend", "Die Veränderung ist konkret und passt zur gewählten Situation."], ["Sicher", "Sie sagt, was die Kinder dann entscheiden – und was die Erwachsenen weiter entscheiden."], ["Souverän", "Sie wird abgesichert, damit sie weder Fassade noch Willkür wird: im Team abgesprochen oder in der Kita-Verfassung festgehalten."]] });
+        box.appendChild(p("Eine Einschätzung aus Ihrer Sicht – keine Bewertung Ihrer Praxisstelle. Keine Namen.", "meta"));
+      } },
+    aufRueckblick("e6", 7, D.e6.these, "a6", { fehlt: "Der Rückblick öffnet sich, wenn Ihr Check fertig ist (Auftrag 6)." }),
+    aufZf("e6", "a7", function (box) {
+      zfDaten(box, { kopf: "Etappe 6 · Demokratie im Alltag", frage: "Was erleben Kinder in den vielen Stunden zwischen den Gremien?",
+        kern: "Informelle Demokratiebildung ist die Dauerleistung: Mahlzeiten, Pflege, Schlafen, Spiel, Konflikte, Morgenkreis. Feste Verfahren ohne gelebten Alltag sind Fassade. Ein freundlicher Alltag ohne feste Verfahren ist Willkür. Erst beides zusammen ist gelebte Demokratie.",
+        begriffe: [
+          ["Informelle Demokratiebildung", "Gelebte Demokratie im Alltag – die vielen kleinen Aushandlungen am Tisch, im Flur, im Sandkasten, beim Wickeln."],
+          ["Alltagspartizipation", "Beteiligung in den kleinen Situationen des Tages."],
+          ["Fassade", "Es gibt ein Gremium, im Alltag entscheiden aber weiter nur die Erwachsenen."],
+          ["Willkür", "Ob Kinder mitbestimmen, hängt von der Fachkraft oder vom Tag ab."],
+          ["Stopp-Regel", "Eine feste Regel, die jedem Kind gehört – mit Wirkung im ganzen Alltag."],
+          ["Partizipatorische Eingewöhnung", "Das Kind bestimmt das Tempo mit; sie endet, wenn das Kind zeigt, dass sie abgeschlossen ist."]],
+        tabelle: { kopf: ["Ort", "Die Frage an den Alltag"], zeilen: [
+          ["Mahlzeiten", "Wer entscheidet, was und wie viel auf den Teller kommt?"], ["Wickeln und Pflege", "Wer wickelt mich – und wird mein Nein gehört?"],
+          ["Schlafen", "Muss ich liegen, wenn ich nicht müde bin?"], ["Morgenkreis", "Darf ich Nein sagen und trotzdem dazugehören?"]] },
+        werk: ["Denkwerkzeug: Fassade oder Willkür?", ["Gibt es eine feste Vereinbarung?", "Lebt sie im Alltag – bei allen Fachkräften, an jedem Tag?", "Wissen die Kinder davon und können sie sie nutzen?"]],
+        mein: [["Mein Beteiligungscheck", function () { var s = S.w["e6.sit"] && S.w["e6.sit"].sit, a = ampelWort("e6.check", D.e6.check.length); return h("div", {}, mein(s ? "Situation: " + s : "", "noch offen – Auftrag 6"), a ? p("Meine Ampel: " + a, "meta") : null); }],
+          ["Meine Veränderung", "e6.veraend", "noch offen – Auftrag 6"], ["Mein Satz für die Lernspur", "e6.spur", "noch offen – Auftrag 7"]],
+        aufgabe: "Erläutern Sie an einer Mahlzeit, was informelle Demokratiebildung ist. Zeigen Sie, warum eine Kita dafür Verfahren und Haltung braucht." });
+    }),
+    aufExtra("e6", "Eine Mahlzeit beobachten", {
+      auftrag: "Freiwillig – nur wenn Sie möchten. Beobachten Sie in Ihrer Praxisstelle eine Mahlzeit: Wer entscheidet, was und wie viel auf den Teller kommt? Notieren Sie in Stichworten, ohne Namen von Kindern, Eltern oder Kolleginnen und Kollegen.",
+      felder: [["beob", "Was ich beobachtet habe", "Die Teller … Die Kinder …"], ["art", "Fassade, Willkür oder gelebte Demokratie? Nennen Sie die Fundstelle (Auftrag 5).", "Eher …, weil …"], ["urteil", "Ein Satz zu Ihrem Urteil: Was müsste sich ändern, damit die Kinder mitentscheiden?", "Ich denke, …"]] })
+  ]
+});
+
+/* ===== Arbeitsblatt Etappe 7 · Haltung zeigen (Doppelstunde, Fassung 5.0) =====
+   Erste Stunde der Etappe (Curriculum, Einheiten 21 bis 24): Grenze der Kontroversität, Fakten statt Pauschalurteil,
+   Gesprächsmodell in fünf Schritten (benennen – begrenzen – begründen – Brücken bauen – beauftragen) aus dem Curriculum.
+   Aktuelle Zahlen: Stand 18.11.2026, mit Quellen – vor jeder Stunde neu prüfen. Bewertet werden Aussagen, nicht Menschen. */
+
+D.e7 = {
+  these: "Als Fachkraft muss ich politisch neutral sein. Zu solchen Aussagen sage ich lieber nichts.",
+  abruf: [
+    ["Was ist gelebte Demokratie – im Unterschied zu Fassade und Willkür?", "Feste Verfahren und eine Haltung im Alltag, die zusammenpassen."],
+    ["Was bedeutet Minderheitenschutz?", "Es gibt Rechte, die keine Mehrheit wegstimmen kann – im Grundgesetz vor allem die Menschenwürde (Art. 1 und Art. 79 Abs. 3)."],
+    ["Nennen Sie die vier Merkmale demokratischer Haltung.", "Macht offenlegen, Beteiligung ermöglichen, Widerspruch aushalten, Vielfalt als Normalität anerkennen."]
+  ],
+  grenze: [["streit", "Darüber kann man streiten", "tuerkis"], ["grenze", "Das wertet Menschen ab – hier ist die Grenze", "rot"]],
+  aussagen: [
+    { id: "c1", text: "»Die Kita sollte länger geöffnet haben.«", zu: "streit", warum: "Eine Meinung zu einer Sachfrage. Man kann dafür und dagegen sein." },
+    { id: "c2", text: "»Ich wähle eine andere Partei als Sie.«", zu: "streit", warum: "Die Wahl ist frei und geheim. Über Parteien und ihre Programme darf man streiten." },
+    { id: "c3", text: "»Die Ausländer nehmen uns alles weg.«", zu: "grenze", warum: "Eine pauschale Abwertung einer ganzen Gruppe. Sie trifft auch die Kinder, die daneben stehen." },
+    { id: "c4", text: "»Ich halte die neue Essensregel für falsch.«", zu: "streit", warum: "Kritik an einer Regel ist erwünscht – so werden Regeln besser." },
+    { id: "c5", text: "»Kinder aus solchen Familien sollen nicht mit unseren spielen.«", zu: "grenze", warum: "Ausschluss wegen der Herkunft. Das widerspricht Art. 3 GG und Art. 2 der UN-Kinderrechtskonvention." },
+    { id: "c6", text: "»Mir machen die steigenden Preise Angst.«", zu: "streit", warum: "Eine Sorge, über die man sprechen kann. Oft setzt genau hier die Brücke an." }
+  ],
+  lage: [
+    ["Landtagswahl Baden-Württemberg, 8. März 2026", "AfD 18,8 Prozent, drittstärkste Kraft mit 35 Sitzen. Stärkste Kraft: Grüne mit 30,2 Prozent, knapp vor der CDU mit 29,7 Prozent.", "Pressemitteilung des Landes Baden-Württemberg (vorläufiges amtliches Ergebnis); Bundeszentrale für politische Bildung"],
+    ["Landtagswahl Sachsen-Anhalt, 6. September 2026", "AfD 43,8 Prozent, stärkste Kraft mit 39 von 83 Sitzen – keine absolute Mehrheit. CDU 17,2 Prozent.", "Ergebnis der Landeswahlleiterin, nach wahlrecht.de; Legal Tribune Online, 07.09.2026"],
+    ["Einstufung durch den Verfassungsschutz", "Das Bundesamt für Verfassungsschutz hatte die AfD im Mai 2025 als »gesichert rechtsextremistische Bestrebung« eingestuft. Am 26. Februar 2026 hat das Verwaltungsgericht Köln im Eilverfahren entschieden: Bis zum Urteil im Hauptsacheverfahren darf das Bundesamt die Partei nicht so einstufen und nicht so bezeichnen. Die Verhandlung im Hauptsacheverfahren ist für März 2027 angesetzt.", "VG Köln, Beschluss vom 26.02.2026, Az. 13 L 1109/25, nach ZDF und Legal Tribune Online; Termin nach beck-aktuell, 12.11.2026"]
+  ],
+  schritte: [
+    ["Benennen", "»Ich habe gehört, dass Sie gesagt haben: …«"],
+    ["Begrenzen", "»Diese Aussage wertet Menschen wegen ihrer Herkunft ab. Das akzeptieren wir in unserer Einrichtung nicht.«"],
+    ["Begründen", "»Unser Auftrag ist, jedes Kind zu schützen und gleiche Würde und Beteiligung zu sichern.«"],
+    ["Brücken bauen", "»Was genau macht Ihnen Sorgen? Worauf beziehen Sie sich?«"],
+    ["Beauftragen", "»Lassen Sie uns die konkrete Frage mit verlässlichen Informationen klären. Wenn die Abwertung weitergeht, beenden wir das Gespräch und holen Unterstützung dazu.«"]
+  ],
+  karten: [
+    { id: "g1", titel: "Meinungsfreiheit", unter: "beim Elternabend", satz: "»Man darf ja gar nichts mehr sagen.«", anders: "»Sie dürfen Ihre Meinung sagen. Gleichzeitig dürfen Kinder und Erwachsene hier nicht abgewertet werden. Worauf beziehen Sie sich konkret?«" },
+    { id: "g2", titel: "Gehorsam", unter: "ein Großvater beim Sommerfest", satz: "»Kinder müssen wieder lernen, sich unterzuordnen.«", anders: "»Kinder brauchen Orientierung und Grenzen – aber auch Rechte, Gehör und Schutz. Gehorsam allein ist kein demokratisches Bildungsziel.«" },
+    { id: "g3", titel: "Familie und Geschlecht", unter: "eine Mutter beim Abholen", satz: "»Über Geschlecht und Familie soll man mit Kindern nicht sprechen.«", anders: "»Kinder erleben ganz verschiedene Familien. Wir sprechen altersgerecht darüber, damit alle Kinder dazugehören können.«" },
+    { id: "g4", titel: "Nur ein Witz?", unter: "ein Kollege im Team", satz: "»Das war doch nur ein Witz.«", anders: "»Humor kann verletzen. Entscheidend ist nicht nur, wie es gemeint war, sondern auch, wie es wirkt – und ob Menschen abgewertet werden.«" },
+    { id: "g5", titel: "Eine Partei", unter: "ein Vater im Gespräch", satz: "»Die AfD sagt wenigstens, was die Menschen denken.«", anders: "»Parteien darf man kritisieren und vergleichen. Menschenfeindliche oder demokratiefeindliche Aussagen prüfen wir aber an den Grundrechten und an ihren Folgen.«" }
+  ]
+};
+
+blatt({
+  id: "e7", etappe: 7, art: "doppelstunde", dauer: 90, titel: "Haltung zeigen",
+  frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
+  karte: "Acht Aufträge · 90 Minuten · am Ende steht Ihre Antwort in fünf Sätzen.",
+  darum: "Manche Sätze fallen beiläufig – an der Garderobe, beim Elternabend, im Team. Sie werten Menschen ab, und Kinder hören zu. Heute klären Sie, wo die Grenze zwischen Meinung und Abwertung verläuft, bringen überprüfbare Zahlen ins Gespräch und üben eine Antwort in fünf Schritten: benennen, begrenzen, begründen, Brücken bauen, beauftragen.",
+  ziele: ["unterscheiden, worüber man streiten kann und was die Menschenwürde verletzt,", "auf eine abwertende Aussage in fünf Schritten reagieren,", "begründen, warum der Schutz der Kinder vor dem Gespräch kommt."],
+  hinweis: "In dieser Stunde geht es um abwertende Aussagen. Sie müssen nichts aus Ihrem Leben erzählen, und niemand muss eigene Erfahrungen mit Abwertung erklären. Wiederholen Sie verletzende Sätze nicht öfter als nötig. Die Klasse vereinbart ein Stopp-Signal – wenn Ihnen etwas zu nahe geht, nutzen Sie es.",
+  spur: "e7.spur", spurAnfang: "Wenn jemand Menschen abwertet, …", spurFrage: "Was tun Sie, wenn jemand Menschen abwertet? Ein Satz genügt.",
+  kann: ["Ich kann unterscheiden, worüber man streiten kann und was die Menschenwürde verletzt.", "Ich kann auf eine abwertende Aussage in fünf Schritten reagieren.", "Ich kann begründen, warum der Schutz der Kinder vor dem Gespräch kommt."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken: erst legen, dann die Grenze; erst die eigene Antwort, dann der Vorschlag. Das Rollenspiel läuft ohne Gerät. Die fünf Sätze gibt es als Schreibblatt für den Stift.",
+  lk: [
+    ["Vor der Stunde", ["<b>Aktualitätscheck:</b> Zahlen und Einstufung in Auftrag 5 neu prüfen (Stand der Seite: 18.11.2026). Das Ergebnis in Baden-Württemberg ist auf der Seite als vorläufig bezeichnet – am endgültigen Ergebnis abgleichen.", "Gesprächsregeln, Vertraulichkeit und ein Stopp-Signal vereinbaren.", "Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen. Für Auftrag 6 Gruppen zu dritt bilden."]],
+    ["Plenumsstellen", ["Nach Auftrag 2: Was brauchen die beiden Kinder an der Garderobe? Schutz vor Gesprächskomfort.", "Nach Auftrag 3: Positionslinie 0–10.", "Nach Auftrag 4: Wo verläuft die Grenze? Bei welcher Karte war die Klasse uneins?", "Nach Auftrag 5: Woran erkenne ich eine verlässliche Quelle?", "Auftrag 6: Rollenspiel zu dritt – sprechen, antworten, beobachten; zwei Durchgänge mit Rollentausch.", "Nach Auftrag 7: Zwei Antworten vorlesen.", "Auftrag 8: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
+    ["Wenn die Zeit knapp wird", ["K1 · Auftrag 5 im Plenum am Gerät vorne (– 4 Min.).", "K2 · Auftrag 1 mündlich im Plenum (– 2 Min.).", "K3 · Im Rollenspiel nur ein Durchgang (– 7 Min.)."]],
+    ["Status der Inhalte", ["Szene »Beim Abholen«: ausgedacht; die Aussage stammt aus den Gesprächskarten des Curriculums.", "Gesprächsmodell in fünf Schritten und die Gesprächskarten: aus dem Curriculum (09.09.2026), sprachlich leicht angepasst. Die Aussagen in Auftrag 4: ausgedacht.", "Beutelsbacher Konsens: nach der Bundeszentrale für politische Bildung (bpb.de). Art. 1 Abs. 1 und Art. 3 Abs. 3 GG: am Gesetzestext geprüft (18.11.2026). Art. 2 UN-KRK: am Wortlaut abgeglichen (17.11.2026).", "Wahlergebnisse und Einstufung: Stand 18.11.2026, Quellen an jeder Zahl. Die Seite nennt Parteien nur in Fakten mit Quelle; bewertet werden Aussagen, nicht Wählerinnen und Wähler.", "Welche Antwort »zentral« ist und wohin eine Karte gehört, ist ein Vorschlag. Die Grenze bei Menschenwürde und gleichen Rechten ist kein Vorschlag."]]
+  ],
+  auftraege: [
+    aufAbruf("e7", D.e7.abruf, "Heute geht es darum, was Sie tun, wenn Erwachsene genau diese Grundlagen angreifen."),
+    aufSzene("e7", 2, { min: 6, danach: function () { return [kasten("sicherung", "Schutz kommt vor dem Gespräch", p("Sind Kinder betroffen, kommt zuerst der Schutz: die Aussage stoppen, die Kinder nicht zu einer Stellungnahme drängen, ihnen Halt geben. Das Gespräch mit dem Erwachsenen kommt danach – ohne Kinder daneben."), p("Nach dem Curriculum: »Schutz vor Dialogkomfort«", "quelle")), kasten("raum", null, p("Zu zweit: Was brauchen die beiden Kinder an der Garderobe jetzt von Ihnen?"))]; } }),
+    aufPosition("e7", 3, D.e7.these),
+    { id: "a4", nr: "4", kurz: "Die Grenze", phase: "Erarbeitung", name: "Wo die Kontroverse endet", form: "allein, dann zu zweit", min: 14, frei: "ansage", gleich: "Sie klären, worüber man streiten darf – und wo die Menschenwürde die Grenze zieht.", prinzip: "Verdecken – erst legen, dann der Vorschlag", raum: "Bei welcher Karte war die Klasse uneins?",
+      fertig: function () { return legenFertig("e7.grenze"); },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Der Beutelsbacher Konsens",
+          p("Seit 1976 gelten für politische Bildung in Deutschland drei Grundsätze: <b>Niemanden überwältigen</b> – keine erwünschte Meinung aufdrängen. <b>Kontroverses kontrovers darstellen</b> – was in Wissenschaft und Politik umstritten ist, bleibt auch in der Bildung umstritten. <b>Zum eigenen Urteil befähigen.</b>"),
+          p("Ein Gebot, zu allem neutral zu bleiben, ist das nicht. Die Bundeszentrale für politische Bildung betont: Die Kontroversität hat eine Grenze."),
+          p("Nach bpb.de, Themenseite »Beutelsbacher Konsens«", "quelle")));
+        box.appendChild(kasten("wissen", "Die Grenze steht im Grundgesetz",
+          p("»Die Würde des Menschen ist unantastbar.« (Art. 1 Abs. 1 GG)"),
+          p("»Niemand darf wegen seines Geschlechtes, seiner Abstammung, seiner Rasse, seiner Sprache, seiner Heimat und Herkunft, seines Glaubens, seiner religiösen oder politischen Anschauungen benachteiligt oder bevorzugt werden.« (Art. 3 Abs. 3 Satz 1 GG)"),
+          p("Und für jedes Kind: Die Rechte der UN-Kinderrechtskonvention gelten ohne jede Diskriminierung (Art. 2)."),
+          p("GG am Gesetzestext geprüft (18.11.2026) · Art. 2 UN-KRK am Wortlaut abgeglichen (17.11.2026)", "quelle")));
+        box.appendChild(kasten("auftrag", null, p("Sechs Sätze, wie sie in einer Kita fallen könnten. Tippen Sie eine Karte an und dann die Spalte. Wenn alle liegen, vergleichen Sie mit dem Vorschlag.")));
+        legen(box, "e7.grenze", D.e7.aussagen, D.e7.grenze, { kopf: "Der Vorschlag – wo ist die Grenze?", offen: "Über die linke Spalte darf man streiten. Die rechte ist nicht verhandelbar.", danach: function () {
+          return kasten("sicherung", "Die Grenze", p("Kontroverses wird kontrovers besprochen. Menschenwürde und gleiche Rechte stehen nicht zur Abstimmung. Menschenfeindliche Aussagen sind deshalb keine Meinung wie jede andere – sie werden benannt und begrenzt."));
+        } });
+      } },
+    { id: "a5", nr: "5", kurz: "Fakten", phase: "Erarbeitung", name: "Fakten statt Pauschalurteil", form: "zu zweit", min: 10, frei: "ansage", gleich: "Sie prüfen eine Behauptung an Zahlen, die sich nachsehen lassen.", prinzip: "Verdecken · Rückmelden", raum: "Woran erkenne ich eine verlässliche Quelle?",
+      fertig: function () { return !!(S.w["e7.fakt"] && S.w["e7.fakt"].fest); },
+      seite: function (box) {
+        box.appendChild(h("div", { class: "lage" }, h("p", { class: "lage__kopf", text: "Die Lage – Stand 18. November 2026" }),
+          h("dl", {}, D.e7.lage.map(function (l) { return h("div", {}, h("dt", { text: l[0] }), h("dd", {}, p(esc(l[1])), p("Quelle: " + esc(l[2]), "quelle"))); })),
+          p("Zahlen ändern sich. Vor jeder Verwendung neu prüfen – am besten bei der Quelle selbst.", "meta")));
+        box.appendChild(kasten("wissen", "Die Quellenampel", liste(["<b>Grün:</b> die Quelle selbst – Wahlleitung, Statistisches Amt, Gesetzestext, Gericht.", "<b>Gelb:</b> Medien, die ihre Quelle nennen und Fehler korrigieren.", "<b>Rot:</b> ein Beitrag ohne Quelle, ein Bildschirmfoto, »hab ich irgendwo gelesen«."])));
+        box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachte Szene"), p("Später, im Gespräch ohne Kinder, sagt der Großvater: »In Sachsen-Anhalt hat doch die Hälfte AfD gewählt. Das ist eben die Meinung des Volkes.«", "falltext__text")));
+        box.appendChild(kasten("auftrag", null, p("Legen Sie sich zu zweit fest und begründen Sie in einem Satz.")));
+        wahl(box, "e7.fakt", { frage: "Was antworten Sie?", optionen: [
+          ["»Das lässt sich nachsehen: Es waren 43,8 Prozent – viel, aber nicht die Hälfte. Und eine Wahl macht es nicht richtig, Menschen abzuwerten.«", "zentral", "Sie bringen eine prüfbare Zahl ein und trennen zwei Fragen: Wie haben die Menschen gewählt? Und: Ist eine Aussage über Menschen akzeptabel? Das Zweite entscheidet keine Wahl."],
+          ["»Das ist Propaganda. Darüber rede ich nicht.«", "kaum", "Ein Abbruch ohne Fakten bestätigt oft das Gefühl, nicht gehört zu werden. Abbrechen ist richtig, wenn weiter abgewertet wird – hier gibt es noch eine Brücke."],
+          ["»Die Leute dort sind eben so.«", "kaum", "Damit werten Sie selbst eine Gruppe pauschal ab – genau das, dem Sie widersprechen wollen."]], platz: "Wir antworten so, weil …" });
+      } },
+    { id: "a6", nr: "6", kurz: "Fünf Schritte", phase: "Sichern und üben", name: "Antworten in fünf Schritten", form: "Rollenspiel zu dritt", min: 20, frei: "antwort", nach: "a4", fehlt: "Die fünf Schritte öffnen sich, wenn die Grenze geklärt ist (Auftrag 4).", prinzip: "Verdecken – erst die eigene Antwort, dann der Vorschlag", raum: "Rollenspiel: sprechen, antworten, beobachten",
+      fertig: function () { return umformenZahl("e7.karte", D.e7.karten) >= 2; },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Ein Gespräch in fünf Schritten", h("ol", { class: "schritte" }, D.e7.schritte.map(function (s, i) { return h("li", {}, h("span", { class: "schritte__nr", "aria-hidden": "true", text: String(i + 1) }), h("b", { text: s[0] }), h("span", { text: s[1] })); })), p("Gesprächsmodell aus dem Curriculum des Wahlfachs", "quelle")));
+        box.appendChild(kasten("auftrag", null, p("Arbeiten Sie zu dritt: Eine Person sagt den Satz, eine antwortet, eine beobachtet, welche der fünf Schritte vorkommen. Schreiben Sie Ihre Antwort danach auf – erst dann sehen Sie einen Vorschlag. Tauschen Sie die Rollen."), p("<b>Fertig sind Sie mit zwei Sätzen.</b> Vorher ein Stopp-Signal vereinbaren.")));
+        umformen(box, "e7.karte", D.e7.karten, { ziel: 2, titel: "Fünf Sätze", label: "Meine Antwort:", platz: "»…«", kopf: "Eine mögliche Antwort", frage: "Steckt in Ihrer Antwort eine klare Grenze und eine Brücke?", min: 6 });
+        box.appendChild(p("Die Sätze und die Antworten stammen aus den Gesprächskarten des Curriculums, leicht angepasst.", "meta"));
+      } },
+    { id: "a7", nr: "7", kurz: "Fünf Sätze", phase: "Übertragen und Ausblick", name: "Ihre Antwort in fünf Sätzen", form: "allein", min: 12, frei: "antwort", nach: "a6", schreib: true, fehlt: "Dieser Auftrag öffnet sich nach dem Rollenspiel (Auftrag 6).", prinzip: "keines der sechs – die Seite bringt die Kriterien nach dem Text", raum: "Zwei Antworten vorlesen",
+      fertig: function () { return mehrfeldFertig("e7.fuenf"); },
+      seite: function (box) {
+        box.appendChild(h("div", { class: "falltext" }, etikett("ausgedachte Szene"), p("Zurück an die Garderobe. Die Kinder sind versorgt. Sie bitten den Großvater kurz zur Seite.", "falltext__text")));
+        box.appendChild(kasten("auftrag", null, p("Schreiben Sie Ihre Antwort an den Großvater – einen Satz für jeden Schritt.")));
+        mehrfeld(box, "e7.fuenf", D.e7.schritte.map(function (s, i) { return ["s" + i, (i + 1) + " · " + s[0], ["»Ich habe gehört, …«", "»Diese Aussage …«", "»Unser Auftrag …«", "»Was genau …«", "»Lassen Sie uns …«"][i]]; }),
+          { kriterien: [["Grundlegend", "Die Antwort benennt die Aussage und setzt eine klare Grenze, ohne den Großvater selbst abzuwerten."], ["Sicher", "Sie begründet mit dem Auftrag der Kita – Würde und Schutz jedes Kindes – und baut eine Brücke zu seiner Sorge."], ["Souverän", "Sie schützt die Kinder (kein Gespräch vor ihnen) und nennt einen nächsten Schritt: verlässliche Informationen, Leitung, Unterstützung."]] });
+      } },
+    aufRueckblick("e7", 8, D.e7.these, "a7", { fehlt: "Der Rückblick öffnet sich, wenn Ihre fünf Sätze fertig sind (Auftrag 7).", vorSpur: function () {
+      return kasten("hinweis", "Wenn es ernst wird", p("Bei einem akuten Konflikt gilt: stoppen, schützen, dokumentieren, die Leitung einbeziehen und Beratung nutzen. Sie müssen das nicht allein lösen."), p("Nach dem Curriculum des Wahlfachs · Beratungsstellen vor Ort nennt Ihre Lehrkraft", "quelle"));
+    } }),
+    aufZf("e7", "a8", function (box) {
+      zfDaten(box, { kopf: "Etappe 7 · Haltung zeigen", frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
+        kern: "Kontroverses bleibt kontrovers. Menschenwürde und gleiche Rechte stehen aber nicht zur Abstimmung. Wenn Kinder betroffen sind, kommt zuerst der Schutz, dann das Gespräch: benennen – begrenzen – begründen – Brücken bauen – beauftragen.",
+        begriffe: [
+          ["Beutelsbacher Konsens", "Drei Grundsätze politischer Bildung (1976): niemanden überwältigen, Kontroverses kontrovers darstellen, zum eigenen Urteil befähigen. Kein Gebot, zu allem neutral zu sein."],
+          ["Menschenwürde", "»Die Würde des Menschen ist unantastbar.« (Art. 1 Abs. 1 GG) – keine Mehrheit kann sie abschaffen."],
+          ["Diskriminierungsverbot", "Niemand darf wegen Herkunft, Sprache, Glauben und weiterer Merkmale benachteiligt werden (Art. 3 Abs. 3 GG; für Kinder Art. 2 UN-KRK)."],
+          ["Populismus", "Eine Art, Politik zu machen: »das wahre Volk« gegen »die da oben« oder »die anderen«, dazu einfache Antworten."],
+          ["Gruppenbezogene Menschenfeindlichkeit", "Menschen werden abgewertet, weil sie einer Gruppe zugerechnet werden."],
+          ["Quellenampel", "Grün: die Quelle selbst · Gelb: Medien mit Quellenangabe · Rot: Beitrag ohne Quelle."]],
+        tabelle: { kopf: ["Schritt", "So kann es klingen"], zeilen: D.e7.schritte },
+        werk: ["Denkwerkzeug: Erst schützen, dann sprechen", ["Sind Kinder betroffen? Dann zuerst stoppen und schützen.", "Ist die Aussage kontrovers – oder wertet sie Menschen ab?", "Welcher der fünf Schritte kommt jetzt – und was ist mein nächster Schritt?"]],
+        mein: [["Meine Antwort in fünf Sätzen", function () { var t = D.e7.schritte.map(function (s, i) { return txt("e7.fuenf.s" + i); }).filter(function (x) { return String(x).trim(); }); return t.length ? h("ol", {}, t.map(function (x) { return h("li", { text: x }); })) : mein("", "noch offen – Auftrag 7"); }],
+          ["Mein Satz für die Lernspur", "e7.spur", "noch offen – Auftrag 8"]],
+        aufgabe: "Ein Elternteil wertet beim Abholen Menschen wegen ihrer Herkunft ab; Kinder stehen daneben. Begründen Sie, wie Sie handeln, und formulieren Sie Ihre Antwort in fünf Schritten." });
+    }),
+    aufExtra("e7", "Eine Aussage, die ich gehört habe", {
+      auftrag: "Freiwillig – nur wenn Sie möchten. Denken Sie an eine Aussage, bei der Sie gern etwas gesagt hätten. Schreiben Sie sie ohne Namen auf. Eine Umschreibung genügt – verletzende Wörter müssen Sie nicht wiederholen.",
+      felder: [["aussage", "Die Aussage, umschrieben", "Jemand sagte sinngemäß, dass …"], ["einordnung", "Kontrovers oder Grenze? Nennen Sie die Fundstelle (Auftrag 4).", "Das ist …, weil …"], ["antwort", "Ihr erster Satz nach den fünf Schritten (Auftrag 6):", "»…«"]] })
+  ]
+});
+
+/* ===== Arbeitsblatt Etappe 8 · Ihr Praxisprojekt (Doppelstunde, Fassung 5.0) =====
+   Erste Stunde der Projektwerkstatt (Curriculum, Einheiten 30 bis 34). Tiefgang aus dem Impulsvortrag, Kapitel 14
+   (sieben Fähigkeiten, zivilisiert streiten) und 15 (Kinder können Demokratie). Produkt: ein Projektsteckbrief.
+   Der Leistungsnachweis ist noch offen; der Steckbrief passt zu den Varianten Praxisprojekt und Konzeptprodukt. */
+
+D.e8 = {
+  these: "Ein gutes Demokratieprojekt braucht ein großes Vorhaben – zum Beispiel ein Kinderparlament.",
+  abruf: [
+    ["Was unterscheidet Fassade von Willkür?", "Fassade: Verfahren ohne gelebten Alltag. Willkür: ein freundlicher Alltag ohne feste Verfahren – es hängt von der Fachkraft ab."],
+    ["Welche drei Fragen stellen Sie vor jeder Abstimmung?", "Ist die Frage wirklich offen? Kennen die Kinder den Rahmen? Wie erfahren sie, was aus ihrer Entscheidung wurde?"],
+    ["Nennen Sie die fünf Schritte gegen abwertende Aussagen.", "Benennen, begrenzen, begründen, Brücken bauen, beauftragen."]
+  ],
+  faehig: [
+    { id: "f1", titel: "Das Laufrad", unter: "zwei Kinder, ein Rad",
+      text: ["Zwei Kinder wollen dasselbe Laufrad. Die Fachkraft fragt: »Wie können wir das lösen, dass es für beide passt?« Die beiden einigen sich auf eine Sanduhr: Wenn sie durchgelaufen ist, wird getauscht."],
+      etikett: "ausgedachte Szene, nach einem Beispiel aus dem Vortrag",
+      frage: "Welche Fähigkeit üben die Kinder hier vor allem?",
+      optionen: [["Aushandeln – sich ausdrücken, zuhören, einen Kompromiss finden.", "zentral", "Beide bringen ihren Wunsch ein und finden eine Lösung, mit der beide leben können."], ["Widersprechen.", "begruendbar", "Beide sagen zuerst Nein zum anderen. Geübt wird hier aber vor allem das Einigen."], ["Mitverantworten.", "kaum", "Um Verantwortung für die Gruppe geht es hier noch nicht."]] },
+    { id: "f2", titel: "Das Beet", unter: "Gießen nach Plan",
+      text: ["Die Kinder haben ein Beet angelegt. Jede Woche gießen zwei andere Kinder – so hat es die Kinderkonferenz beschlossen."],
+      etikett: "ausgedachte Szene",
+      frage: "Welche Fähigkeit üben die Kinder hier vor allem?",
+      optionen: [["Mitverantworten – für die Gruppe, den Raum, für andere.", "zentral", "Die Kinder tragen gemeinsam die Folgen ihres Beschlusses."], ["Entscheiden.", "begruendbar", "Entschieden wurde in der Konferenz. Jetzt geht es darum, die Folgen zu tragen – das ist Mitverantwortung."], ["Perspektivwechsel.", "kaum", "Sich in andere hineinzuversetzen, ist hier nicht der Kern."]] },
+    { id: "f3", titel: "Die neue Regel", unter: "ein Nein im Morgenkreis",
+      text: ["Ein Kind sagt im Morgenkreis: »Die neue Regel ist doof. Die will ich nicht.« Die Fachkraft antwortet: »Erzähl mal, warum.«"],
+      etikett: "ausgedachte Szene",
+      frage: "Welche Fähigkeit übt das Kind hier vor allem?",
+      optionen: [["Widersprechen – das Nein als demokratisches Kernelement.", "zentral", "Das Kind widerspricht, und die Fachkraft hört zu. So wird aus dem Nein ein Beitrag."], ["Konflikte gewaltfrei lösen.", "begruendbar", "Wenn das Gespräch weitergeht, vielleicht. Zuerst wird hier aber das Widersprechen geübt."], ["Mitverantworten.", "kaum", "Die Verantwortung für die Regel steht hier noch nicht im Mittelpunkt."]] },
+    { id: "f4", titel: "Der Ausflug", unter: "und was ist mit den Kleinen?",
+      text: ["Vor der Abstimmung über den Ausflug fragt ein Kind: »Und was ist mit den Kleinen? Die können doch noch nicht so weit laufen.«"],
+      etikett: "ausgedachte Szene",
+      frage: "Welche Fähigkeit zeigt das Kind hier vor allem?",
+      optionen: [["Perspektivwechsel – sich in die Lage anderer versetzen.", "zentral", "Das Kind denkt an die, die selbst nicht mitreden können – ein Stück Minderheitenschutz."], ["Vielfalt aushalten.", "begruendbar", "Auch das: Unterschiede in der Gruppe werden ernst genommen. Der Kern ist aber, sich in andere hineinzuversetzen."], ["Entscheiden.", "kaum", "Entschieden wird erst später. Jetzt geht es um den Blick auf andere."]] }
+  ],
+  ideen: [
+    { id: "p1", titel: "Das Kinderrechte-Plakat", unter: "Idee 1",
+      text: ["Die Kinder malen Bilder für ein Plakat »Unsere Kinderrechte«. Das Team hängt es im Flur auf."],
+      frage: "Was fehlt dieser Idee am meisten?",
+      optionen: [["Eine echte Entscheidung der Kinder.", "zentral", "Die Kinder schmücken ein Plakat, entscheiden aber nichts. Im Stufenmodell ist das Dekoration (Etappe 5)."], ["Eine Rückmeldung an die Kinder.", "kaum", "Eine Rückmeldung hilft wenig, wenn es nichts zu entscheiden gab."], ["Die Leisen und die Jüngsten.", "begruendbar", "Malen können alle. Aber auch die Lauten entscheiden hier nichts."]] },
+    { id: "p2", titel: "Neue Spielgeräte", unter: "Idee 2",
+      text: ["In einer Kinderkonferenz wählen die Kinder drei neue Spielgeräte. Bestellt wird später ein Gerät, das die Leitung aussucht. Die Kinder erfahren es nicht."],
+      frage: "Was fehlt dieser Idee am meisten?",
+      optionen: [["Eine echte Entscheidung der Kinder.", "begruendbar", "Auch das: Am Ende entscheidet die Leitung allein. Ehrlich wäre, das vorher zu sagen."], ["Eine Rückmeldung an die Kinder.", "zentral", "Die Kinder erfahren nie, was aus ihrer Wahl wurde. So kippt Beteiligung in Schein."], ["Die Leisen und die Jüngsten.", "kaum", "Davon sagt die Idee nichts. Das größte Loch liegt woanders."]] },
+    { id: "p3", titel: "Die Zukunftswerkstatt", unter: "Idee 3",
+      text: ["Die Vorschulkinder planen in einer Zukunftswerkstatt das Sommerfest. Die Krippenkinder sind nicht dabei."],
+      frage: "Was fehlt dieser Idee am meisten?",
+      optionen: [["Eine echte Entscheidung der Kinder.", "kaum", "Die Vorschulkinder entscheiden wirklich."], ["Eine Rückmeldung an die Kinder.", "begruendbar", "Eine Rückmeldung an alle ist gut. Sie ersetzt aber nicht, die Jüngsten zu beteiligen."], ["Die Leisen und die Jüngsten.", "zentral", "Die Jüngsten sind ausgeschlossen. Bildkarten, Steine oder eine Befragung vorab könnten sie einbeziehen."]] }
+  ],
+  steck: [["titel", "Titel Ihres Projekts", "Unser neuer Bauraum / Das Frühstück …"], ["frage", "Was entscheiden die Kinder – welche echte Frage stellen Sie ihnen?", "Die Kinder entscheiden, …"], ["rahmen", "Was ist offen, was steht fest – und warum?", "Offen ist … Fest steht …, weil …"], ["verfahren", "Wie entscheiden die Kinder – mit welchem Verfahren?", "Kinderkonferenz / Zukunftswerkstatt / Abstimmung mit Steinen …"], ["leise", "Wie kommen die Leisen und die Jüngsten zu Wort?", "Wer nicht spricht, kann …"], ["rueck", "Wie erfahren die Kinder, was aus ihrer Entscheidung wurde?", "Wir zeigen … / Wir erzählen …"], ["doku", "Wie dokumentieren Sie? (ohne Namen; Fotos nur mit Zustimmung)", "Ich halte fest …", 2, true], ["plan", "Drei Termine: planen, durchführen, zurückmelden", "1. … 2. … 3. …", 2, true]]
+};
+
+blatt({
+  id: "e8", etappe: 8, art: "doppelstunde", dauer: 90, titel: "Ihr Praxisprojekt",
+  frage: "Was nehmen Sie mit in Ihre Einrichtung?",
+  karte: "Sieben Aufträge · 90 Minuten · am Ende steht der Steckbrief Ihres Praxisprojekts.",
+  darum: "Kinder können Demokratie – wenn Erwachsene ihnen Räume dafür öffnen. In Ihrem Praxisprojekt öffnen Sie einen solchen Raum. Heute planen Sie es: mit einer echten Frage an die Kinder, einem Verfahren, das trägt, und einem Plan, wie die Kinder erfahren, was aus ihrer Entscheidung wurde.",
+  ziele: ["sieben demokratische Fähigkeiten von Kindern nennen und an Situationen zeigen,", "ein Praxisprojekt planen, in dem Kinder wirklich mitentscheiden,", "Ihr Projekt an den Kinderrechten und an Fassade und Willkür prüfen."],
+  hinweis: "Ihr Projekt planen Sie für Ihre Praxisstelle – sprechen Sie es dort ab. In diesem Leitfaden stehen keine Namen und keine Fotos von Kindern. Wenn Sie zurzeit keine Praxisstelle haben, planen Sie für eine ausgedachte Kita.",
+  spur: "e8.spur", spurAnfang: "In meine Einrichtung nehme ich mit: …", spurFrage: "Was nehmen Sie mit in Ihre Einrichtung? Ein Satz genügt.",
+  kann: ["Ich kann sieben demokratische Fähigkeiten von Kindern nennen und an einer Situation zeigen.", "Ich kann ein Praxisprojekt planen, in dem Kinder wirklich mitentscheiden.", "Ich kann mein Projekt an den Kinderrechten und an Fassade und Willkür prüfen."],
+  papier: "Digital ist der Kern beim Verdecken und Aufdecken: die Festlegungen mit Rückmeldung und die Kriterien nach dem eigenen Steckbrief. Den Steckbrief gibt es als Schreibblatt für den Stift – er kann auch auf einem großen Papierbogen in der Gruppe entstehen.",
+  lk: [
+    ["Vor der Stunde", ["Am Gerät vorne »Alle Aufträge auf diesem Gerät freigeben« wählen.", "<b>Leistungsnachweis noch offen:</b> Das Curriculum nennt Variante A (Praxisprojekt), B (Fallanalyse) und C (Konzeptprodukt). Der Steckbrief passt zu A und C. Vor der Stunde festlegen und mit den Schulvorgaben abgleichen."]],
+    ["Plenumsstellen", ["Nach Auftrag 2: Was braucht das Kind von der Fachkraft? Zwei oder drei Begründungen.", "Nach Auftrag 3: Positionslinie 0–10.", "Nach Auftrag 4: Welche Fähigkeit üben Kinder bei Ihnen am häufigsten – welche am seltensten?", "Nach Auftrag 5: Was fehlt den drei Ideen? An der Tafel als Projekt-Check sammeln.", "Auftrag 6: Kurze kollegiale Beratung zu zweit: eine Frage, ein Tipp.", "Auftrag 7: Positionslinie noch einmal; Stimmkarte A · B · C zählen."]],
+    ["Wenn die Zeit knapp wird", ["K1 · Die Felder »Dokumentation« und »Drei Termine« im Steckbrief bis zur nächsten Stunde (– 6 Min.).", "K2 · Auftrag 1 mündlich im Plenum (– 2 Min.).", "K3 · In Auftrag 4 genügen zwei Szenen (– 5 Min.)."]],
+    ["Status der Inhalte", ["Szene »Der Mülleimer«: aus dem Film »Die Kinderstube der Demokratie« (Müller, Plöger 2008), nach dem Impulsvortrag – noch am Film zu prüfen.", "Sieben Fähigkeiten: im Vortrag in Anlehnung an Himmelmann und die BLK-Kommission zusammengefasst (Kapitel 14). Befunde zur Wirkung: nach Hansen, Knauer und Sturzenhecker, im Vortrag zitiert (Kapitel 15) – am Original noch zu prüfen. Zitat Stärck, Wach und Zankl (2019, S. 9, zitiert nach Doll, Herrmann 2020, S. 27): im Vortrag zitiert.", "Szenen in Auftrag 4 und Projektideen in Auftrag 5: ausgedacht. Zukunftswerkstatt: Methode nach Robert Jungk.", "Welche Antwort »zentral« ist, ist ein Vorschlag – gute Begründungen für eine andere Wahl zählen."]]
+  ],
+  auftraege: [
+    aufAbruf("e8", D.e8.abruf, "Heute bündeln Sie, was Sie in diesem Jahr gelernt haben – in einem Projekt für Ihre Praxisstelle."),
+    aufSzene("e8", 2, { min: 6, danach: function () { return [kasten("sicherung", "Zivilisiert streiten", p("Das Kind braucht keine Entscheidung von Erwachsenen. Es braucht Begleitung, damit die Gruppe selbst eine Lösung findet. Damit umgehen zu können, dass es mehrere gleich berechtigte Lösungen gibt – und darüber fair zu streiten: Das ist vielleicht die wichtigste demokratische Fähigkeit."), p("Nach Stärck, Wach und Zankl (2019), im Impulsvortrag zitiert", "quelle")), kasten("raum", null, p("Zu zweit: Was würden Sie als Fachkraft jetzt sagen – ohne die Lösung vorzugeben?"))]; } }),
+    aufPosition("e8", 3, D.e8.these),
+    { id: "a4", nr: "4", kurz: "Kinder können es", phase: "Erarbeitung", name: "Kinder können Demokratie", form: "allein, dann zu zweit", min: 14, frei: "ansage", gleich: "Sieben Fähigkeiten – und vier Szenen, in denen Kinder sie üben.", prinzip: "Verdecken · Rückmelden", raum: "Welche Fähigkeit üben Kinder bei Ihnen am seltensten?",
+      fertig: function () { return kartenFest("e8.faehig", D.e8.faehig) >= 4; },
+      seite: function (box) {
+        box.appendChild(kasten("wissen", "Sieben Fähigkeiten", h("ol", {}, [["Aushandeln", "sich ausdrücken, zuhören, Kompromisse finden"], ["Entscheiden", "auch Verantwortung für die Folgen tragen"], ["Mitverantworten", "für die Gruppe, den Raum, für andere"], ["Widersprechen", "das Nein als demokratisches Kernelement"], ["Konflikte gewaltfrei lösen", "eine Grundkompetenz, kein Zusatz"], ["Perspektivwechsel", "sich in andere hineinversetzen"], ["Vielfalt aushalten", "und genießen lernen"]].map(function (f) { return h("li", {}, h("b", { text: f[0] }), document.createTextNode(" – " + f[1])); })),
+          p("Und es wirkt: Kinder, die an echten Entscheidungen beteiligt werden, diskutieren untereinander mehr aus, finden öfter ohne Erwachsene gemeinsame Lösungen und tragen ihre Erfahrungen in die Familie – manche wollen dort »Familienkonferenzen« abhalten."),
+          p("Nach dem Impulsvortrag, Kapitel 14 und 15 · Befunde nach Hansen, Knauer und Sturzenhecker – am Original noch zu prüfen", "quelle")));
+        box.appendChild(kasten("auftrag", null, p("Vier Szenen aus Kitas. Legen Sie sich bei jeder fest, welche Fähigkeit die Kinder vor allem üben, und begründen Sie in einem Satz."), p("<b>Fertig sind Sie mit allen vier Szenen.</b>")));
+        kartenRunde(box, "e8.faehig", D.e8.faehig, { titel: "Vier Szenen" });
+      } },
+    { id: "a5", nr: "5", kurz: "Ideen prüfen", phase: "Sichern und üben", name: "Drei Projektideen prüfen", form: "zu zweit", min: 12, frei: "antwort", nach: "a4", fehlt: "Die Projektideen öffnen sich nach Auftrag 4.", prinzip: "Rückmelden – je Antwort mit Erklärung", raum: "An der Tafel: der Projekt-Check",
+      fertig: function () { return kartenFest("e8.idee", D.e8.ideen) >= 3; },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Drei Projektideen, wie sie in Praxisstellen entstehen könnten. Was fehlt jeder Idee am meisten? Legen Sie sich zu zweit fest und begründen Sie.")));
+        kartenRunde(box, "e8.idee", D.e8.ideen, { titel: "Drei Ideen", platz: "Am meisten fehlt …, weil …" });
+        box.appendChild(kasten("sicherung", "Der Projekt-Check", liste(["Ist die Entscheidung wirklich offen?", "Kennen die Kinder den Rahmen?", "Sind die Leisen und die Jüngsten dabei?", "Erfahren die Kinder, was aus ihrer Entscheidung wurde – und was bleibt danach im Alltag?"])));
+      } },
+    { id: "a6", nr: "6", kurz: "Ihr Steckbrief", phase: "Übertragen und Ausblick", name: "Der Steckbrief Ihres Projekts", form: "allein, dann kollegiale Beratung zu zweit", min: 28, frei: "antwort", nach: "a5", schreib: true, fehlt: "Ihr Steckbrief öffnet sich nach dem Projekt-Check (Auftrag 5).", prinzip: "keines der sechs – Papierfrage: geht auch auf Papier; die Seite bringt die Kriterien nach dem Text", raum: "Kollegiale Beratung: eine Frage, ein Tipp",
+      fertig: function () { return mehrfeldFertig("e8.steck"); },
+      seite: function (box) {
+        box.appendChild(kasten("auftrag", null, p("Planen Sie Ihr Praxisprojekt. Füllen Sie die Felder in Stichworten oder ganzen Sätzen. Die letzten beiden Felder dürfen Sie später ergänzen. Dokumentiert wird ohne Namen; Fotos von Kindern nur mit Zustimmung von Praxisstelle und Eltern. Stellen Sie danach Ihren Steckbrief einer anderen Person vor: Sie stellt eine Frage und gibt einen Tipp.")));
+        mehrfeld(box, "e8.steck", D.e8.steck, { min: 3, kriterien: [["Grundlegend", "Das Projekt stellt den Kindern eine echte Frage und nennt ein Verfahren."], ["Sicher", "Der Rahmen ist offengelegt, die Leisen und die Jüngsten sind bedacht, und eine Rückmeldung an die Kinder ist geplant."], ["Souverän", "Das Projekt ist an den drei Prüfsteinen geprüft und sagt, was danach im Alltag bleibt – damit es keine Fassade wird."]],
+          danach: function () { return kasten("wissen", "Die drei Prüfsteine", h("dl", { class: "pruef" }, D.pruefsteine.map(function (x) { return h("div", { class: "pruef--" + x[0] }, h("dt", { text: x[1] }), h("dd", { text: x[2] })); }))); } });
+      } },
+    aufRueckblick("e8", 7, D.e8.these, "a6", { fehlt: "Der Rückblick öffnet sich, wenn Ihr Steckbrief fertig ist (Auftrag 6)." }),
+    aufZf("e8", "a7", function (box) {
+      zfDaten(box, { kopf: "Etappe 8 · Ihr Praxisprojekt", frage: "Was nehmen Sie mit in Ihre Einrichtung?",
+        kern: "Kinder können Demokratie. Ein gutes Praxisprojekt öffnet ihnen eine echte Entscheidung, legt den Rahmen offen, holt die Leisen und die Jüngsten dazu und sagt den Kindern, was aus ihrer Entscheidung wurde – und es lässt etwas im Alltag zurück.",
+        begriffe: [
+          ["Zivilisiert streiten", "Damit umgehen, dass es mehrere gleich berechtigte Lösungen gibt – und darüber fair streiten."],
+          ["Zukunftswerkstatt", "Methode nach Robert Jungk in drei Schritten: Kritik sammeln, Wünsche entwickeln, Umsetzung planen."],
+          ["Perspektivwechsel", "Sich in die Lage und die Wünsche anderer hineinversetzen."],
+          ["Dekoration", "Kinder schmücken eine Entscheidung, an der sie nicht beteiligt waren."],
+          ["Rückmeldung", "Die Kinder erfahren, was aus ihrer Entscheidung wurde – sonst kippt Beteiligung in Schein."]],
+        tabelle: { kopf: ["Fähigkeit", "Im Kita-Alltag"], zeilen: [["Aushandeln", "sich ausdrücken, zuhören, Kompromisse finden"], ["Entscheiden", "auch für die Folgen einstehen"], ["Mitverantworten", "für die Gruppe, den Raum, andere"], ["Widersprechen", "das Nein als Kernelement"], ["Konflikte gewaltfrei lösen", "Grundkompetenz, kein Zusatz"], ["Perspektivwechsel", "sich in andere hineinversetzen"], ["Vielfalt aushalten", "und genießen lernen"]] },
+        werk: ["Denkwerkzeug: Der Projekt-Check", ["Ist die Entscheidung wirklich offen?", "Kennen die Kinder den Rahmen?", "Sind die Leisen und die Jüngsten dabei?", "Erfahren die Kinder, was aus ihrer Entscheidung wurde – und was bleibt danach im Alltag?"]],
+        mein: [["Mein Projekt", function () { var t = txt("e8.steck.titel"), f = txt("e8.steck.frage"); return h("div", {}, mein(t, "noch offen – Auftrag 6"), f ? p(esc("Die Frage an die Kinder: " + f), "meta") : null); }],
+          ["Mein Satz für die Lernspur", "e8.spur", "noch offen – Auftrag 7"]],
+        aufgabe: "Stellen Sie Ihr Praxisprojekt vor. Begründen Sie mit den Kinderrechten und mit dem Unterschied zwischen Fassade und gelebter Demokratie, warum die Kinder darin wirklich mitentscheiden." });
+    }),
+    aufExtra("e8", "Mit der Praxisanleitung sprechen", {
+      auftrag: "Freiwillig – nur wenn Sie möchten. Stellen Sie Ihrer Praxisanleitung Ihre Projektidee in drei Sätzen vor und fragen Sie: Was ist bei uns möglich? Notieren Sie die Antwort in Stichworten, ohne Namen.",
+      felder: [["antwort", "Die Rückmeldung in Stichworten", "Möglich ist … Schwierig ist …"], ["anpassung", "Was ändern Sie an Ihrem Steckbrief (Auftrag 6)?", "Ich ändere …"], ["urteil", "Ein Satz zu Ihrem Urteil: Bleibt nach Ihrem Projekt etwas im Alltag – oder droht Fassade?", "Ich denke, …, weil …"]] })
+  ]
 });
 </script>
 <script>/* ===== Kompass: das Jahr auf einen Blick, Stunden je Etappe, Lernspur, Sichern und Laden ===== */

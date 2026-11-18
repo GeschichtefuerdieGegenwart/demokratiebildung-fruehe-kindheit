@@ -1,6 +1,7 @@
 /* Leitfaden durch das Jahr: acht Etappen entlang des Impulsvortrags (Fachtag 29.04.2026).
    Status: Zuschnitt der Etappen, Rückmeldetexte und Einstufungen sind Vorschläge – noch nicht geprüft.
-   Jede Etappe hat ein Blatt (#e1 … #e8): Etappe 1 und 3 als Arbeitsblatt einer Doppelstunde, die anderen als kurzes Einstiegsblatt. */
+   Jede Etappe hat ein Arbeitsblatt einer Doppelstunde (#e1 … #e8). Seit Fassung 5.0 gibt es keine Einstiegsblätter mehr:
+   Die Szene des früheren Einstiegs ist jetzt Auftrag 2 des Arbeitsblatts und behält ihren Speicherschlüssel (eN.szene). */
 var DATEN = {
   schluessel: "wpb-demokratie-leitfaden:v4",
   schluesselAlt: "wpb-demokratie-leitfaden:v3",
@@ -60,9 +61,7 @@ DATEN.etappen = [
       ["Aushandlung", "Verschiedene Wünsche werden besprochen, bis eine Lösung steht, die alle mittragen können."]],
     mit: "vier Gründe, mit denen Sie Demokratiebildung im Team und vor Eltern begründen können",
     kita: "Wo haben Sie zuletzt erlebt, dass Kinder einen Streit ohne Erwachsene gelöst haben? Was hatten sie dafür schon gelernt?",
-    weg: [["einstieg", "Einstieg: »Wir brauchen einen Chef«", "e2", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Vier Gründe für die frühe Kindheit", "", "Sie sammeln Argumente, mit denen Sie vor Team und Eltern bestehen.", "45 Minuten"],
-          ["kommt", "Welche Demokratie lernen Kinder bei uns?", "", "Sie prüfen eine Situation aus Ihrer eigenen Einrichtung.", "45 Minuten"]] },
+    weg: [["blatt", "Warum gerade die Kita? – vier Gründe und eine Antwort für den Elternabend", "e2", "Sie prüfen vier Gründe aus der Forschung an einer Kita-Szene und antworten auf Einwände von Eltern und Team.", "90 Minuten"]] },
 
   { kurz: "Kinderrechte", titel: "Kinder haben Rechte", vortrag: "Teil II · Korczak und der gesetzliche Auftrag", blatt: "e3",
     frage: "Geben wir Kindern Rechte – oder haben sie welche?",
@@ -100,8 +99,7 @@ DATEN.etappen = [
       ["Vorurteilsbewusste Bildung", "Ansatz mit vier Zielen (Anti-Bias): Identitäten stärken, Vielfalt erfahrbar machen, kritisch über Vorurteile nachdenken, gegen Diskriminierung aktiv werden."]],
     mit: "eine persönliche Handlungsleitlinie für Essen, Schlafen, Anziehen und Wickeln",
     kita: "Bei welcher Alltagsfrage entscheiden Sie allein, obwohl das Kind mitentscheiden könnte?",
-    weg: [["einstieg", "Einstieg: »Wollt ihr heute rausgehen?«", "e4", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Einladende und verschließende Sätze", "", "Sie formulieren Alltagssätze so um, dass Kinder mitentscheiden können.", "45 Minuten"],
+    weg: [["blatt", "Macht und Haltung – einladende und verschließende Sätze", "e4", "Sie erkennen das Machtgefälle in Alltagssätzen, formulieren sie einladend um und schreiben Ihre Handlungsleitlinie.", "90 Minuten"],
           ["kommt", "Vielfalt als Normalität: vorurteilsbewusste Bildung", "", "Sie prüfen Bücher, Bilder und Routinen: Wer kommt vor, wer nicht?", "90 Minuten"],
           ["kommt", "Stereotype Aussagen unter Kindern aufgreifen", "", "Sie üben, wie Sie reagieren, wenn ein Kind ein anderes abwertet.", "90 Minuten"]] },
 
@@ -124,8 +122,7 @@ DATEN.etappen = [
       ["Ambiguitätstoleranz", "Die Fähigkeit, Uneindeutiges und Widersprüche auszuhalten, statt nach einfachen Antworten zu greifen."]],
     mit: "den Ablauf einer Kinderkonferenz und ein kleines Beschwerdekonzept",
     kita: "Welche festen Verfahren gibt es in Ihrer Einrichtung – und wissen die Kinder davon?",
-    weg: [["einstieg", "Einstieg: Das Mopslied", "e5", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Kinder beteiligen – aber wie? Der Fall Matschhose", "", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein.", "90 Minuten"],
+    weg: [["blatt", "Kinder beteiligen – aber wie? Das Mopslied und der Fall Matschhose", "e5", "Sie unterscheiden echte Beteiligung von Beteiligung zum Schein, lernen Kinderkonferenz, Beschwerdeweg und Kita-Verfassung kennen und entwerfen ein Beteiligungsformat.", "90 Minuten"],
           ["kommt", "Eine Kinderkonferenz gestalten", "", "Sie planen den Ablauf einer Kinderkonferenz und erproben die Moderation.", "90 Minuten"],
           ["kommt", "Beschwerdewege für Kinder", "", "Sie entwerfen einen Weg, auf dem auch kleine Kinder sich beschweren können.", "90 Minuten"]] },
 
@@ -146,10 +143,8 @@ DATEN.etappen = [
       ["Willkür", "Eine Fachkraft nimmt Kinder ernst. Am Nachbartisch gilt das Gegenteil, weil nichts vereinbart ist."]],
     mit: "einen Beteiligungscheck für Essen, Pflege, Schlafen und Morgenkreis",
     kita: "Beobachten Sie eine Mahlzeit: Wer entscheidet, was und wie viel auf den Teller kommt?",
-    weg: [["einstieg", "Einstieg: »Erbsen esse ich nicht!«", "e6", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Mahlzeiten: der wichtigste Übungsort", "", "Sie untersuchen, wer beim Essen was entscheidet.", "45 Minuten"],
-          ["kommt", "Wickeln, Schlafen, Eingewöhnung", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"],
-          ["kommt", "Fassade oder Willkür? Struktur und Haltung zusammenbringen", "", "Sie prüfen, wo Ihrer Einrichtung eher das Verfahren fehlt und wo die Haltung.", "90 Minuten"]] },
+    weg: [["blatt", "Demokratie im Alltag – vier Orte, Fassade oder Willkür", "e6", "Sie untersuchen Mahlzeiten, Wickeln, Schlafen und Morgenkreis, unterscheiden Fassade und Willkür und prüfen eine Situation mit dem Beteiligungscheck.", "90 Minuten"],
+          ["kommt", "Wickeln, Schlafen, Eingewöhnung – vertieft", "", "Sie klären, wie Kinder über ihren eigenen Körper mitbestimmen.", "45 Minuten"]] },
 
   { kurz: "Position", titel: "Haltung zeigen", vortrag: "Teil I · Was steht auf dem Spiel? – weitergedacht", blatt: "e7",
     frage: "Wie widerspreche ich klar – und schütze dabei die Kinder?",
@@ -168,7 +163,7 @@ DATEN.etappen = [
       ["Beutelsbacher Konsens", "Drei Grundsätze politischer Bildung: niemanden überwältigen, Kontroverses kontrovers darstellen, zum eigenen Urteil befähigen."]],
     mit: "einen Gesprächsleitfaden und eine Intervention in fünf Sätzen",
     kita: "Welche Aussage haben Sie schon gehört, bei der Sie gern etwas gesagt hätten?",
-    weg: [["einstieg", "Einstieg: Beim Abholen", "e7", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
+    weg: [["blatt", "Haltung zeigen – die Grenze, die Fakten, fünf Schritte", "e7", "Sie klären, wo die Kontroverse endet, prüfen eine Behauptung an Zahlen und antworten auf abwertende Aussagen in fünf Schritten.", "90 Minuten"],
           ["kommt", "Diskriminierung erkennen und benennen", "", "Sie lernen Formen der Abwertung kennen und ordnen Aussagen ein.", "mehrere Stunden"],
           ["kommt", "Populismus verstehen – die aktuelle Lage", "", "Sie prüfen politische Aussagen an Quellen und an den Grundrechten.", "mehrere Stunden"],
           ["kommt", "Zuhören, nachfragen, klar widersprechen", "", "Sie üben Gespräche mit Erwachsenen, die abwertend sprechen.", "mehrere Stunden"]] },
@@ -189,8 +184,7 @@ DATEN.etappen = [
       ["Zukunftswerkstatt", "Methode in drei Schritten: Kritik sammeln, Wünsche entwickeln, Umsetzung planen."]],
     mit: "Ihr eigenes Demokratieprojekt – geplant, erprobt und vorgestellt",
     kita: "Welche kleine Veränderung in Ihrer Einrichtung würden die Kinder sofort bemerken?",
-    weg: [["einstieg", "Einstieg: Der Mülleimer", "e8", "Eine Szene, eine Festlegung, die wichtigsten Begriffe.", "15 Minuten"],
-          ["kommt", "Projektwerkstatt", "", "Sie planen Ihr eigenes Vorhaben für die Praxisstelle.", "mehrere Stunden"],
+    weg: [["blatt", "Projektwerkstatt – der Steckbrief Ihres Praxisprojekts", "e8", "Sie zeigen an Szenen, was Kinder in Demokratie können, prüfen Projektideen und planen Ihr eigenes Vorhaben.", "90 Minuten"],
           ["kommt", "Erprobung und kollegiale Beratung", "", "Sie probieren Ihr Vorhaben aus und holen Rückmeldung ein.", "mehrere Stunden"],
           ["kommt", "Präsentation und Ausblick", "", "Sie stellen Ihr Projekt vor und halten fest, was Sie mitnehmen.", "mehrere Stunden"]] }
 ];

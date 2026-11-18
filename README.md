@@ -2,7 +2,7 @@
 
 Digitaler Leitfaden für das Wahlfach »Demokratie, jetzt und in Zukunft: Demokratiebildung in der frühen Kindheit« (Fachschule für Sozialpädagogik, Abschlussklasse, Tablet-Klasse).
 
-**Stand:** Version 4.0 vom 18.11.2026 – das Blatt auf DIN-A4-Grundlage. Entwurf, noch nicht im Unterricht erprobt. Was sich geändert hat und warum: [`docs/version-4.0.md`](docs/version-4.0.md).
+**Stand:** Version 5.0 vom 18.11.2026 – alle acht Etappen als Arbeitsblatt auf DIN-A4-Grundlage. Entwurf, noch nicht im Unterricht erprobt. Was sich geändert hat und warum: [`docs/version-5.0.md`](docs/version-5.0.md) und [`docs/version-4.0.md`](docs/version-4.0.md).
 
 ## Was hier liegt
 
@@ -13,12 +13,26 @@ Digitaler Leitfaden für das Wahlfach »Demokratie, jetzt und in Zukunft: Demokr
 | Jahreskompass | `#start` | Acht Etappen durch das Schuljahr, in der Mitte die Kinderrechte. Darunter: die Arbeitsblätter mit Fortschritt, der rote Faden (ein Satz je Etappe und eine eigene Antwort auf jede Leitfrage), Sichern und Laden als Datei, der Vortrag in drei Teilen. |
 | Arbeitsblatt Etappe 1 | `#e1` | »Drei Formen – ein Ganzes«, Doppelstunde, sieben Aufträge. |
 | Arbeitsblatt Etappe 3 | `#e3` | »Kinder haben Rechte«, Doppelstunde, neun Aufträge, mit der Ausstellung »Kinderrechte im Kita-Alltag«. |
-| Einstiegsblätter | `#e2`, `#e4` bis `#e8` | Je drei kurze Aufträge (etwa 15 Minuten): Szene mit Festlegung, Das steckt dahinter, In Ihrer Kita. Die Stunden dieser Etappen kommen im Lauf des Jahres; ihr Einstieg wird dann Auftrag 1. |
+| Arbeitsblatt Etappe 2 | `#e2` | »Warum gerade die Kita?«, Doppelstunde, sieben Aufträge: vier Gründe aus der Forschung, Einwände, Antwort für den Elternabend. |
+| Arbeitsblatt Etappe 4 | `#e4` | »Macht und Haltung«, acht Aufträge: das Machtgefälle, einladende und verschließende Sätze, vier Merkmale demokratischer Haltung, Handlungsleitlinie. |
+| Arbeitsblatt Etappe 5 | `#e5` | »Kinder beteiligen – aber wie?«, acht Aufträge: Mopslied, Fall Matschhose, Beteiligung oder Schein, Kinderkonferenz · Beschwerdeweg · Kita-Verfassung, Beteiligungsformat mit Ampel. |
+| Arbeitsblatt Etappe 6 | `#e6` | »Demokratie im Alltag«, sieben Aufträge: vier Orte im Alltag, Fassade oder Willkür, Beteiligungscheck. |
+| Arbeitsblatt Etappe 7 | `#e7` | »Haltung zeigen«, acht Aufträge: die Grenze der Kontroverse, Fakten statt Pauschalurteil (Stand 18.11.2026), fünf Schritte im Gespräch. |
+| Arbeitsblatt Etappe 8 | `#e8` | »Ihr Praxisprojekt«, sieben Aufträge: was Kinder in Demokratie können, Projektideen prüfen, der Steckbrief des eigenen Projekts. |
 | Ein Auftrag | `#e3/a5` | Jeder Auftrag hat eine eigene Adresse (für QR-Codes und Links in Moodle). |
-| Extra | `#e1/aX`, `#e3/aX` | Je eine freiwillige Aufgabe für die Praxisstelle. Zählt nicht zur Zeit und nicht zum Stand. |
-| Hinweise für die Lehrkraft | `#e1/lk`, `#e3/lk` | Ablauf mit Zeiten, Lehrfunktion je Auftrag, Freigaben, Plenumsstellen, Kürzungen, Papierfrage, Status der Inhalte. Dort auch: »Alle Aufträge auf diesem Gerät freigeben« für das Smartboard. |
+| Extra | `#e1/aX` … `#e8/aX` | Je eine freiwillige Aufgabe für die Praxisstelle. Zählt nicht zur Zeit und nicht zum Stand. |
+| Hinweise für die Lehrkraft | `#e1/lk` … `#e8/lk` | Ablauf mit Zeiten, Lehrfunktion je Auftrag, Freigaben, Plenumsstellen, Kürzungen, Papierfrage, Status der Inhalte. Dort auch: »Alle Aufträge auf diesem Gerät freigeben« für das Smartboard. |
 
 Alte Adressen führen weiter: `#heute` → `#e1`, `#heute-alle` → `#e1` mit allen Freigaben, `#ausstellung` → `#e3/a5`, `#etappe-3` → `#e3`.
+
+## Fassung 5.0: Alle acht Etappen als Arbeitsblatt
+
+Jede Etappe hat jetzt ein Arbeitsblatt für eine Doppelstunde, gebaut nach demselben Bogen wie Etappe 1 und 3: **erinnern** (drei Abruffragen zur vorigen Etappe) · **die Szene** aus dem Impulsvortrag mit Festlegung · **die eigene Position** auf einer Linie · **erarbeiten** (meist als Gruppenpuzzle) · **üben** · **ein eigenes Produkt** mit Kriterien nach dem Text · **Rückblick** mit Rückkehr zur ersten Position, Lernspur und »Das kann ich« · **Zusammenfassung** auf zwei Seiten · **Extra** für die Praxisstelle.
+
+- Die Szene des früheren Einstiegsblatts ist jetzt Auftrag 2 und behält ihren Speicherschlüssel (`eN.szene`): Wer sich dort schon festgelegt hat, findet die Festlegung wieder. Die Notiz »In Ihrer Kita« aus dem Einstiegsblatt steht auf der Seite des Extras.
+- Neue gemeinsame Bausteine in `src/blatt-bausteine.js`: Kartenrunde (links wählen, rechts lesen und festlegen), Legen in Spalten mit Vorschlag, Umformen (erst der eigene Satz, dann der Vorschlag), Ampel mit Wort, Produkt in mehreren Feldern, Zusammenfassung aus Daten.
+- **Szenen bleiben oben:** Auf den Szenenseiten liegt der erste Knopf bei 1280 × 720 unter dem ersten Bildschirm. Das ist eine begründete Ausnahme von First-Action (entschieden am 18.11.2026): Die Szene steht vor der Festlegung.
+- Etappe 4 und 7 tragen jeweils die erste Stunde ihrer Etappe (Curriculum, Einheit 6 bzw. Einheiten 21 bis 24). Vielfalt und Anti-Bias, Diskriminierungsformen und Desinformation folgen als eigene Stunden.
 
 ## Fassung 4.0: Das Blatt auf DIN-A4-Grundlage
 
@@ -82,13 +96,13 @@ Der Vortrag ist das Kerncurriculum. Die Etappen 1 bis 6 und 8 folgen seinen Kapi
 | Nr. | Etappe | Szene | Im Vortrag | Blatt |
 | --- | --- | --- | --- | --- |
 | 1 | Demokratie verstehen | Drei Kinder am Fenster | Teil I | Arbeitsblatt |
-| 2 | Warum gerade die Kita? | »Wir brauchen einen Chef« | Teil II, Kapitel 3 | Einstieg |
+| 2 | Warum gerade die Kita? | »Wir brauchen einen Chef« | Teil II, Kapitel 3 | Arbeitsblatt |
 | 3 | Kinder haben Rechte | Korczak zeigt sich selbst an | Teil II, Kapitel 4–5 | Arbeitsblatt |
-| 4 | Macht und Haltung | »Wollt ihr heute rausgehen?« | Teil III, Kapitel 13 | Einstieg |
-| 5 | Strukturen, die verlässlich sind | Das Mopslied | Teil II, Kapitel 6 · Teil III, Kapitel 10 | Einstieg |
-| 6 | Demokratie im Alltag | »Erbsen esse ich nicht!« | Teil III, Kapitel 11–12 | Einstieg |
-| 7 | Haltung zeigen | Beim Abholen | Teil I, Kapitel 1 – weitergedacht | Einstieg |
-| 8 | Ihr Praxisprojekt | Der Mülleimer | Teil III, Kapitel 14–15 | Einstieg |
+| 4 | Macht und Haltung | »Wollt ihr heute rausgehen?« | Teil III, Kapitel 13 | Arbeitsblatt |
+| 5 | Strukturen, die verlässlich sind | Das Mopslied | Teil II, Kapitel 6 · Teil III, Kapitel 10 | Arbeitsblatt (aus DS 4) |
+| 6 | Demokratie im Alltag | »Erbsen esse ich nicht!« | Teil III, Kapitel 11–12 | Arbeitsblatt |
+| 7 | Haltung zeigen | Beim Abholen | Teil I, Kapitel 1 – weitergedacht | Arbeitsblatt |
+| 8 | Ihr Praxisprojekt | Der Mülleimer | Teil III, Kapitel 14–15 | Arbeitsblatt |
 
 Wo die Klasse gerade steht, legt `hier` in `src/daten-jahr.js` fest (0 = Etappe 1). Nur dort umstellen.
 
@@ -98,6 +112,7 @@ Wo die Klasse gerade steht, legt `hier` in `src/daten-jahr.js` fest (0 = Etappe 
 - **Umfang:** Die Arbeitsblätter tragen eine ganze Doppelstunde, gemeinsam geführt am Smartboard. Positionslinie, Rundgang im Plenum und Stimmkarten bleiben im Raum; jeder Auftrag nennt in »Zurück in den Raum«, wann das Gerät beiseitegelegt wird.
 - **Anrede:** »Sie« (erwachsene Lernende).
 - **Interaktionsmuster:** Etappe 3 hat drei Muster der Stunde – Einfachwahl mit Erklärung je Option und eigener Begründung · Satzanfang mit Kriterienvergleich (Übersetzung, Plakat) · Zuordnen in Spalten. Dazu kommen die Rituale, die jedes Blatt gleich hat: Erst erinnern, Position am Anfang und Rückkehr am Ende, Selbsteinschätzung, Stimmkarte. Etappe 1 liegt mit Markieren, Begriffsnetz und Dreibein bewusst über der Faustregel von drei Mustern – das Wahlfach ist das Versuchsfeld für Legetechniken; Kürzungen K1 und K2 stehen in den Hinweisen für die Lehrkraft.
+- **Interaktionsmuster der Fassung 5.0** (je Blatt höchstens drei, dazu die Rituale Abruf, Positionslinie, Lernspur, Stimmkarte): Etappe 2 – Einfachwahl mit Erklärung je Option (Szene, vier Gründe, Einwände) · Satzanfang mit Kriterienvergleich (Antwort für den Elternabend). Etappe 4 – Einfachwahl · eigener Satz, dann Vorschlag (Umformen) · Zuordnen in Spalten (vier Merkmale). Etappe 5 – Einfachwahl (Ecken, drei Verfahren) · Zuordnen in Spalten (Stufen) · Selbsteinschätzung mit Wort (Ampel). Etappe 6 – Einfachwahl (vier Orte) · Zuordnen in Spalten (Fassade oder Willkür) · Ampel mit Wort und Satzanfang mit Kriterien. Etappe 7 – Zuordnen in Spalten (die Grenze) · Einfachwahl (Fakten) · eigener Satz, dann Vorschlag (fünf Schritte). Etappe 8 – Einfachwahl (Fähigkeiten, Projektideen) · Produkt in Feldern mit Kriterien (Steckbrief). Jedes Muster verlangt eine Festlegung vor der Rückmeldung.
 - **Rückmeldung erst nach der Festlegung:** Die Rückmeldetexte kommen erst nach »Festlegen« ins Dokument, auch nicht vorher für Vorleseprogramme (geprüft). Bei Deutungsfragen gestuft: zentral · auch begründbar · passt kaum.
 - **Fortschritt** zählt erledigte Aufträge, keine Klicks. Etappe 3, Auftrag 5 ist fertig mit drei Plakaten; Etappe 1, Auftrag 3 mit Zwischenstand und zwei Verbindungen oder mit allen zwölf Karten.
 - **Bewegung:** nur nach einer Handlung – Rückmeldung und Karten blenden in 180 bis 240 ms ein, der Stempel »festgelegt« in 320 ms, das Dreibein kippt in 420 ms, die Nadel des Kompasses dreht in 800 ms. »Weniger Bewegung« im System oder per Schalter (im Register und auf der Startseite) hält alles an; der Schalter bleibt gespeichert.
@@ -111,7 +126,8 @@ Wo die Klasse gerade steht, legt `hier` in `src/daten-jahr.js` fest (0 = Etappe 
 - **Ausgedacht und so gekennzeichnet:** die Kita-Fälle A–F, der Fall in Etappe 3, Auftrag 4, die sechs Szenen und sechs Alltagskarten der Ausstellung, die Szenen der Etappen 2, 4 und 7.
 - **Aus dem Vortrag übernommen, am Original noch zu prüfen:** Bürgermeister-Szene, Korczak-Zitat (Korczak 1999, S. 273), Fröbel-Leitbild, Kinderzitat aus BilDe, Mopslied (nach Sturzenhecker), Erbsen-Szene (Doll/Herrmann u. a. 2020), Mülleimer-Szene (Film 2008), Himmelmann 2004, Hansen/Knauer 2015; Lesetext der ersten Stunde (Schmidt 2010, Schultze 2015).
 - **Am Wortlaut der amtlichen deutschen Übersetzung abgeglichen (17.11.2026):** UN-Kinderrechtskonvention, Präambel und Artikel 2, 12, 19, 31.
-- **Am Gesetzestext geprüft:** § 45 Abs. 2 Satz 2 Nr. 4 SGB VIII und § 8 Abs. 1 SGB VIII (01.11.2026), § 1631 Abs. 2 BGB (11.11.2026). Daten zu Korczak: socialnet-Lexikon und Jüdische Allgemeine (01.08.2022), abgeglichen 17.11.2026.
+- **Am Gesetzestext geprüft:** § 45 Abs. 2 Satz 2 Nr. 4 SGB VIII und § 8 Abs. 1 SGB VIII (01.11.2026), § 1631 Abs. 2 BGB (11.11.2026), Art. 1 Abs. 1, Art. 3 Abs. 3 und Art. 79 Abs. 3 GG (18.11.2026).
+- **Aktuelle Daten mit Stand (Etappe 7, Auftrag 5):** Landtagswahlen Baden-Württemberg (8.3.2026) und Sachsen-Anhalt (6.9.2026), Einstufung der AfD und Beschluss des VG Köln vom 26.02.2026 – Stand 18.11.2026, je mit Quelle; vor jeder Stunde neu prüfen. Daten zu Korczak: socialnet-Lexikon und Jüdische Allgemeine (01.08.2022), abgeglichen 17.11.2026.
 - **Nicht übernommen:** § 22a Abs. 1 SGB VIII in der Form des Vortrags – der Absatz regelt die Qualitätssicherung; die Bedürfnisse des einzelnen Kindes stehen in § 22 Abs. 3 SGB VIII. Zahlen aus der BilDe-Studie stehen nicht auf der Seite, solange sie nicht am Original geprüft sind.
 
 ## Zeitdiagnose
@@ -122,8 +138,14 @@ Gemessen am vollen Stand (alle Festlegungen getroffen), 150 Wörter pro Minute f
 | --- | --- | --- | --- | --- |
 | Etappe 3 | 82 Min. + 3 Zusammenfassung | 3.316 (mit drei Plakaten) | etwa 22 Min. | Auftrag 4 (533 Wörter, 12 Min.) und Rundgang (664 Wörter mit einem Plakat, 934 mit drei; 25 Min. mit Plenum) – Kürzungen K1 bis K3 in den Hinweisen |
 | Etappe 1 | 87 Min. + 3 Zusammenfassung | 2.156 | etwa 14 Min. | Begriffsnetz und Kita-Fall (je 20 Min.) – Kürzungen K1 und K2 |
+| Etappe 2 | 70 Min. + 3 | 2.416 | etwa 16 Min. | Gruppenpuzzle (671 Wörter mit allen vier Karten, 22 Min.) |
+| Etappe 4 | 76 Min. + 3 | 2.858 | etwa 19 Min. | Sätze (545 Wörter mit allen neun) und vier Merkmale (564 mit Vorschlag) |
+| Etappe 5 | 78 Min. + 3 | 3.038 | etwa 20 Min. | Drei Verfahren (638 Wörter mit allen drei Karten, 20 Min.) |
+| Etappe 6 | 74 Min. + 3 | 2.466 | etwa 16 Min. | Vier Orte (645 Wörter, 22 Min.) und Fassade oder Willkür (446) |
+| Etappe 7 | 76 Min. + 3 | 2.841 | etwa 19 Min. | Die Grenze (469 Wörter) und fünf Schritte (420 mit allen Karten) |
+| Etappe 8 | 74 Min. + 3 | 2.245 | etwa 15 Min. | Steckbrief (28 Min. Schreiben und Beratung) |
 
-Gemessen am 18.11.2026 (Fassung 4.0) am vollen Stand, ohne die Hinweise für die Lehrkraft und ohne das Extra (je etwa 110 bis 140 Wörter, außerhalb der Stunde).
+Gemessen am 18.11.2026 (Fassungen 4.0 und 5.0) am vollen Stand, bei Kartenrunden mit allen Karten, ohne die Hinweise für die Lehrkraft und ohne das Extra (außerhalb der Stunde). Die neuen Blätter planen 73 bis 81 Minuten; der Rest der Doppelstunde bleibt für Wechsel und Plenum. Kürzungen K1 bis K3 stehen in den Hinweisen jedes Blatts.
 
 Schätzung, nicht erprobt. Nach der ersten Stunde mit der Beobachtung vergleichen.
 
@@ -133,13 +155,13 @@ Schätzung, nicht erprobt. Nach der ersten Stunde mit der Beobachtung vergleiche
 python3 build.py
 ```
 
-setzt `src/seite.html`, `src/seite.css`, `src/daten-jahr.js` (Etappen), `src/kern.js` (Stand, Blatt-Rahmen, Bausteine), `src/blatt-e1.js`, `src/blatt-e3.js`, `src/blatt-einstieg.js`, `src/hub.js` (Kompass, Lernspur, Sichern), `src/start.js` und die Schriften aus `fonts/` zu `index.html` zusammen.
+setzt `src/seite.html`, `src/seite.css`, `src/daten-jahr.js` (Etappen), `src/kern.js` (Stand, Blatt-Rahmen, Bausteine), `src/blatt-e1.js`, `src/blatt-e3.js`, `src/blatt-bausteine.js` (gemeinsame Bausteine der Fassung 5.0), `src/blatt-e2.js`, `src/blatt-e4.js` bis `src/blatt-e8.js`, `src/hub.js` (Kompass, Lernspur, Sichern), `src/start.js` und die Schriften aus `fonts/` zu `index.html` zusammen.
 
 ## Geprüft und nicht geprüft
 
-- **Gelaufen (automatisch, Chromium, 18.11.2026):** beide Arbeitsblätter vollständig wie eine Lernende durchgearbeitet (jede Festlegung, Freigabe auf Ansage, Rückmeldung erst nach dem Festlegen, Register und Fortschritt, Begriffsnetz, Dreibein, Rundgang mit drei Plakaten, Plakat, Legen in Spalten, Rückblick, »Das kann ich«, Zusammenfassung), Stand nach Neuladen, Sichern und Laden als Datei auf der Startseite und im Register jedes Blatts, falsche Datei, »Eingaben dieses Blatts löschen«, »Alle Eingaben löschen«, Ansicht für den Beamer und »Weniger Bewegung« nach Neuladen und auf dem nächsten Blatt, alte Adressen. Breiten 390, 820, 1024, 1180, 1280 × 720 und 1440 ohne waagrechten Überlauf; keine Schrift unter 16 Pixel und keine Zielfläche unter 44 Pixel in den Blättern und auf der Startseite; Schrift in allen Grafiken wirksam mindestens 16 Pixel; keine doppelten IDs, alle Felder beschriftet; keine Abrufe von fremden Servern, keine Fehler in der Konsole. Druck: Deckblätter je eine Seite, Schreibblätter je eine Seite, Zusammenfassungen je zwei Seiten, Plakat und Lernspur je eine Seite. Erster Knopf bei 1280 × 720 gemessen (Ausnahme: Szenenseiten, siehe `docs/version-4.0.md`, Abschnitt 4). Bildschirmfotos angesehen.
+- **Gelaufen (automatisch, Chromium, 18.11.2026):** alle acht Arbeitsblätter vollständig wie eine Lernende durchgearbeitet – mit Freigabe auf Ansage, Rückmeldung erst nach dem Festlegen, Register und Fortschritt (Etappe 5 zusätzlich bei 390 × 844, Etappe 7 bei 820 × 1180); ein Stand aus Fassung 4.0 mit Einstiegsblatt wird richtig übernommen; Stand nach Neuladen, Sichern und Laden als Datei, falsche Datei, »Eingaben dieses Blatts löschen«, »Alle Eingaben löschen«, Ansicht für den Beamer und »Weniger Bewegung« nach Neuladen, alte Adressen. Breiten 390, 820, 1024, 1180, 1280 × 720 und 1440 ohne waagrechten Überlauf; keine Schrift unter 16 Pixel und keine Zielfläche unter 44 Pixel in allen Blättern und auf der Startseite; Schrift in allen Grafiken wirksam mindestens 16 Pixel; keine doppelten IDs, alle Felder beschriftet; keine Abrufe von fremden Servern, keine Fehler in der Konsole. Druck: alle acht Deckblätter je eine Seite, alle Schreibblätter je eine Seite, alle acht Zusammenfassungen je zwei Seiten, Plakat eine Seite, Lernspur mit acht Etappen zwei Seiten (mit sehr langen Sätzen drei). Erster Knopf bei 1280 × 720 gemessen (Ausnahme: Szenenseiten). Bildschirmfotos angesehen.
 - **Nicht gelaufen:** Safari auf einem echten iPad (hoch und quer), VoiceOver, Zoom 200 %, echter Beamer, echter Drucker und GoodNotes, Moodle, axe, Impeccable und Taste Skill.
-- **Bekannt:** Ohne JavaScript bleiben Kompass und Blätter leer. Auf dem Telefon (390 Pixel) überdecken die Linien des Begriffsnetzes andere Karten; die Beschriftung der Linien steht dort nur in der Liste darunter. Auf vier Szenenseiten liegt der erste Knopf bei 1280 × 720 unter dem ersten Bildschirm, weil die Szene vor der Festlegung steht.
+- **Bekannt:** Ohne JavaScript bleiben Kompass und Blätter leer. Auf dem Telefon (390 Pixel) überdecken die Linien des Begriffsnetzes andere Karten; die Beschriftung der Linien steht dort nur in der Liste darunter. Auf den Szenenseiten liegt der erste Knopf bei 1280 × 720 unter dem ersten Bildschirm (begründete Ausnahme).
 
 ## Schriften
 

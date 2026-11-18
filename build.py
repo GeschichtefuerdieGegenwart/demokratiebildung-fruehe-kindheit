@@ -21,7 +21,7 @@ teile = {
     "/*SEITE*/": lies("seite.css"),
     "/*DATEN*/": lies("daten-jahr.js"),
     "/*KERN*/": lies("kern.js"),
-    "/*BLAETTER*/": "\n".join(lies(n) for n in ["blatt-e1.js", "blatt-e3.js", "blatt-einstieg.js"]),
+    "/*BLAETTER*/": "\n".join(lies(n) for n in ["blatt-e1.js", "blatt-e3.js", "blatt-bausteine.js", "blatt-e2.js", "blatt-e4.js", "blatt-e5.js", "blatt-e6.js", "blatt-e7.js", "blatt-e8.js"]),
     "/*HUB*/": lies("hub.js"),
     "/*START*/": lies("start.js"),
 }
